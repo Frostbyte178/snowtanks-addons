@@ -471,7 +471,7 @@ function addGunner({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0,
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.65 }
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.7 }
 			},
 		},
 	];
@@ -709,9 +709,6 @@ function addDrone({length = 18, width = 8, aspect = 1.2, x = 8, y = 0, angle = 0
 function addMinion({length = 18, gap = 3, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.factory], TYPE = "assailantMinionSnowdread", MAX_CHILDREN = 2) {
 	return [
 		{
-			POSITION: [length + 1, width, -1.3, x, y, angle, 0],
-			PROPERTIES: { COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5, SATURATION_SHIFT: 0.6} },
-		}, {
 			POSITION: [gap, width - 1, 1, x + length, y, angle, 0],
 			PROPERTIES: { COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6} },
 		}, {
@@ -731,6 +728,9 @@ function addMinion({length = 18, gap = 3, width = 8, aspect = 1, x = 0, y = 0, a
 		}, {
 			POSITION: [length + gap - 1, width * 0.6, -1.4, x, y, angle, 0],
 			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15} },
+		}, {
+			POSITION: [length + gap - 2.5, width * 0.3, -1.2, x, y, angle, 0],
+			PROPERTIES: { COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.7} },
 		},
 	];
 }
@@ -2362,7 +2362,7 @@ Class.shadeSnowdread = { // aura-traps
 }
 for(let i = 0; i < 4; i++) {
 	Class.shadeSnowdread.GUNS.push(
-		...addAuraTrap({length: 14, length2: 3, width: 7, aspect: 1.6, angle: 90*i}, -5, [g.trap, g.hexaTrapper, {health: 1.25}], 100)
+		...addAuraTrap({length: 14, length2: 3, width: 7, aspect: 1.6, angle: 90*i}, -5, [g.trap, g.hexaTrapper, {shudder: 0.6, health: 1.25}], 100)
 	)
 }
 Class.screwdriverSnowdread = { // trap + gun
@@ -3038,8 +3038,8 @@ Class.appeaserSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.appeaserSnowdread.GUNS.push(
-		...addNormal({length: 7, width: 11, aspect: 1.35, x: 6, angle: 120*i}, 5, [g.basic, g.machineGun, {size: 0.8}], false),
-		...addNormal({length: 7, width: 10, aspect: 1.3, x: 8, angle: 120*i}, 5, [g.basic, g.machineGun, {size: 0.8, reload: 0.9}]),
+		...addNormal({length: 7, width: 10, aspect: 1.35, x: 6, angle: 120*i}, 5, [g.basic, g.machineGun, {size: 0.8}], false),
+		...addNormal({length: 7, width: 9, aspect: 1.3, x: 8, angle: 120*i}, 5, [g.basic, g.machineGun, {size: 0.8, reload: 0.9}]),
 	)
 }
 Class.amalgamAutoSnowdread = {
@@ -3090,9 +3090,9 @@ Class.breakerSnowdread = { // ultra bullet spam
 }
 for(let i = 0; i < 3; i++) {
 	Class.breakerSnowdread.GUNS.push(
-		...addGunner({length: 19, width: 2.75, y: -3, angle: 120*i, delay: 1/3}, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
-		...addGunner({length: 19, width: 2.75, y: 3, angle: 120*i, delay: 2/3}, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
-		...addGunner({length: 21.5, width: 3.25, y: 0, angle: 120*i}, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05, size: 2.75/3.25}]),
+		...addGunner({length: 19, width: 2.75, y: -3, angle: 120*i, delay: 1/3}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
+		...addGunner({length: 19, width: 2.75, y: 3, angle: 120*i, delay: 2/3}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
+		...addGunner({length: 21.5, width: 3.25, y: 0, angle: 120*i}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05, size: 2.75/3.25}]),
 		{
 			POSITION: [10, 8.5, 0.6, 5, 0, 120*i, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } },
@@ -3229,9 +3229,9 @@ Class.infiltratorSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.infiltratorSnowdread.GUNS.push(
-		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: 5.5, angle: 120*i}, -2.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
-		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: -5.5, angle: 120*i}, -2.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
-		...addDrone({length: 5, width: 6, aspect: 1.4, x: 8, angle: 120*i}, -2.5, [g.drone, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
+		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: 5.5, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
+		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: -5.5, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
+		...addDrone({length: 5, width: 6, aspect: 1.4, x: 8, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
 	)
 }
 Class.aggressorMinionTopSnowdread = {
@@ -4464,17 +4464,17 @@ Class.eroderSnowdread = { // ultra bullet spam
 }
 for(let i = 0; i < 5; i++) {
 	Class.eroderSnowdread.GUNS.push(
-		...addSpam({length: 14, width: 4, y: 4.5, angle: 72*i, delay: 0}, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addSpam({length: 12, width: 4, y: 4.5, angle: 72*i, delay: 0.5}, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addSpam({length: 14, width: 4, y: -4.5, angle: 72*i, delay: 0.25}, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addSpam({length: 12, width: 4, y: -4.5, angle: 72*i, delay: 0.75}, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addGunner({length: 18, width: 1.6, y: -2, angle: 72*i}, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
-		...addGunner({length: 18, width: 1.6, y: 2, angle: 72*i, delay: 0.5}, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
+		...addSpam({length: 14.5, width: 4, y: 4.5, angle: 72*i, delay: 0}, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addSpam({length: 12.5, width: 4, y: 4.5, angle: 72*i, delay: 0.5}, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addSpam({length: 14.5, width: 4, y: -4.5, angle: 72*i, delay: 0.25}, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addSpam({length: 12.5, width: 4, y: -4.5, angle: 72*i, delay: 0.75}, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addGunner({length: 19, width: 1.6, y: -2, angle: 72*i}, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
+		...addGunner({length: 19, width: 1.6, y: 2, angle: 72*i, delay: 0.5}, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
 		{
-			POSITION: [13.5, 7.5, 1, 0, 0, 72*i, 0],
+			POSITION: [14, 7.5, 1, 0, 0, 72*i, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 }, },
 		}, {
-			POSITION: [12.5, 6, 1, 0, 0, 72*i, 0],
+			POSITION: [13, 6, 1, 0, 0, 72*i, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 } },
 		},
 	)
@@ -4932,14 +4932,14 @@ Class.interstellarSnowdread = {
 Class.gigabyteTurretSnowdread = {
 	PARENT: ["autoTankGun"],
 	INDEPENDENT: true,
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
+	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
 	GUNS: [
 		{
-			POSITION: [14, 8, 0.001, -2, -11, 135, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 5, SATURATION_SHIFT: 1.2 } },
+			POSITION: [14, 8, 0.001, -2, -10.5, 140, 0],
+			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 7.5, SATURATION_SHIFT: 1.2 } },
 		}, {
-			POSITION: [14, 8, 0.001, -2, 11, -135, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 5, SATURATION_SHIFT: 1.2 } },
+			POSITION: [14, 8, 0.001, -2, 10.5, -140, 0],
+			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 7.5, SATURATION_SHIFT: 1.2 } },
 		}, {
 			POSITION: [21, 16, 1.3, 0, 0, 0, 0],
 			PROPERTIES: {
@@ -4950,7 +4950,7 @@ Class.gigabyteTurretSnowdread = {
 		}, { // Main gun
 			POSITION: [26, 16, 1, 0, 0, 0, 0],
 			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, {speed: 1.1, health: 0.8}]),
+				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, {speed: 1.25, health: 0.7}]),
 				TYPE: "bullet",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.6 },
 			},
@@ -5012,7 +5012,7 @@ Class.gigabyteSnowdread = {
 			POSITION: [20, 0, 0, 0, 0, 1],
 			TYPE: ["pentagonBaseDeco"],
 		}, {
-			POSITION: [13, 0, 0, 0, 360, 1],
+			POSITION: [12.5, 0, 0, 0, 360, 1],
 			TYPE: "gigabyteTurretSnowdread",
 		},
 	],
