@@ -412,9 +412,7 @@ for (let a = 0; a < 3; a++) {
     }
 }
 
-Class.voidlingsMenu = menu("Voidlings");
-Class.voidlingsMenu.SHAPE = 3.5;
-Class.voidlingsMenu.COLOR = baseColor;
+Class.voidlingsMenu = menu("Voidlings", baseColor, 3.5);
 
 Class.addons.UPGRADES_TIER_0.push("voidlingsMenu");
     Class.voidlingsMenu.UPGRADES_TIER_0 = ["relativity"];
