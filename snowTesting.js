@@ -12,7 +12,7 @@ Class.fastSpectator = {
     },
 }
 Class.superFastSpectator = {
-    PARENT: "genericTank",
+    PARENT: "spectator",
     LABEL: "Super Fast Spectator",
     BODY: {
         SPEED: 75,
