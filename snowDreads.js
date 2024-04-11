@@ -1278,7 +1278,7 @@ Class.genericEggnoughtSnowdread = {
 	PARENT: ["genericDreadnoughtSnowdread"],
 	BODY: eggnoughtBody,
 	SHAPE: 0,
-	COLOR: 6,
+	COLOR: 'egg',
 	SIZE: 16,
 	DANGER: 8,
 }
@@ -1286,7 +1286,7 @@ Class.genericSquarenoughtSnowdread = {
 	PARENT: ["genericDreadnoughtSnowdread"],
 	BODY: squarenoughtBody,
 	SHAPE: 4,
-	COLOR: 13,
+	COLOR: 'square',
 	SIZE: 20,
 	DANGER: 9,
 }
@@ -1294,7 +1294,7 @@ Class.genericTrinoughtSnowdread = {
 	PARENT: ["genericDreadnoughtSnowdread"],
 	BODY: trinoughtBody,
 	SHAPE: 3.5,
-	COLOR: 2,
+	COLOR: 'triangle',
 	SIZE: 23,
 	DANGER: 10,
 }
@@ -1302,7 +1302,7 @@ Class.genericPentanoughtSnowdread = {
 	PARENT: ["genericDreadnoughtSnowdread"],
 	BODY: pentanoughtBody,
 	SHAPE: 5.5,
-	COLOR: 14,
+	COLOR: 'pentagon',
 	SIZE: 25,
 	DANGER: 11,
 }
@@ -1310,7 +1310,7 @@ Class.genericHexnoughtSnowdread = {
 	PARENT: ["genericDreadnoughtSnowdread"],
 	BODY: hexnoughtBody,
 	SHAPE: 6,
-	COLOR: 0,
+	COLOR: 'hexagon',
 	SIZE: 26,
 	DANGER: 12,
 }
