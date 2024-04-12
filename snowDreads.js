@@ -97,7 +97,7 @@ function addSniper({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0,
 			POSITION: [length, width, 1, x, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "bullet",
+				TYPE: "heavyBulletSnowdread",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 }
 			},
 		}, {
@@ -320,7 +320,7 @@ function addHeavySniper({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle
 			POSITION: [length, width, 1, x, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "bullet",
+				TYPE: "heavyBulletSnowdread",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6 },
 			},
 		}, {
@@ -505,7 +505,7 @@ function addHeavy({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, 
 			POSITION: [length, width, aspect, x, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "bullet",
+				TYPE: "heavyBulletSnowdread",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5, SATURATION_SHIFT: 0.6 },
 			},
 		}, {
@@ -824,7 +824,7 @@ function addTrap({length = 18, length2 = 3, width = 8, aspect = 1.6, x = 0, y = 
 			POSITION: [length2, width, aspect, x + length, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: isBox ? "unsetTrap" : "trap",
+				TYPE: isBox ? "unsetTrapSnowdread" : "trap",
 				STAT_CALCULATOR: gunCalcNames.trap,
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6}
 			},
@@ -1350,6 +1350,17 @@ Class.spamAutoTurret = {
 		},
 	],
 }
+Class.ring085 = {
+	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5},
+	SHAPE: "M -0.85 0 A 0.85 0.85 0 0 0 0.85 0 A 0.85 0.85 0 0 0 -0.85 0 M -1 0 A 1 1 0 0 1 1 0 A 1 1 0 0 1 -1 0 Z"
+}
+Class.heavyBulletSnowdread = {
+	PARENT: "bullet",
+	PROPS: [{
+		POSITION: [20, 0, 0, 0, 1],
+		TYPE: "ring085"
+	}]
+}
 Class.missileProjectileSnowdread = {
 	PARENT: "bullet",
 	LABEL: "Missile",
@@ -1485,6 +1496,17 @@ Class.pillboxTurretWeakSnowdread = {
 			},
 		},
 	],
+}
+Class.unsetTrapTopSnowdread = {
+	SHAPE: "M 1.1 1.1 L 1 0 L 1.1 -1.1 L 0 -1 L -1.1 -1.1 L -1 0 L -1.1 1.1 L 0 1 L 1.1 1.1 M 0.9 0.9 L 0 0.825 L -0.9 0.9 L -0.825 0 L -0.9 -0.9 L 0 -0.825 L 0.9 -0.9 L 0.825 0 L 0.9 0.9 Z",
+	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5},
+}
+Class.unsetTrapSnowdread = {
+	PARENT: 'unsetTrap',
+	PROPS: [{
+		POSITION: [20, 0, 0, 0, 1],
+		TYPE: 'unsetTrapTopSnowdread'
+	}]
 }
 Class.pillboxTurretSnowdread = {
 	PARENT: "spamAutoTurret",
@@ -1637,7 +1659,7 @@ Class.centaurSnowdread = {
 }
 for (let i = 0; i < 2; i++) {
 	Class.centaurSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 3, width: 7, angle: 180*i}, 0, [g.trap, {health: 2}])
+		...addTrap({length: 13, length2: 3, width: 7, angle: 180*i}, 0, [g.trap, {reload: 2, health: 4, range: 0.75}])
 	)
 }
 Class.centaur2Snowdread = {
@@ -2326,8 +2348,8 @@ Class.daemonSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.daemonSnowdread.GUNS.push(
-		...addTrap({length: 11, length2: 2, width: 4.5, aspect: 1.7, y: 4.5, angle: 90*i}, 5, [g.trap, g.twin, {health: 2}]),
-		...addTrap({length: 11, length2: 2, width: 4.5, aspect: 1.7, y: -4.5, angle: 90*i}, 5, [g.trap, g.twin, {health: 2}]),
+		...addTrap({length: 11, length2: 2, width: 4.5, aspect: 1.7, y: 4.5, angle: 90*i}, 5, [g.trap, g.twin, {reload: 2, health: 3.5}]),
+		...addTrap({length: 11, length2: 2, width: 4.5, aspect: 1.7, y: -4.5, angle: 90*i}, 5, [g.trap, g.twin, {reload: 2, health: 3.5}]),
 	)
 }
 Class.minotaurSnowdread = {
@@ -2338,7 +2360,7 @@ Class.minotaurSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.minotaurSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 2.5, [g.trap, g.setTrap, {health: 2}], true),
+		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 2.5, [g.trap, g.setTrap, {reload: 2, health: 2}], true),
 	)
 }
 Class.cleanerSnowdread = { // auto-traps
@@ -2645,6 +2667,7 @@ Class.jumboSnowdread = {
 }
 Class.colossusTopSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
+	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
 	GUNS: [],
 }
 for (let i = 0; i < 4; i++) {
@@ -2680,7 +2703,7 @@ for (let i = 0; i < 4; i++) {
 }
 Class.colossusSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
-	LABEL: "colossus",
+	LABEL: "Colossus",
 	UPGRADE_TOOLTIP: "Speed Buff",
 	BODY: speedBuffBodyStats[0],
 	GUNS: [],
@@ -3004,7 +3027,7 @@ Class.ballistaSnowdread = { // mega-sniper
 }
 for (let i = 0; i < 3; i++) {
 	Class.ballistaSnowdread.GUNS.push(
-		...addHeavySniper({length: 22, width: 11, angle: 120*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.2, size: 2}])
+		...addHeavySniper({length: 22, width: 10.5, angle: 120*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.2, size: 2}])
 	)
 }
 Class.barbSnowdread = { // railgun
@@ -3147,7 +3170,7 @@ Class.suppressorSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.suppressorSnowdread.GUNS.push(
-		...addHeavy({length: 16.5, width: 11.5, angle: 120*i}, 0, [g.basic, g.pounder, g.destroyer, {reload: 0.85}])
+		...addHeavy({length: 16.5, width: 10.5, angle: 120*i}, 0, [g.basic, g.pounder, g.destroyer, {reload: 0.85}])
 	)
 }
 Class.inhibitorSnowdread = {
@@ -4347,7 +4370,7 @@ Class.rapierSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.rapierSnowdread.GUNS.push(
-		...addRifle({length: 18, width: 5, angle: 72*i}, 5, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
+		...addRifle({length: 18, width: 4.5, angle: 72*i}, 5, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
 	)
 }
 Class.woomeraSnowdread = { // hunter
@@ -4520,7 +4543,7 @@ Class.retardantSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.retardantSnowdread.GUNS.push(
-		...addHeavy({length: 17, width: 11, angle: 72*i}, 2.5, [g.basic, g.pounder, g.destroyer, g.annihilator, {reload: 0.9, health: 1.5}])
+		...addHeavy({length: 17, width: 10, angle: 72*i}, 2.5, [g.basic, g.pounder, g.destroyer, g.annihilator, {reload: 0.9, health: 1.5}])
 	)
 }
 Class.tyrantSnowdread = {
