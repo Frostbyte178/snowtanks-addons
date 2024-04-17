@@ -1,1581 +1,24 @@
-const { combineStats, makeAuto } = require('../facilitators.js');
-const { gunCalcNames, smshskl, base } = require('../constants.js');
+const { combineStats } = require('../facilitators.js');
+const { gunCalcNames } = require('../constants.js');
 const g = require('../gunvals.js');
-const ensureIsClass = (Class, str) => {
-    if ("object" == typeof str) {
-        return str;
-    }
-    if (str in Class) {
-        return Class[str];
-    }
-    throw Error(`Definition ${str} is attempted to be gotten but does not exist!`);
-};
-const eggnoughtBody = {
-    SPEED: base.SPEED * 0.8,
-    HEALTH: base.HEALTH * 1.75,
-	SHIELD: base.SHIELD * 1.5,
-	REGEN: base.REGEN * 1.5,
-    FOV: base.FOV,
-	RESIST: base.RESIST,
-	DENSITY: base.DENSITY * 1.5,
-};
-const squarenoughtBody = {
-    SPEED: base.SPEED * 0.675,
-    HEALTH: base.HEALTH * 2.5,
-	SHIELD: base.SHIELD * 2,
-	REGEN: base.REGEN * 2,
-    FOV: base.FOV * 0.95,
-	RESIST: base.RESIST,
-	DENSITY: base.DENSITY * 2,
-};
-const trinoughtBody = {
-    SPEED: base.SPEED * 0.55,
-    HEALTH: base.HEALTH * 3.5,
-	SHIELD: base.SHIELD * 2.5,
-	REGEN: base.REGEN * 2.5,
-    FOV: base.FOV * 0.95,
-	RESIST: base.RESIST,
-	DENSITY: base.DENSITY * 2.5,
-};
-const pentanoughtBody = {
-    SPEED: base.SPEED * 0.425,
-    HEALTH: base.HEALTH * 4.25,
-	SHIELD: base.SHIELD * 3,
-	REGEN: base.REGEN * 3,
-    FOV: base.FOV * 0.95,
-	RESIST: base.RESIST,
-	DENSITY: base.DENSITY * 3,
-};
-const hexnoughtBody = {
-    SPEED: base.SPEED * 0.3,
-    HEALTH: base.HEALTH * 5,
-	SHIELD: base.SHIELD * 3.5,
-	REGEN: base.REGEN * 3.5,
-    FOV: base.FOV * 0.95,
-	RESIST: base.RESIST,
-	DENSITY: base.DENSITY * 3.5,
-};
+const { 
+	addSniper, addAssassin, addRifle, addHunter, addHeavySniper, addRailgun, 
+	addNormal, addSpam, addGunner, 
+	addHeavy, addLauncher, addShotgun, addTwister, 
+	addDrone, addMinion, addAutoDrone, addHoncho, addSwarm, 
+	addTrap, addAutoTrap, addAuraTrap, 
+	addTrinoughtAuraRing, addTrinoughtTurretRing, addPentanoughtAuraRing, addPentanoughtTurretRing,
+} = require('./snowDreadsFacilitators.js');
+const {
+	enableSnowDreads,
+	buildHexnoughts, useOldPhotosphere, hexnoughtScaleFactor,
+	hpBuffBodyStats, speedBuffBodyStats, sizeBuffBodyStats,
+} = require('./snowDreadsConstants.js');
+require('./snowDreadsMisc.js');
 
-// Comment out the line below to enable this addon, uncomment it to disable this addon.
-// return console.log('--- Snowdreads addon [snowdreads.js] is disabled. ---');
-
-// Set the below variable to true to enable hex dreadnought building.
-const buildHexnoughts = true;
-
-// Set the below variable to true to enable photosphere with 10 auras instead of 6.
-const useOldPhotosphere = false;
-
-// For hexnought merging
-const hexnoughtScaleFactor = 0.9;
-
-// Missing stats
-g.flame = {reload: 0.5, recoil: 0.1, shudder: 1.5, range: 0.5, spray: 7, damage: 2, health: 1/3, speed: 0.6, maxSpeed: 0.3};
-g.honcho = {size: 2, damage: 2.5, health: 1.2, reload: 2, speed: 0.7};
-
-// Body helpers
-const hpBuffBodyStats = [
-	{ HEALTH: 2.1, SHIELD: 2.1, REGEN: 2,   SPEED: 0.8  },
-	{ HEALTH: 2.9, SHIELD: 2.9, REGEN: 2.2, SPEED: 0.65 },
-	{ HEALTH: 3.5, SHIELD: 3.4, REGEN: 2.5, SPEED: 0.55 },
-];
-const speedBuffBodyStats = [
-	{ SPEED: 1.95, HEALTH: 0.65 },
-	{ SPEED: 2.3,  HEALTH: 0.5  },
-	{ SPEED: 2.55, HEALTH: 0.35 },
-];
-const sizeBuffBodyStats = [
-	{ SPEED: 0.9,  HEALTH: 2   },
-	{ SPEED: 0.85, HEALTH: 2.4 },
-	{ SPEED: 0.8,  HEALTH: 2.8 },
-];
-
-// Snowdread Building Functions --------------
-// Guns
-function addSniper({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) {
-	let output = [
-		{ // Main barrel
-			POSITION: [length, width, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 }
-			},
-		}, {
-			POSITION: [length - 3.3, width * 0.8, -0.65, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [length - 1.6, width * 0.6, -0.65, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 25, SATURATION_SHIFT: 0.5 },
-				BORDERLESS: true,
-			},
-		},
-	];
-	for (let i = 0; i < 2; i++) {
-		output.push(
-			{
-				POSITION: [0.6, width * 0.7, -0.9, x + length - 2 - i * 2.5, y, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift - 12.5 },
-				},
-			},
-		)
-	}
-	return output;
-}
-function addAssassin({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) {
-	return [
-		{
-			POSITION: [(length - x) * 0.6, width, -1.6, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift },
-			},
-		},
-		...addSniper({length, width, aspect, x: 0, y, angle, delay}, brightShift, stats),
-		{
-			POSITION: [5, width, -1.6, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 } },
-		}, {
-			POSITION: [5, width - 1.5, -1.6, x - 1.5, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 } },
-		},
-	];
-}
-function addRifle({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper], isMusket = false) {
-	if (isMusket) {
-		return [
-			{
-				POSITION: [length - 1, 1, aspect, x, y + width + 1, angle, 0],
-				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 22.5, SATURATION_SHIFT: 0.5 },}
-			}, {
-				POSITION: [length - 1, 1, aspect, x, y - width - 1, angle, 0],
-				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 22.5, SATURATION_SHIFT: 0.5 },}
-			}, {
-				POSITION: [4.5, width + 4, 0, x + length - 8, y + (width + 1) / 2, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-				}
-			}, {
-				POSITION: [4.5, width + 4, 0, x + length - 12, y + (width + 1) / 2, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-				}
-			}, {
-				POSITION: [4.5, width + 4, 0, x + length - 8, y - (width + 1) / 2, angle, delay + 0.5],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-				}
-			}, {
-				POSITION: [4.5, width + 4, 0, x + length - 12, y - (width + 1) / 2, angle, delay + 0.5],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-				}
-			}, {
-				POSITION: [length, width, aspect, x, y + (width + 1) / 2, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats(stats),
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5, SATURATION_SHIFT: 0.65 },
-					TYPE: "bullet",
-				},
-			}, {
-				POSITION: [length, width, aspect, x, y - (width + 1) / 2, angle, delay + 0.5],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats(stats),
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5, SATURATION_SHIFT: 0.65 },
-					TYPE: "bullet",
-				},
-			}, {
-				POSITION: [length - 2.5, width, aspect - 0.3, x, y + (width + 1) / 2, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 7.5, SATURATION_SHIFT: 0.65 },
-					BORDERLESS: true
-				}
-			}, {
-				POSITION: [length - 2.5, width, aspect - 0.3, x, y - (width + 1) / 2, angle, delay + 0.5],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 7.5, SATURATION_SHIFT: 0.65 },
-					BORDERLESS: true
-				}
-			}, {
-				POSITION: [length - 4.5, width * 1.5, aspect - 0.4, x, y, angle, delay],
-				PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5 } }
-			}, {
-				POSITION: [length - 6.5, width * 1.3, aspect - 0.45, x, y, angle, delay],
-				PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 20 }, BORDERLESS: true }
-			},
-		];
-	}
-	return [
-		{
-			POSITION: [length - 2.5, width + 3, aspect, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 22.5, SATURATION_SHIFT: 0.5 },}
-		}, {
-			POSITION: [4.5, width + 4, 0, x + length - 8, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-			}
-		}, {
-			POSITION: [4.5, width + 4, 0, x + length - 12, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-			}
-		}, {
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5, SATURATION_SHIFT: 0.65 },
-				TYPE: "bullet",
-			},
-		}, {
-			POSITION: [length - 1, width, aspect - 0.2, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65 },
-				BORDERLESS: true
-			}
-		}, {
-			POSITION: [length - 2.5, width - 1.5, aspect - 0.2, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.65 },
-				BORDERLESS: true
-			}
-		},
-	];
-}
-function addHunter({length = 18, width = 8, dimensionDifference = 3, barrelCount = 2, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) {
-	let output = [
-		{
-			POSITION: [length - 2.5, width + 2, -aspect - 0.3, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.8 } },
-		},
-	];
-	let delayOffset = 0.5 / barrelCount;
-	for (let i = 0; i < barrelCount; i++) stats.push(g.hunterSecondary);
-	for (let i = barrelCount - 1; i >= 0; i--) {
-		output.push(
-			{
-				POSITION: [length + i * dimensionDifference, width - i * dimensionDifference, aspect, x, y, angle, delay + delayOffset * (barrelCount - i - 1)],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats(stats),
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-					TYPE: "bullet",
-				},
-			}, {
-				POSITION: [length + i * dimensionDifference, width - i * dimensionDifference - 3, -aspect + 0.3, x, y, angle, delay + delayOffset * (barrelCount - i - 1)],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.75 },
-					TYPE: "bullet",
-				},
-			},
-		)
-		stats.pop();
-	}
-	output.push(
-		{
-			POSITION: [length - 1.5, width - 4, -aspect + 0.3, x, y, angle, delay + delayOffset * (barrelCount - 1)],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.8 },
-				TYPE: "bullet",
-				BORDERLESS: true,
-			},
-		},
-	)
-	return output;
-}
-function addHeavySniper({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) {
-	return [
-		{
-			POSITION: [length, width, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6 },
-			},
-		}, {
-			POSITION: [length - 1.5, width * 0.7, -1.3, x, y, angle, delay],
-			PROPERTIES: { 
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.6}, 
-				BORDERLESS: true
-			},
-		}, {
-			POSITION: [length - 7, width * 0.4, -1.4, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5 } },
-		}, {
-			POSITION: [4, width + 2, 1, x + length - 7, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.6 },
-			},
-		}, {
-			POSITION: [2, width + 2.5, 1, x + length - 6, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 },
-			},
-		},
-	];
-}
-function addRailgun({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) {
-	let output = [
-		{
-			POSITION: [length - x - 3.5, width + 3, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.7 }}
-		}, {
-			POSITION: [length - x, width, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-			},
-		}, {
-			POSITION: [(length - x) * 0.85, width * 0.85, 0.7, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 17.5, SATURATION_SHIFT: 0.8 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [5, width + 3, -1.7, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15 },}
-		}, {
-			POSITION: [3.5, width + 1.5, -1.7, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65 },}
-		},
-	];
-	for (let i = 0; i < 3; i++) {
-		output.splice(1, 0,
-			{
-				POSITION: [0.6, width + 4, 1, length - 4 - 2.5 * i, y, angle, delay],
-			}
-		)
-	}
-	return output;
-}
-
-function addNormal({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic], drawTop = true) {
-	let output = [
-		{
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 }
-			},
-		},
-	];
-	if (drawTop) {
-		output.push(
-			{
-				POSITION: [length - 1.5, width * 0.85, aspect * 0.9, x, y, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 27.5, SATURATION_SHIFT: 0.5 },
-					BORDERLESS: true,
-				},
-			}, {
-				POSITION: [length - 1.5, width * 0.5, aspect * -0.7, x, y, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 32.5, SATURATION_SHIFT: 0.5 },
-					BORDERLESS: true,
-				},
-			}, {
-				POSITION: [1.5 * aspect, aspect * width * 0.7, -0.6, x + length - 1.5 - 1.5 * aspect, y, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10 },
-				},
-			},
-		);
-	}
-	return output;
-}
-function addSpam({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic]) {
-	return [
-		{ // Main barrel
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15 }
-			},
-		}, {
-			POSITION: [length - 1.2, width, aspect * (length - 2) / length, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.75 }
-			},
-		}, {
-			POSITION: [length - 2, width - 1, aspect - 0.3, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.75 },
-				BORDERLESS: true,
-			},
-		},
-	];
-}
-function addGunner({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic]) {
-	return [
-		{ // Main barrel
-			POSITION: [length, width, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15 }
-			},
-		}, {
-			POSITION: [length - 1.25, width * 0.8, -0.8, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.7 }
-			},
-		},
-	];
-}
-function addCrowbar({length = 38, width = 6.5, aspect = 1, x = 8, y = 0, angle = 0, delay = 0}, brightShift = 0) {
-	return [
-		{
-			POSITION: [length - x - 8, width, -1.5, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 }},
-		}, {
-			POSITION: [length - x, width, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6 }}
-		}, {
-			POSITION: [length - x, width - 2, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.7 }, BORDERLESS: true}
-		}, {
-			POSITION: [5, width + 2, -1.5, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 7.5, SATURATION_SHIFT: 0.6 }}
-		}, {
-			POSITION: [5, width + 0.5, -1.6, x - 1.5, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 }},
-		},
-	];
-}
-function addHeavy({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic]) {
-	return [
-		{
-			POSITION: [12.5, width * 1.3, -aspect + 0.25, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5 } },
-		}, {
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5, SATURATION_SHIFT: 0.6 },
-			},
-		}, {
-			POSITION: [length - 2, width * 1.2, aspect - 0.35, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.7 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [(length - 11.5) * 0.75, width * 0.65, aspect - 0.4, x + 11.5, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 2.5 } },
-		}, {
-			POSITION: [11.5, width * 0.8, -aspect + 0.25, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 2.5 } },
-		}, {
-			POSITION: [length * 0.8, width * 0.8, aspect - 0.6, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.75 } },
-		}, 
-	];
-}
-function addLauncher({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic], isSkimmer = false, TYPE = "missileProjectileSnowdread") {
-	if (isSkimmer) {
-		return [
-			{
-				POSITION: [10, width - 1, -0.75, x + length - 8, y, angle, 0],
-				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6 }} 
-			}, {
-				POSITION: [9.5, width - 3, -0.75, x + length - 8, y, angle, 0],
-				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.7 }, BORDERLESS: true} 
-			}, {
-				POSITION: [length, width, 0.95, x, y, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats(stats),
-					TYPE,
-					STAT_CALCULATOR: gunCalcNames.sustained,
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
-				},
-			}, {
-				POSITION: [length - 2, width - 2, 0.8, x, y, angle, 0],
-				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6 }}
-			}, {
-				POSITION: [length, width - 2, 0.75, x - 3.5, y, angle, 0],
-				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.7 }, BORDERLESS: true}
-			},
-		];
-	}
-	return [
-		{
-			POSITION: [length - 6, width - 3, 1, x+8, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE,
-				STAT_CALCULATOR: gunCalcNames.sustained,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6 },
-			},
-		}, {
-			POSITION: [length, width, -1.15, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 }} 
-		}, {
-			POSITION: [length, width - 2.5, -0.6, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.7 }}
-		}, {
-			POSITION: [length, width - 3, 0.7, x - 2, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift + 2.5, SATURATION_SHIFT: 0.7 }, BORDERLESS: true}
-		}, {
-			POSITION: [length * 0.8, width * 0.45, 0.001, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 }} 
-		},
-	];
-}
-function addShotgun({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, realGuns = [], bigStats = [g.basic], smallStats = [g.basic]) {
-	let output = [
-		{
-			POSITION: [length - x, width, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.6 },
-			},
-		}, {
-			POSITION: [length - x - 1.5, width - 2, 0.85, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 },
-			},
-		}, {
-			POSITION: [6, width, -1.3, x, y, angle, 0],
-			PROPERTIES: {
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.65 },
-			},
-		}, {
-			POSITION: [length - x - 1, width / 2, -0.6, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.75 },
-			},
-		}, {
-			POSITION: [length - x - 2.5, width * 0.35, -0.85, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.6 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [length - x - 4, width * 0.5, 0.001, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 } },
-		}, {
-			POSITION: [6, width - 1.5, -1.3, x - 1.5, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 } },
-		},
-	];
-	let hasSmall = false;
-	for (let i = 0; i < realGuns.length; i++) {
-		let gun = realGuns[i],
-			stats = gun.small ? smallStats : bigStats,
-			TYPE = i % 3 == 0 ? "casing" : "bullet";
-		if (gun.small) hasSmall = true;
-		output.splice(0, 0, {
-			POSITION: [gun.l, gun.w, 0.001, 0, g.y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE,
-			}
-		});
-	}
-	if (hasSmall) {
-		output.splice(0, 0, {
-			POSITION: [length - x + 2.5, width - 3.5, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6 },
-			},
-		});
-	}
-	return output;
-}
-function addTwister({length = 18, width = 8, aspect = -1.4, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic], TYPE = "spinmissile") {
-	return [
-		{
-			POSITION: [10, width - 1, -0.5, x + length - 8, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 7.5, SATURATION_SHIFT: 0.65 },}
-		}, {
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE,
-				STAT_CALCULATOR: gunCalcNames.sustained,
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 },
-			},
-		}, {
-			POSITION: [length, width * 1.08, aspect, x - length / 5, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: 'bullet',
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.7 },
-			},
-		}, {
-			POSITION: [length, width * 0.8, aspect - 0.1, x - length / 5 - 1.5, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: 'bullet',
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 6.25, SATURATION_SHIFT: 0.7 },
-				BORDERLESS: true
-			},
-		}, {
-			POSITION: [length - 2, width * 0.65, 0.7, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.65 }}
-		},
-	];
-}
-function addDrone({length = 18, width = 8, aspect = 1.2, x = 8, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.drone], MAX_CHILDREN = 4, TYPE = "drone") {
-	let output = [
-		{
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE,
-				MAX_CHILDREN,
-				AUTOFIRE: true,
-				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
-				WAIT_TO_CYCLE: true,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.8}
-			},
-		}, {
-			POSITION: [length - 1, width, 0.8, x, y, angle, 0],
-			PROPERTIES: { COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift, SATURATION_SHIFT: 0.8}, BORDERLESS: true },
-		}, {
-			POSITION: [length - 2.5, width * 0.8, -1.2, x, y, angle, 0],
-			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5} },
-		},
-	];
-	if (MAX_CHILDREN > 2) {
-		output.splice(0, 0,
-			{
-				POSITION: [length - 2, width + 3, 1, x, y, angle, 0],
-				PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift} },
-			}
-		)
-	}
-	return output;
-}
-function addMinion({length = 18, gap = 3, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.factory], TYPE = "assailantMinionSnowdread", MAX_CHILDREN = 2) {
-	return [
-		{
-			POSITION: [gap, width - 1, 1, x + length, y, angle, 0],
-			PROPERTIES: { COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6} },
-		}, {
-			POSITION: [1.5, width, 1, x + length + gap, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE,
-				STAT_CALCULATOR: gunCalcNames.drone,
-				AUTOFIRE: true,
-				SYNCS_SKILLS: true,
-				MAX_CHILDREN,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6},
-			},
-		}, {
-			POSITION: [length, width, 1, x, y, angle, 0],
-			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5} },
-		}, {
-			POSITION: [length + gap - 1, width * 0.6, -1.4, x, y, angle, 0],
-			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15} },
-		}, {
-			POSITION: [length + gap - 2.5, width * 0.3, -1.2, x, y, angle, 0],
-			PROPERTIES: { COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.7} },
-		},
-	];
-}
-function addAutoDrone({length = 18, width = 8, aspect = 1.2, x = 8, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.drone], MAX_CHILDREN = 4) {
-	return [
-		{
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "turretedDroneSnowdread",
-				AUTOFIRE: true,
-				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
-				WAIT_TO_CYCLE: true,
-				MAX_CHILDREN,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65},
-			},
-		}, {
-			POSITION: [length - 3, width - 2, aspect * 0.95, x, y, angle, delay],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5}},
-		}, {
-			POSITION: [length - 1, width - 3, aspect, x, y, angle, delay],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.75}},
-		}, {
-			POSITION: [length - 2, width / 2, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5},}
-		},
-	];
-}
-function addHoncho({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.drone], MAX_CHILDREN = 4) {
-	let sideAngle = Math.atan(((aspect - 1) * width / 2) / (x * 0.8));
-	let xShift = -20 * Math.cos(sideAngle) + 11;
-	return [
-		{
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "honchoDroneSnowdread",
-				AUTOFIRE: true,
-				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
-				WAIT_TO_CYCLE: true,
-				MAX_CHILDREN,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6},
-			},
-		}, {
-			POSITION: [1.5, width * 1.1, 0.5, x + length - 2.5, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.7}, BORDERLESS: true}
-		}, {
-			POSITION: [1.5, width * 1.1, 1, x + length - 4.5, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5}}
-		}, {
-			POSITION: [length + 11, 4, 0.001, x + xShift, y + width * 0.25, angle + sideAngle * 180 / Math.PI, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5},}
-		}, {
-			POSITION: [length + 11, 4, 0.001, x + xShift, y - width * 0.25, angle - sideAngle * 180 / Math.PI, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5},}
-		},
-	];
-}
-function addSwarm({length = 18, width = 8, aspect = 0.6, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.swarm]) {
-	return [
-		{
-			POSITION: [length, width, aspect, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "swarm",
-				STAT_CALCULATOR: gunCalcNames.swarm,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.7}
-			},
-		}, {
-			POSITION: [length * 1.5, width * 0.8, aspect, x - length * 0.65, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "swarm",
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.7},
-				BORDERLESS: true
-			},
-		},
-	];
-}
-function addTrap({length = 18, length2 = 3, width = 8, aspect = 1.6, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.trap], isBox = false) {
-	return [
-		{
-			POSITION: [length + length2 * 0.5, width * 1.3, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10}}
-		}, {
-			POSITION: [length, width, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6}}
-		}, {
-			POSITION: [length2, width, aspect, x + length, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: isBox ? "unsetTrapSnowdread" : "trap",
-				STAT_CALCULATOR: gunCalcNames.trap,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6}
-			},
-		}, {
-			POSITION: [length + length2 / 3, width * 0.8, 0.7, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5,  SATURATION_SHIFT: 0.75}}
-		},
-	];
-}
-function addAutoTrap({length = 18, length2 = 3, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.trap], MAX_CHILDREN = 6, isBox = false) {
-	let output = [
-		{
-			POSITION: [length, width, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6}}
-		}, {
-			POSITION: [length - 3, width + 3, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5}}
-		}, {
-			POSITION: [length - 4, width + 1, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15}, BORDERLESS: true}
-		}, {
-			POSITION: [length2, width, aspect, x + length, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: isBox ? 'unsetPillboxWeakSnowdread' : 'autoTrapSnowdread',
-				STAT_CALCULATOR: gunCalcNames.trap,
-				INDEPENDENT: true,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6},
-				MAX_CHILDREN,
-				DESTROY_OLDEST_CHILD: true,
-			},
-		}, {
-			POSITION: [length + length2 / 2, width * 0.9, 0.6, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 7.5, SATURATION_SHIFT: 0.7}}
-		},
-	];
-	if (isBox) {
-		output.splice(1, 0, {
-			POSITION: [length - 1, width - 2, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 7.5, SATURATION_SHIFT: 0.65}, BORDERLESS: true}
-		});
-		output.push({
-			POSITION: [length + length2 / 2 - 1.5, width * 0.75, 0.6, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift, SATURATION_SHIFT: 0.75}, BORDERLESS: true}
-		});
-	}
-	return output;
-}
-function addAuraTrap({length = 18, length2 = 3, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.trap], MAX_CHILDREN = 6, isBox = false) {
-	return [
-		{
-			POSITION: [length, width, 1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6}}
-		}, {
-			POSITION: [length2 + 1, width - 1.5, -1.7, x + length - length2 - 3, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5}}
-		}, {
-			POSITION: [length, width * 0.6, -0.1, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.75}}
-		}, {
-			POSITION: [length2, width, aspect, x + length, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: isBox ? 'auraBlock' : 'auraTrap',
-				STAT_CALCULATOR: gunCalcNames.trap,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6},
-				MAX_CHILDREN,
-				DESTROY_OLDEST_CHILD: true,
-			},
-		}, {
-			POSITION: [length2 - 1, width - 2, aspect, x + length + 1, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: 'bullet',
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5}
-			},
-		},
-	];
-}
-function addDroneOnAuto({length = 6, width = 12, aspect = 1.2, x = 8, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.drone]) {
-	return [
-		{
-			POSITION: [length, width + 1, -1.2, x - 1, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 } },
-		}, {
-			POSITION: [length, width, 1.2, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: ['drone', {INDEPENDENT: true}],
-				AUTOFIRE: true,
-				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
-				WAIT_TO_CYCLE: true,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 },
-			},
-		}, {
-			POSITION: [length - 2, width * 2/3, 1, x - 1, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 }, DRAW_ABOVE: true },
-		},
-	];
-}
-function addThruster({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic], useThrusterCalculator = true) {
-	let STAT_CALCULATOR = useThrusterCalculator ? gunCalcNames.thruster : undefined;
-	return [
-		{ // Main barrel
-			POSITION: [length, width, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: ["bullet", {PERSISTS_AFTER_DEATH: true}],
-				STAT_CALCULATOR,
-				AUTOFIRE: true,
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15 }
-			},
-		}, {
-			POSITION: [length - 6, width * 0.8, 1.6, x + 4, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: ["bullet", {PERSISTS_AFTER_DEATH: true}],
-				STAT_CALCULATOR,
-				AUTOFIRE: true,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.65 }
-			},
-		},
-	];
-}
-
-// Deco bodies
-Class.eggBaseDeco = {
-	SHAPE: "M 0.71 0.71 A 1 0.98 0 0 1 -0.71 0.71 L -0.6 0.6 A 1 1.25 0 0 0 0.6 0.6 L 0.71 0.71" + 
-			"M -0.71 -0.71 A 1 0.98 180 0 1 0.71 -0.71 L 0.6 -0.6 A 1 1.25 180 0 0 -0.6 -0.6 L -0.71 -0.71" + 
-			"M 0.79 0.33 A 1 0.95 45 0 1 0.6 0.6 L 0.54 0.54 A 1.88 1 45 0 0 0.71 0.29 L 0.79 0.33" + 
-			"M -0.79 0.33 A 1 0.95 157.5 0 0 -0.6 0.6 L -0.54 0.54 A 1.88 1 157.5 0 1 -0.71 0.29 L -0.79 0.33" + 
-			"M 0.79 -0.33 A 1 0.95 -45 0 0 0.6 -0.6 L 0.54 -0.54 A 1.88 1 -45 0 1 0.71 -0.29 L 0.79 -0.33" + 
-			"M -0.79 -0.33 A 1 0.95 -157.5 0 1 -0.6 -0.6 L -0.54 -0.54 A 1.88 1 -157.5 0 0 -0.71 -0.29 L -0.79 -0.33",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 2; i++) {
-	Class.eggBaseDeco.GUNS.push(
-		{
-			POSITION: [8.25, 6.75, 0.6, 0, 0, 180*i+55, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.85 },
-				BORDERLESS: true,
-			}
-		}, {
-			POSITION: [8.25, 6.75, 0.6, 0, 0, 180*i+125, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.85 },
-				BORDERLESS: true,
-			}
-		}, {
-			POSITION: [4, 1.3, 0.001, 9, 0, 48 + 180 * i, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
-				DRAW_ABOVE: true,
-			},
-		}, {
-			POSITION: [3.5, 1.7, 0.001, 9, 0, 90 + 180 * i, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
-				DRAW_ABOVE: true,
-			},
-		}, {
-			POSITION: [4, 1.3, 0.001, 9, 0, 132 + 180 * i, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
-				DRAW_ABOVE: true,
-			},
-		}, {
-			POSITION: [1.5, 1.3, 0, 7.5, 0, 48 + 180 * i, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
-				DRAW_ABOVE: true,
-			},
-		}, {
-			POSITION: [1, 1.7, 0, 8, 0, 90 + 180 * i, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
-				DRAW_ABOVE: true,
-			},
-		}, {
-			POSITION: [1.5, 1.3, 0, 7.5, 0, 132 + 180 * i, 0],
-			PROPERTIES: {
-				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
-				DRAW_ABOVE: true,
-			},
-		}, 
-	)
-}
-Class.squareBaseDeco = {
-	SHAPE: "M -0.98 0.98 L -0.3 0.75 L -0.63 0.63 L -0.75 0.3 L -0.98 0.98" + 
-			"M 0.98 0.98 L 0.75 0.3 L 0.63 0.63 L 0.3 0.75 L 0.98 0.98" + 
-			"M 0.98 -0.98 L 0.3 -0.75 L 0.63 -0.63 L 0.75 -0.3 L 0.98 -0.98" + 
-			"M -0.98 -0.98 L -0.75 -0.3 L -0.63 -0.63 L -0.3 -0.75 L -0.98 -0.98",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.squareBaseDeco.GUNS.push(
-		{
-			POSITION: [4, 2, 0.001, 9.5, 2.6, 20 + 90 * i, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15 } },
-		}, {
-			POSITION: [4, 2, 0.001, 9.5, -2.6, 70 + 90 * i, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15 } },
-		}, {
-			POSITION: [5, 1.5, 0.001, -2, 9, -70 + 90 * i, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 17.5 } },
-		}, {
-			POSITION: [5, 1.5, 0.001, -2, -9, 70 + 90 * i, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 17.5 } },
-		},
-	)
-}
-Class.triangleBaseDeco = {
-	SHAPE: "M -1.546 -0.108 L -1.546 0.108 L -0.175 0.303 L 0.679 1.393 L 0.867 1.285 L 0.35 0 L 0.867 -1.285 L 0.679 -1.393 L -0.175 -0.303 L -1.546 -0.108",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 3; i++) {
-	Class.triangleBaseDeco.GUNS.push(
-		{
-			POSITION: [7, 3, 0.001, 10, 0, 120 * i + 60, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.7 } },
-		}, {
-			POSITION: [5, 2.5, 0.001, 6.5, -2, 120 * i + 90, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.85 } },
-		}, {
-			POSITION: [5, 2.5, 0.001, 6.5, 2, 120 * i + 30, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.85 } },
-		}, {
-			POSITION: [9, 5, 0.25, 0, 0, 120 * i + 60, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 12.5 }, BORDERLESS: true, DRAW_ABOVE: true },
-		},
-	)
-}
-Class.pentagonBaseDeco = {
-	SHAPE: "M -1.207 -0.324 L -0.724 -0.194 L -0.408 -0.629 L -0.681 -1.048 L -0.688 -0.5 Z" +
-		"M -1.207 0.324 L -0.724 0.194 L -0.408 0.629 L -0.681 1.048 L -0.688 0.5 Z" +
-		"M 0.787 -0.971 L 0.472 -0.583 L -0.039 -0.749 L -0.065 -1.248 L 0.263 -0.808 Z" +
-		"M 0.787 0.971 L 0.472 0.583 L -0.039 0.749 L -0.065 1.248 L 0.263 0.808 Z" +
-		"M 1.167 0.448 L 0.7 0.269 L 0.7 -0.269 L 1.167 -0.448 L 0.85 0 Z",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.pentagonBaseDeco.GUNS.push(
-		{
-			POSITION: [4, 6, 0.001, 8.5, 0, 72 * i, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6 } },
-		}, {
-			POSITION: [7, 2.5, 0.001, 6, -6.2, 72 * i + 60, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.8 } },
-		}, {
-			POSITION: [7, 2.5, 0.001, 6, 6.2, 72 * i - 60, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.8 } },
-		},
-	)
-}
-Class.hexagonBaseDeco = {
-	SHAPE: "M -1.1 0 L -0.956 0.292 L -0.669 0.205 L -0.669 -0.205 L -0.956 -0.292 Z" +
-		"M -0.55 0.952 L -0.225 0.974 L -0.157 0.682 L -0.512 0.477 L -0.731 0.682 Z" +
-		"M -0.55 -0.952 L -0.225 -0.974 L -0.157 -0.682 L -0.512 -0.477 L -0.731 -0.682 Z" +
-		"M 0.55 0.952 L 0.225 0.974 L 0.157 0.682 L 0.512 0.477 L 0.731 0.682 Z" +
-		"M 0.55 -0.952 L 0.225 -0.974 L 0.157 -0.682 L 0.512 -0.477 L 0.731 -0.682 Z" +
-		"M 1.1 0 L 0.956 0.292 L 0.669 0.205 L 0.669 -0.205 L 0.956 -0.292 Z",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 2.5 },
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 6; i++) {
-	Class.hexagonBaseDeco.GUNS.push(
-		{
-			POSITION: [1.75, 3, -0.75, 7.5, 0, 60 * i, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 2.5, SATURATION_SHIFT: 0.9 }, DRAW_ABOVE: true },
-		}, {
-			POSITION: [1, 9, 0, 8.5, 0, 60 * i + 30, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 10, SATURATION_SHIFT: 1.15 } },
-		},
-	)
-}
-
-// Auras
-const auraSmallShape = "M 1 0 L 0.715 0.519 L 0.309 0.951 L -0.273 0.84 L -0.809 0.588 L -0.883 0 L -0.809 -0.588 L -0.273 -0.84 L 0.309 -0.951 L 0.715 -0.519 L 1 0" + 
-					"L 0.309 0.951 L -0.809 0.588 L -0.809 -0.588 L 0.309 -0.951 L 1 0" + 
-					"L 0 0 L 0.309 0.951 M 0 0 L -0.809 0.588 M 0 0 L -0.809 -0.588 M 0 0 L 0.309 -0.951";
-const auraMediumShape = "M 1 0 L 0.809 0.588 L 1 0 L 0.809 0.588 L 0.309 0.951 L -0.309 0.951 L -0.809 0.588 L -1 0 L -0.809 -0.588 L -0.309 -0.951 L 0.309 -0.951 L 0.809 -0.588 L 1 0" + 
-					"L 0.856 0.278 L 0.809 0.588 L 0.551 0.759 L 0.309 0.951 L 0 0.9 L -0.309 0.951 L -0.551 0.759 L -0.809 0.588 L -0.856 0.278 L -1 0 L -0.892 -0.29 L -0.809 -0.588 L -0.529 -0.728 L -0.309 -0.951 L 0 -0.938 L 0.309 -0.951 L 0.529 -0.728 L 0.809 -0.588 L 0.892 -0.29 L 1 0" + 
-					"M 0.856 0.278 L 0.551 0.759 L 0 0.9 L -0.551 0.759 L -0.856 0.278 L -0.892 -0.29 L -0.529 -0.728 L 0 -0.938 L 0.529 -0.728 L 0.892 -0.29 L 0.856 0.278" + 
-					"M 0.892 -0.29 L 0.546 -0.178 L 0.856 0.278 L 0.338 0.465 L 0.551 0.759 M 0.338 0.465 L 0 0.9 L -0.338 0.465 L -0.551 0.759 M -0.338 0.465 L -0.856 0.278 L -0.546 -0.178 L -0.892 -0.29 M -0.546 -0.178 L -0.529 -0.728 L 0 -0.575 L 0 -0.938 M 0 -0.575 L 0.529 -0.728 L 0.546 -0.178" + 
-					"L 0.338 0.465 L 0 0 L 0.546 -0.178 L 0 -0.575 L 0 0 L -0.546 -0.178 L -0.338 0.465 L 0 0 M 0 -0.575 L -0.546 -0.178 M -0.338 0.465 L 0.338 0.465";
-const auraLargeShape = "M 1 0 L 0.988 0.156 L 0.951 0.309 L 0.891 0.454 L 0.809 0.588 L 0.707 0.707 L 0.588 0.809 L 0.454 0.891 L 0.309 0.951 L 0.156 0.988 L 0 1 L -0.156 0.988 L -0.309 0.951 L -0.454 0.891 L -0.588 0.809 L -0.707 0.707 L -0.809 0.588 L -0.891 0.454 L -0.951 0.309 L -0.988 0.156 L -1 0 L -0.988 -0.156 L -0.951 -0.309 L -0.891 -0.454 L -0.809 -0.588 L -0.707 -0.707 L -0.588 -0.809 L -0.454 -0.891 L -0.309 -0.951 L -0.156 -0.988 L 0 -1 L 0.156 -0.988 L 0.309 -0.951 L 0.454 -0.891 L 0.588 -0.809 L 0.707 -0.707 L 0.809 -0.588 L 0.891 -0.454 L 0.951 -0.309 L 0.988 -0.156 L 1 0" + 
-					"M 0.988 -0.156 L 0.988 0.156 L 0.891 0.454 L 0.707 0.707 L 0.454 0.891 L 0.156 0.988 L -0.156 0.988 L -0.454 0.891 L -0.707 0.707 L -0.891 0.454 L -0.988 0.156 L -0.988 -0.156 L -0.891 -0.454 L -0.707 -0.707 L -0.454 -0.891 L -0.156 -0.988 L 0.156 -0.988 L 0.454 -0.891 L 0.707 -0.707 L 0.891 -0.454 L 0.988 -0.156 L 0.949 0" + 
-					"L 0.988 0.156 L 0.891 0.256 L 0.891 0.454 L 0.739 0.537 L 0.707 0.707 L 0.519 0.769 L 0.454 0.891 L 0.293 0.902 L 0.156 0.988 L 0.032 0.927 L -0.156 0.988 L -0.282 0.869 L -0.454 0.891 L -0.571 0.731 L -0.707 0.707 L -0.768 0.558 L -0.891 0.454 L -0.871 0.317 L -0.988 0.156 L -0.914 0 L -0.988 -0.156 L -0.871 -0.317 L -0.891 -0.454 L -0.768 -0.558 L -0.707 -0.707 L -0.571 -0.731 L -0.454 -0.891 L -0.282 -0.869 L -0.156 -0.988 L 0.032 -0.927 L 0.156 -0.988 L 0.293 -0.902 L 0.454 -0.891 L 0.519 -0.769 L 0.707 -0.707 L 0.739 -0.537 L 0.891 -0.454 L 0.891 -0.256 L 0.988 -0.156 L 0.949 0" + 
-					"L 0.891 0.256 L 0.739 0.537 L 0.519 0.769 L 0.293 0.902 L 0.032 0.927 L -0.282 0.869 L -0.571 0.731 L -0.768 0.558 L -0.871 0.317 L -0.914 0 L -0.871 -0.317 L -0.768 -0.558 L -0.571 -0.731 L -0.282 -0.869 L 0.032 -0.927 L 0.293 -0.902 L 0.519 -0.769 L 0.739 -0.537 L 0.891 -0.256 L 0.949 0" + 
-					"M 0.834 0 L 0.891 0.256 L 0.704 0.291 L 0.739 0.537 L 0.495 0.579 L 0.519 0.769 L 0.258 0.793 L 0.032 0.927 L -0.06 0.759 L -0.282 0.869 L -0.398 0.649 L -0.571 0.731 L -0.674 0.49 L -0.871 0.317 L -0.741 0.178 L -0.914 0 L -0.741 -0.178 L -0.871 -0.317 L -0.674 -0.49 L -0.571 -0.731 L -0.398 -0.649 L -0.282 -0.869 L -0.06 -0.759 L 0.032 -0.927 L 0.258 -0.793 L 0.519 -0.769 L 0.495 -0.579 L 0.739 -0.537 L 0.704 -0.291 L 0.891 -0.256 L 0.834 0" + 
-					"L 0.704 0.291 L 0.495 0.579 L 0.258 0.793 L -0.06 0.759 L -0.398 0.649 L -0.674 0.49 L -0.741 0.178 L -0.741 -0.178 L -0.674 -0.49 L -0.398 -0.649 L -0.06 -0.759 L 0.258 -0.793 L 0.495 -0.579 L 0.704 -0.291 L 0.834 0" + 
-					"M 0.592 0 L 0.704 0.291 L 0.413 0.3 L 0.495 0.579 L 0.183 0.563 L -0.06 0.759 L -0.158 0.485 L -0.398 0.649 L -0.479 0.348 L -0.741 0.178 L -0.51 0 L -0.741 -0.178 L -0.479 -0.348 L -0.398 -0.649 L -0.158 -0.485 L -0.06 -0.759 L 0.183 -0.563 L 0.495 -0.579 L 0.413 -0.3 L 0.704 -0.291 L 0.592 0" + 
-					"L 0.413 0.3 L 0.183 0.563 L -0.158 0.485 L -0.479 0.348 L -0.51 0 L -0.479 -0.348 L -0.158 -0.485 L 0.183 -0.563 L 0.413 -0.3 L 0.592 0" + 
-					"M 0.292 0 L 0.413 0.3 L 0.09 0.277 L -0.158 0.485 L -0.236 0.171 L -0.51 0 L -0.236 -0.171 L -0.158 -0.485 L 0.09 -0.277 L 0.413 -0.3 L 0.292 0 L 0.09 0.277" + 
-					"L -0.236 0.171 L -0.236 -0.171 L 0.09 -0.277 L 0.292 0 M 0 0 L 0.949 0" + 
-					"M 0 0 L 0.293 0.902 M 0 0 L -0.768 0.558 M 0 0 L -0.768 -0.558 M 0 0 L 0.293 -0.902";
-const auraConfig = {
-	FACING_TYPE: ["spin", {speed: -0.04}],
-	LAYER: 30,
-	BORDER_FIRST: true,
-}
-Class.auraSmall = {
-	PARENT: ["aura"],
-	...auraConfig,
-	SHAPE: auraSmallShape,
-}
-Class.healAuraSmall = {
-	PARENT: ["healAura"],
-	...auraConfig,
-	SHAPE: auraSmallShape,
-}
-Class.auraMedium = {
-	PARENT: ["aura"],
-	...auraConfig,
-	SHAPE: auraMediumShape,
-}
-Class.healAuraMedium = {
-	PARENT: ["healAura"],
-	...auraConfig,
-	SHAPE: auraMediumShape,
-}
-Class.auraLarge = {
-	PARENT: ["auraBase"],
-	...auraConfig,
-	SHAPE: auraLargeShape,
-}
-Class.healAuraLarge = {
-	PARENT: ["auraLarge"],
-	...auraConfig,
-	SHAPE: auraLargeShape,
-}
-Class.auraSymbolSnowdreads = {
-	PARENT: ["genericTank"],
-	CONTROLLERS: [["spin", { speed: -0.04 }]],
-	INDEPENDENT: true,
-	COLOR: 0,
-	BORDER_FIRST: true,
-	SHAPE: "M 1 0 L 0.797 0.46 L 0.5 0.866 L 0 0.92 L -0.5 0.866 L -0.797 0.46 L -1 0 L -0.797 -0.46 L -0.5 -0.866 L 0 -0.92 L 0.5 -0.866 L 0.797 -0.46 L 1 0 Z" +
-	"M 0.52 0.3 L 0.52 -0.3 L 0.797 -0.46 M 0.52 -0.3 L 0 -0.6 L 0 -0.92 M 0 -0.6 L -0.52 -0.3 L -0.797 -0.46 M -0.52 -0.3 L -0.52 0.3 L -0.797 0.46 M -0.52 0.3 L 0 0.6 L 0 0.92 M 0 0.6 L 0.52 0.3 L 0.797 0.46"
-}
-Class.healAuraSymbolSnowdreads = {
-	PARENT: ["genericTank"],
-	CONTROLLERS: [["spin", { speed: -0.04 }]],
-	INDEPENDENT: true,
-	COLOR: "red",
-	BORDER_FIRST: true,
-	SHAPE: "M 1 0 L 0.5 0.866 L -0.5 0.866 L -1 0 L -0.5 -0.866 L 0.5 -0.866 L 1 0 Z M 0.7 0 L 1 0 L 0.5 0.866 L 0.7 0 L -0.35 0.606 L 0.5 0.866 L -0.5 0.866 L -0.35 0.606 M -0.5 0.866 L -1 0 L -0.35 0.606 L -0.35 -0.606 L -1 0 L -0.5 -0.866 L -0.35 -0.606 L -0.5 -0.866 L 0.5 -0.866 L -0.35 -0.606 L 0.7 0 L 0.5 -0.866 L 1 0",
-};
-function addAura(damageFactor = 1, sizeFactor = 1, opacity = 0.3, auraColor, auraSize = "Medium") {
-	let isHeal = damageFactor < 0;
-	let auraType = isHeal ? "healAura" + auraSize : "aura" + auraSize;
-	let symbolType = isHeal ? "healAuraSymbolSnowdreads" : "auraSymbolSnowdreads";
-	auraColor = auraColor ?? (isHeal ? 12 : 0);
-	return {
-		PARENT: ["genericTank"],
-		INDEPENDENT: true,
-		LABEL: "",
-		COLOR: 17,
-		GUNS: [
-			{
-				POSITION: [0, 20, 1, 0, 0, 0, 0,],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([g.aura, { size: sizeFactor, damage: damageFactor }]),
-					TYPE: [auraType, {COLOR: auraColor, ALPHA: opacity}],
-					MAX_CHILDREN: 1,
-					AUTOFIRE: true,
-					SYNCS_SKILLS: true,
-				}, 
-			}, 
-		],
-		TURRETS: [
-			{
-				POSITION: [20 - isHeal, 0, 0, 0, 360, 1],
-				TYPE: [symbolType, {COLOR: auraColor, INDEPENDENT: true}],
-			},
-		]
-	};
-}
-
-function addTrinoughtAuraRing(heal = false) {
-	let output = [],
-		TYPE = heal ? "trinoughtSmallHealAura" : "trinoughtSmallAura";
-	for (let i = 0; i < 3; i++) {
-		let theta = (120 * i + 60) * Math.PI / 180;
-		output.push(
-			{
-				POSITION: [3.5, 10.5 * Math.cos(theta), 10.5 * Math.sin(theta), 0, 360, 1],
-				TYPE,
-			},
-		);
-	}
-	return output;
-}
-function addTrinoughtTurretRing() {
-	let output = [];
-	for (let i = 0; i < 3; i++) {
-		output.push(
-			{
-				POSITION: [3.5, 10.5, 0, 120*i+60, 180, 1],
-				TYPE: "spamAutoTurret",
-			},
-		);
-	}
-	return output;
-}
-function addPentanoughtAuraRing(heal = false) {
-	let output = [],
-		TYPE = heal ? "pentanoughtSmallHealAura" : "pentanoughtSmallAura";
-	for (let i = 0; i < 5; i++) {
-		let theta = (72 * i + 36) * Math.PI / 180;
-		output.push(
-			{
-				POSITION: [4, 8.5 * Math.cos(theta), 8.5 * Math.sin(theta), 0, 360, 1],
-				TYPE,
-			},
-		)
-	}
-	return output;
-}
-function addPentanoughtTurretRing() {
-	let output = [];
-	for (let i = 0; i < 5; i++) {
-		output.push(
-			{
-				POSITION: [3.25, 9, 0, 72*i+36, 180, 1],
-				TYPE: "spamAutoTurret",
-			},
-		)
-	}
-	return output;
-}
-
-// Misc
-Class.genericDreadnoughtSnowdread = {
-	PARENT: ["genericTank"],
-	SKILL_CAP: Array(10).fill(smshskl),
-	REROOT_UPGRADE_TREE: ["dreadWeaponSnowdread", "dreadBodySnowdread"],
-}
-Class.genericEggnoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
-	BODY: eggnoughtBody,
-	SHAPE: 0,
-	COLOR: 'egg',
-	SIZE: 16,
-	DANGER: 8,
-}
-Class.genericSquarenoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
-	BODY: squarenoughtBody,
-	SHAPE: 4,
-	COLOR: 'square',
-	SIZE: 20,
-	DANGER: 9,
-}
-Class.genericTrinoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
-	BODY: trinoughtBody,
-	SHAPE: 3.5,
-	COLOR: 'triangle',
-	SIZE: 23,
-	DANGER: 10,
-}
-Class.genericPentanoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
-	BODY: pentanoughtBody,
-	SHAPE: 5.5,
-	COLOR: 'pentagon',
-	SIZE: 25,
-	DANGER: 11,
-}
-Class.genericHexnoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
-	BODY: hexnoughtBody,
-	SHAPE: 6,
-	COLOR: 'hexagon',
-	SIZE: 26,
-	DANGER: 12,
-}
-
-Class.spamAutoTurret = {
-	PARENT: ["autoTankGun"],
-	INDEPENDENT: true,
-	COLOR: 17,
-	GUNS: [
-		{
-			POSITION: [17, 14, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5}
-			},
-		}, {
-			POSITION: [22, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.autoTurret, {recoil: 0.2}]),
-				TYPE: "bullet",
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6}
-			},
-		}, {
-			POSITION: [14, 12, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}
-			},
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [13, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: -1, BORDERLESS: true}],
-		},
-	],
-}
-Class.ring085 = {
-	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5},
-	SHAPE: "M -0.85 0 A 0.85 0.85 0 0 0 0.85 0 A 0.85 0.85 0 0 0 -0.85 0 M -1 0 A 1 1 0 0 1 1 0 A 1 1 0 0 1 -1 0 Z"
-}
-Class.heavyBulletSnowdread = {
-	PARENT: "bullet",
-	PROPS: [{
-		POSITION: [20, 0, 0, 0, 1],
-		TYPE: "ring085"
-	}]
-}
-Class.missileProjectileSnowdread = {
-	PARENT: "bullet",
-	LABEL: "Missile",
-	INDEPENDENT: true,
-	BODY: { RANGE: 120 },
-	GUNS: [
-		...addThruster({length: 16, width: 6, y: -2, angle: 130}, -2.5, [g.basic, g.skimmer, g.lowPower, {reload: 0.5, recoil: 1.35, speed: 1.7, maxSpeed: 1.7}]),
-		...addThruster({length: 16, width: 6, y: 2, angle: -130}, -2.5, [g.basic, g.skimmer, g.lowPower, {reload: 0.5, recoil: 1.35, speed: 1.7, maxSpeed: 1.7}]),
-	],
-	TURRETS: [
-		{
-			POSITION: [10, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
-		}
-	],
-}
-Class.superMissileSnowdread = {
-	PARENT: ["bullet"],
-	LABEL: "Missile",
-	INDEPENDENT: true,
-	BODY: { RANGE: 120 },
-	GUNS: [
-		...addThruster({length: 14, width: 7, y: -2, angle: 130}, -2.5, [g.basic, g.skimmer, g.lowPower, {speed: 1.7, maxSpeed: 1.7, recoil: 2.7, damage: 0.6}]),
-		...addThruster({length: 14, width: 7, y: 2, angle: -130}, -2.5, [g.basic, g.skimmer, g.lowPower, {speed: 1.7, maxSpeed: 1.7, recoil: 2.7, damage: 0.6}]),
-		...addThruster({length: 15.5, width: 7, delay: 0.2}, -2.5, [g.basic, g.skimmer, {speed: 2.2, maxSpeed: 2.2, damage: 0.9}], false),
-	],
-	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [9, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.6}, BORDERLESS: true}],
-		},
-	],
-};
-Class.betadrone = {
-	PARENT: ["drone"],
-	TURRETS: [
-		{
-			POSITION: [10, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: -1}],
-		},
-	]
-}
-Class.droneAutoTurretSnowdread = {
-	PARENT: 'autoTurret',
-	CONTROLLERS: ['nearestDifferentMaster'],
-	INDEPENDENT: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.8},
-	GUNS: [
-		{
-			POSITION: [22, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, g.overdrive]),
-				TYPE: "bullet",
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.8},
-			},
-		},
-	]
-}
-Class.turretedDroneSnowdread = {
-	PARENT: 'drone',
-	TURRETS: [
-		{
-			POSITION: [13, 0, 0, 0, 0, 1],
-			TYPE: ['triangle', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [10, 0, 0, 180, 360, 1],
-			TYPE: 'droneAutoTurretSnowdread',
-		},
-	]
-}
-Class.honchoDroneSnowdread = {
-	PARENT: 'drone',
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 180, 0, 1],
-			TYPE: ["aggressorMinionTopSnowdread"],
-		},
-	]
-}
-Class.trapAutoTurret = {
-	PARENT: "spamAutoTurret",
-	GUNS: [
-		{
-			POSITION: [22, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.turret, g.overdrive, {recoil: 0}]),
-				TYPE: "bullet",
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6}
-			},
-		},
-	],
-}
-Class.autoTrapSnowdread = {
-	PARENT: 'trap',
-	TURRETS: [
-		{
-			POSITION: [11, 0, 0, 0, 360, 1],
-			TYPE: "trapAutoTurret",
-		},
-	],
-}
-Class.pillboxTurretWeakSnowdread = {
-	PARENT: "spamAutoTurret",
-	LABEL: "",
-	BODY: {
-		FOV: 2,
-	},
-	HAS_NO_RECOIL: true,
-	GUNS: [
-		{
-			POSITION: [17, 15, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.minionGun, g.turret, g.power, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5}
-			},
-		}, {
-			POSITION: [22, 11, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.minionGun, g.turret, g.power, g.autoTurret, {density: 0.1},]),
-				TYPE: "bullet",
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6}
-			},
-		}, {
-			POSITION: [14, 13, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.minionGun, g.turret, g.power, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}
-			},
-		},
-	],
-}
-Class.unsetTrapTopSnowdread = {
-	SHAPE: "M 1.1 1.1 L 1 0 L 1.1 -1.1 L 0 -1 L -1.1 -1.1 L -1 0 L -1.1 1.1 L 0 1 L 1.1 1.1 M 0.9 0.9 L 0 0.825 L -0.9 0.9 L -0.825 0 L -0.9 -0.9 L 0 -0.825 L 0.9 -0.9 L 0.825 0 L 0.9 0.9 Z",
-	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5},
-}
-Class.unsetTrapSnowdread = {
-	PARENT: 'unsetTrap',
-	PROPS: [{
-		POSITION: [20, 0, 0, 0, 1],
-		TYPE: 'unsetTrapTopSnowdread'
-	}]
-}
-Class.pillboxTurretSnowdread = {
-	PARENT: "spamAutoTurret",
-	LABEL: "",
-	BODY: {
-		FOV: 2,
-	},
-	HAS_NO_RECOIL: true,
-	GUNS: [
-		{
-			POSITION: [17, 15, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.minionGun, g.turret, g.power, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5}
-			},
-		}, {
-			POSITION: [22, 11, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.minionGun, g.turret, g.power, g.autoTurret, {density: 0.1}]),
-				TYPE: "bullet",
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6}
-			},
-		}, {
-			POSITION: [14, 13, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.minionGun, g.turret, g.power, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}
-			},
-		},
-	],
-}
-Class.unsetPillboxTopSnowdread = {
-	SHAPE: "M -1.3 -0.15 L -1.3 0.15 L -0.3 0.3 L -0.15 1.3 L 0.15 1.3 L 0.3 0.3 L 1.3 0.15 L 1.3 -0.15 L 0.3 -0.3 L 0.15 -1.3 L -0.15 -1.3 L -0.3 -0.3 Z",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
-}
-Class.unsetPillboxWeakSnowdread = {
-	PARENT: 'unsetPillbox',
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 45, 360, 1],
-			TYPE: "unsetPillboxTopSnowdread",
-		}, {
-			POSITION: [11, 0, 0, 0, 360, 1],
-			TYPE: "pillboxTurretWeakSnowdread",
-		},
-	]
-}
-Class.unsetPillboxSnowdread = {
-	PARENT: 'unsetPillbox',
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 45, 360, 1],
-			TYPE: "unsetPillboxTopSnowdread",
-		}, {
-			POSITION: [11, 0, 0, 0, 360, 1],
-			TYPE: "pillboxTurretSnowdread",
-		},
-	]
+// Navigate to [snowDreadsConstants.js] and the "enableSnowDreads" variable to enable/disable this addon.
+if (!enableSnowDreads) {
+	return console.log('--- Snowdreads addon [snowDreads.js] is disabled. ---');
 }
 
 // T0
@@ -1676,76 +119,6 @@ Class.centaur2Snowdread = {
 }
 
 // T1 Bodies
-Class.byteTurretSnowdread = {
-	PARENT: ["genericTank"],
-	CONTROLLERS: ["nearestDifferentMaster"],
-	INDEPENDENT: true,
-	COLOR: {
-		BASE: 6,
-		BRIGHTNESS_SHIFT: -20,
-		SATURATION_SHIFT: 0.5,
-	},
-	GUNS: [
-		{
-			POSITION: [18, 12, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-			},
-		}, { // Main gun
-			POSITION: [22, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -20, SATURATION_SHIFT: 0.5 },
-			},
-		}, {
-			POSITION: [18.5, 6.5, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.5 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [14.5, 2, 1, 0, 5, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		}, {
-			POSITION: [14.5, 2, 1, 0, -5, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		}, {
-			POSITION: [10, 6, 0.5, 0, 0, 123, 0],
-			PROPERTIES: { 
-				COLOR: 17,
-				DRAW_ABOVE: true,
-			}
-		}, {
-			POSITION: [10, 6, 0.5, 0, 0, -123, 0],
-			PROPERTIES: { 
-				COLOR: 17,
-				DRAW_ABOVE: true,
-			}
-		}
-	],
-	TURRETS: [
-		{
-			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -20, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [8, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-}
 Class.byteSnowdread = {
 	PARENT: ["genericEggnoughtSnowdread"],
 	LABEL: "Byte",
@@ -1762,31 +135,6 @@ Class.byteSnowdread = {
 			TYPE: 'byteTurretSnowdread',
 		},
 	],
-}
-Class.showerTurretSnowdread = {
-	PARENT: "genericTank",
-	LABEL: "",
-	BODY: { FOV: 1.5 },
-	CONTROLLERS: [[ 'spin', {speed: 0.03}]],
-	COLOR: {
-		BASE: 6,
-		BRIGHTNESS_SHIFT: -20,
-		SATURATION_SHIFT: 0.5,
-	},
-	INDEPENDENT: true,
-	MAX_CHILDREN: 4,
-	GUNS: [
-		...addDroneOnAuto({length: 6, width: 12, x: 8}, 0, [g.drone, {size: 1.3}])
-	],
-	TURRETS: [
-		{
-			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -20, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [8, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
 }
 Class.showerSnowdread = { // Drones
 	PARENT: ["genericEggnoughtSnowdread"],
@@ -1809,7 +157,6 @@ Class.showerSnowdread = { // Drones
 		},
 	],
 }
-Class.atmosphereAuraSnowdread = addAura(1, 1, 0.15);
 Class.atmosphereSnowdread = {
 	PARENT: ["genericEggnoughtSnowdread"],
 	LABEL: "Atmosphere",
@@ -1853,30 +200,6 @@ Class.juggernautSnowdread = {
 		},
 	],
 }
-Class.stomperTurretSnowdread = {
-	PARENT: 'genericTank',
-	MIRROR_MASTER_ANGLE: true,
-	LABEL: "",
-	COLOR: -1,
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [10, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -15}}]
-		}
-	]
-}
-for(let i = 0; i < 2; i++) {
-	Class.stomperTurretSnowdread.GUNS.push(
-		{
-			POSITION: [17, 17, -0.2, 0, 0, 180*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [15, 12.5, -0.2, 0, 0, 180*i, 0],
-			PROPERTIES: { COLOR: { BASE: 9, BRIGHTNESS_SHIFT: 7.5 }, BORDERLESS: true },
-		},
-	)
-}
 Class.stomperSnowdread = { // Size increase
 	PARENT: ["genericEggnoughtSnowdread"],
 	LABEL: "Stomper",
@@ -1895,31 +218,6 @@ Class.stomperSnowdread = { // Size increase
 			TYPE: 'stomperTurretSnowdread',
 		},
 	],
-}
-Class.dropperTurretSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [["spin", {speed: -0.035}]],
-	INDEPENDENT: true,
-	LABEL: "",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-	GUNS: [
-		{ 
-			POSITION: [13, 25, 1, -6.5, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -20 } },
-		}, { 
-			POSITION: [8, 32, 1, -4, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 } },
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -20, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [6.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
 }
 Class.dropperSnowdread = { // Minelayer
 	PARENT: ["genericEggnoughtSnowdread"],
@@ -1948,22 +246,6 @@ Class.dropperSnowdread = { // Minelayer
 		}
 	],
 }
-Class.spotterRadarSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
-	INDEPENDENT: true,
-	SHAPE: [[0.225, 1], [0.225, -1], [-0.225, -1], [-0.225, 1]],
-	COLOR: 17,
-	GUNS: [
-		{
-			POSITION: [4.5, 26, 1, -2.25, 0, 0, 0],
-			PROPERTIES: {COLOR: -1}
-		}, {
-			POSITION: [7, 17, 1, -3.5, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -20}}
-		},
-	]
-};
 Class.spotterSnowdread = { // FOV
 	PARENT: ["genericEggnoughtSnowdread"],
 	LABEL: "Spotter",
@@ -2069,57 +351,6 @@ for (let i = 0; i < 4; i++) {
 		...addNormal({length: 9, width: 8, aspect: 1.4, x: 6, angle: 90*i}, 7.5, [g.basic, g.machineGun, {size: 0.8, health: 1.3}]),
 	)
 }
-Class.melderAutoSnowdread = {
-	PARENT: 'autoTankGun',
-	GUNS: [
-		{
-			POSITION: [18, 12, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, {reload: 1.1}, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-			},
-		}, { // Main gun
-			POSITION: [22, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, {reload: 1.1}]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.5 },
-			},
-		}, {
-			POSITION: [18.5, 6.5, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, {reload: 1.1}, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.5 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [14.5, 2, 1, 0, 5, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, {reload: 1.1}, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		}, {
-			POSITION: [14.5, 2, 1, 0, -5, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, {reload: 1.1}, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [8, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-}
 Class.melderSnowdread = { // all auto
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Melder",
@@ -2133,7 +364,7 @@ for(let i = 0; i < 4; i++) {
 			TYPE: 'melderAutoSnowdread',
 		},
 	)
-	}
+}
 Class.crackerSnowdread = { // ultra bullet spam
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Cracker",
@@ -2147,33 +378,6 @@ for(let i = 0; i < 4; i++) {
 		...addSpam({length: 15, width: 8, angle: 90*i, delay: 2/3}, -10, [g.basic, g.minigun, {reload: 0.85}]),
 	)
 }
-Class.grabberTurretSnowdread = {
-	PARENT: ["spamAutoTurret"],
-	GUNS: [
-		{
-			POSITION: [17, 14, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5}
-			},
-		}, {
-			POSITION: [22, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.flankGuard, g.autoTurret, {recoil: 0.2}]),
-				TYPE: "bullet",
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6}
-			},
-		}, {
-			POSITION: [14, 12, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.flankGuard, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}
-			},
-		},
-	],
-};
 Class.grabberSnowdread = { // spread
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Grabber",
@@ -2226,22 +430,6 @@ for(let i = 0; i < 4; i++) {
 		], [g.basic, g.machineGun, g.shotgun, {health: 1.5, damage: 1.5}]),
 	)
 }
-Class.swirlMissileSnowdread = {
-	PARENT: 'spinmissile',
-	GUNS: [
-		...addThruster({length: 14, width: 8, angle: 0}, -2.5, [g.basic, g.skimmer, {speed: 1.3, maxSpeed: 1.3}], false),
-		...addThruster({length: 14, width: 8, angle: 180}, -2.5, [g.basic, g.skimmer, {speed: 1.3, maxSpeed: 1.3}], false),
-	],
-	PROPS: [
-		{
-			POSITION: [14, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [6, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 10, SATURATION_SHIFT: 0.7}}],
-		},
-	]
-}
 Class.swirlSnowdread = { // twister
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Swirl",
@@ -2281,27 +469,6 @@ Class.assailantMinionTopSnowdread = {
 	SHAPE: "M 0.5 0 L 1 1 L 0 0.5 L -1 1 L -0.5 0 L -1 -1 L 0 -0.5 L 1 -1 L 0.5 0",
 	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.75},
 	MIRROR_MASTER_ANGLE: true,
-}
-Class.assailantMinionSnowdread = {
-	PARENT: ["minion"],
-	BODY: { SPEED: 0.5 },
-	SHAPE: 4,
-	COLOR: 13,
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["square", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}, MIRROR_MASTER_ANGLE: true}]
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "assailantMinionTopSnowdread"
-		}
-	]
-}
-for (let i = 0; i < 4; i++) {
-	Class.assailantMinionSnowdread.GUNS.push(
-		...addGunner({length: 15, width: 7.5, angle: 90*i}, -5, [g.basic, g.assassin, g.minionGun])
-	)
 }
 Class.assailantSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
@@ -2382,8 +549,6 @@ for(let i = 0; i < 4; i++) {
 		...addAutoTrap({length: 15, width: 6, aspect: 1.7, angle: 90*i}, 0, [g.trap, {health: 1.2, reload: 1.15, speed: 0.8}], 7)
 	)
 }
-Class.auraTrapAura = addAura(1/3, 2.5, 0.15, 0, "Small");
-Class.auraTrap = makeAuto(Class.trap, "", {type: 'auraTrapAura'});
 Class.shadeSnowdread = { // aura-traps
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Shade",
@@ -2430,72 +595,9 @@ for (let i = 0; i < 4; i++) {
 	Class.automationSnowdread.TURRETS.push(
 		{
 			POSITION: [4, 9, 0, 90*i+45, 200, 1],
-			TYPE: "spamAutoTurret",
+			TYPE: "spamAutoTurretSnowdread",
 		},
 	)
-}
-Class.kilobyteTurretSnowdread = {
-	PARENT: ["genericTank"],
-	CONTROLLERS: ["nearestDifferentMaster"],
-	INDEPENDENT: true,
-	COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.65 },
-	GUNS: [
-		{
-			POSITION: [21, 12, -1.4, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-			},
-		}, { // Main gun
-			POSITION: [26, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, {health: 1.2, speed: 0.8}]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.65 },
-			},
-		}, {
-			POSITION: [21.5, 6.5, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.75 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [16.5, 2, -1.35, 0, 5.1, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		}, {
-			POSITION: [16.5, 2, -1.35, 0, -5.1, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		}, {
-			POSITION: [10, 8, 0.5, 0, 0, 73, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 8, 0.5, 0, 0, -73, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 8, 0.5, 0, 0, 180, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}
-	],
-	TURRETS: [
-		{
-			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [8, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
 }
 Class.kilobyteSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
@@ -2514,47 +616,6 @@ Class.kilobyteSnowdread = {
 		},
 	],
 }
-Class.lighterTurretSnowdread = {
-	PARENT: 'genericTank',
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -12.5},
-	BODY: {FOV: 5},
-	CONTROLLERS: ['nearestDifferentMaster'],
-	INDEPENDENT: true,
-	GUNS: [
-		{
-			POSITION: [15, 11, 1, 0, 0, 180, 0],
-			PROPERTIES: {COLOR: 13},
-		}, {
-			POSITION: [16.5, 7, 1, 0, 0, 180, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}},
-		}, {
-			POSITION: [14, 2, 1, 0, 7, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 12.5}},
-		}, {
-			POSITION: [14, 2, 1, 0, -7, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 12.5}},
-		}, {
-			POSITION: [22, 7, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.autoTurret, g.flame]),
-				TYPE: 'growBullet',
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -17.5},
-			}
-		}, {
-			POSITION: [13, 8, -1.3, 0, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}},
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [13.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 } }],
-		}, {
-			POSITION: [9, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-};
 Class.lighterSnowdread = { // Flamethrower
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Lighter",
@@ -2572,28 +633,6 @@ Class.lighterSnowdread = { // Flamethrower
 		}
 	],
 }
-Class.stormTurretSnowdread = {
-	PARENT: 'genericTank',
-	LABEL: "",
-	BODY: { FOV: 1.5 },
-	CONTROLLERS: [[ 'spin', {speed: 0.03}]],
-	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
-	INDEPENDENT: true,
-	MAX_CHILDREN: 6,
-	GUNS: [
-		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: 90}, 5, [g.drone, {size: 1.2}]),
-		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: -90}, 5, [g.drone, {size: 1.2}]),
-	],
-	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.6 } }],
-		}, {
-			POSITION: [8.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-};
 Class.stormSnowdread = { // Drones
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Storm",
@@ -2615,7 +654,6 @@ Class.stormSnowdread = { // Drones
 		}
 	],
 }
-Class.coronaAuraSnowdread = addAura(1.5, 0.8, 0.15);
 Class.coronaSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Corona",
@@ -2633,7 +671,6 @@ Class.coronaSnowdread = {
 		},
 	],
 }
-Class.thermosphereAuraSnowdread = addAura(-1, 1.5);
 Class.thermosphereSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Thermosphere",
@@ -2651,7 +688,6 @@ Class.thermosphereSnowdread = {
 		},
 	],
 }
-Class.octogon = { SHAPE: 8 }
 Class.jumboSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Jumbo",
@@ -2673,42 +709,6 @@ Class.jumboSnowdread = {
 		},
 	],
 }
-Class.colossusTopSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.colossusTopSnowdread.GUNS.push(
-		{
-			POSITION: [3.5, 17.5, 0.001, 9, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [2.5, 9, 0, 7, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9, DRAW_ABOVE: true},
-		},
-	)
-}
-Class.colossusBottomSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.colossusTopSnowdread.GUNS.push(
-		{
-			POSITION: [3.5, 17.5, 0.001, 9, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
-for (let i = 0; i < 4; i++) {
-	Class.colossusBottomSnowdread.GUNS.push(
-		{
-			POSITION: [4, 17.5, 0.001, 9, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
 Class.colossusSnowdread = {
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Colossus",
@@ -2728,28 +728,6 @@ Class.colossusSnowdread = {
 		},
 	],
 }
-Class.cottonTurretSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	SHAPE: [[1, 0], [0, 1], [-1, 0], [0, -1]],
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.cottonTurretSnowdread.GUNS.push(
-		{
-			POSITION: [25, 16, 0.001, 0, 0, 90*i+45, 0],
-			PROPERTIES: {COLOR: 9}
-		},
-	)
-}
-for(let i = 0; i < 4; i++) { // layering issues
-	Class.cottonTurretSnowdread.GUNS.push(
-		{
-			POSITION: [25 * 3/4, 12, 0.001, 0, 0, 90*i+45, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true}
-		},
-	)
-}
 Class.cottonSnowdread = { // Drifter
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Cotton",
@@ -2767,40 +745,6 @@ Class.cottonSnowdread = { // Drifter
 			TYPE: 'cottonTurretSnowdread',
 		}
 	],
-}
-Class.ironTopSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
-	SHAPE: 0,
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-for(let i = 0; i < 8; i++) {
-	Class.ironTopSnowdread.GUNS.push(
-		{
-			POSITION: [8, 6, 0.001, 20, 0, 45*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [8, 6, 0.001, -20, 0, 45*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
-Class.ironBottomSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.ironBottomSnowdread.GUNS.push(
-		{
-			POSITION: [6, 6, 0.001, 9.5, 5, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [6, 6, 0.001, 9.5, -5, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
 }
 Class.ironSnowdread = { // Body damage increase
 	PARENT: ["genericSquarenoughtSnowdread"],
@@ -2823,22 +767,6 @@ Class.ironSnowdread = { // Body damage increase
 			TYPE: 'ironBottomSnowdread',
 		},
 	],
-}
-Class.rollerTurretSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.rollerTurretSnowdread.GUNS.push(
-		{
-			POSITION: [20, 20, 0, 0, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [15, 15, 0, 2.5, 0, 90*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 7.5}, BORDERLESS: true},
-		},
-	)
 }
 Class.rollerSnowdread = { // Size increase
 	PARENT: ["genericSquarenoughtSnowdread"],
@@ -2882,37 +810,6 @@ Class.owlSnowdread = { // Size decrease
 		},
 	],
 }
-Class.baiterTurretSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [["spin", {speed: -0.035}]],
-	INDEPENDENT: true,
-	LABEL: "",
-	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 12.5},
-	GUNS: [
-		{ 
-			POSITION: [11, 23, 1, -5.5, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -17.5}}
-		}, {
-			POSITION: [11, 23, 1, -5.5, 0, 90, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -17.5}}
-		}, { 
-			POSITION: [7, 28, 1, -3.5, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 6}}
-		}, {
-			POSITION: [7, 28, 1, -3.5, 0, 90, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 6}}
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [15, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.45 } }],
-		}, {
-			POSITION: [7.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-}
 Class.baiterSnowdread = { // Minelayer
 	PARENT: ["genericSquarenoughtSnowdread"],
 	LABEL: "Baiter",
@@ -2939,22 +836,6 @@ Class.baiterSnowdread = { // Minelayer
 			TYPE: 'baiterTurretSnowdread'
 		},
 	],
-}
-Class.spyRadarSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
-	INDEPENDENT: true,
-	SHAPE: [[0.2, 1], [0.2, -1], [-0.2, -1], [-0.2, 1]],
-	COLOR: 17,
-	GUNS: [
-		{
-			POSITION: [4, 26, 1, -2, 0, 0, 0],
-			PROPERTIES: {COLOR: 13}
-		}, {
-			POSITION: [7, 17, 1, -3.5, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -17.5}}
-		}
-	]
 }
 Class.spySnowdread = { // FOV
 	PARENT: ["genericSquarenoughtSnowdread"],
@@ -3073,31 +954,6 @@ for (let i = 0; i < 3; i++) {
 		...addNormal({length: 7, width: 9, aspect: 1.3, x: 8, angle: 120*i}, 5, [g.basic, g.machineGun, {size: 0.8, reload: 0.9}]),
 	)
 }
-Class.amalgamAutoSnowdread = {
-	PARENT: 'autoTankGun',
-	BODY: {FOV: 2},
-	GUNS: [
-		...addGunner({length: 16, width: 4, y: -3.5, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
-		...addGunner({length: 16, width: 4, y: 3.5, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
-		...addGunner({length: 18, width: 4, delay: 0}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
-		{
-			POSITION: [7, 11, -1.3, 5, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 } },
-		}, {
-			POSITION: [7, 11 - 1.5, -1.3, 3.5, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } },
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [15.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [9.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-}
 Class.amalgamSnowdread = { // all auto
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Amalgam",
@@ -3112,7 +968,7 @@ for(let i = 0; i < 3; i++) {
 			TYPE: 'amalgamAutoSnowdread',
 		},
 	)
-};
+}
 Class.breakerSnowdread = { // ultra bullet spam
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Breaker",
@@ -3136,24 +992,6 @@ for(let i = 0; i < 3; i++) {
 		},
 	)
 }
-Class.clasperTurretSnowdread = {
-	PARENT: ["spamAutoTurret"],
-	INDEPENDENT: true,
-	GUNS: [
-		{
-			POSITION: [14, 15, -1.2, 0, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } },
-		},
-		...addGunner({length: 16, width: 4, y: -4}, 0, [g.basic, g.autoTurret, g.pelleter, g.twin, g.power, g.flankGuard, g.flankGuard, {speed: 0.7, maxSpeed: 0.7, recoil: 0.25}]),
-		...addGunner({length: 16, width: 4, y: 4, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.twin, g.power, g.flankGuard, g.flankGuard, {speed: 0.7, maxSpeed: 0.7, recoil: 0.25}]),
-	],
-	TURRETS: [
-		{
-			POSITION: [13, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: -1}],
-		},
-	],
-};
 Class.clasperSnowdread = { // spread
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Clasper",
@@ -3210,22 +1048,6 @@ for(let i = 0; i < 3; i++) {
 		], [g.basic, g.machineGun, g.shotgun, {health: 1.5, damage: 1.5}]),
 	)
 }
-Class.spiralMissileSnowdread = {
-	PARENT: 'spinmissile',
-	GUNS: [
-		...addThruster({length: 14, width: 8, angle: 0}, -2.5, [g.basic, g.rocketeer, {speed: 1.3, maxSpeed: 1.3}], false),
-		...addThruster({length: 14, width: 8, angle: 180}, -2.5, [g.basic, g.rocketeer, {speed: 1.3, maxSpeed: 1.3}], false),
-	],
-	PROPS: [
-		{
-			POSITION: [13, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [8, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 10, SATURATION_SHIFT: 0.7}}],
-		},
-	]
-}
 Class.spiralSnowdread = { // twister
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Spiral",
@@ -3263,29 +1085,6 @@ for (let i = 0; i < 3; i++) {
 		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: 5.5, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
 		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: -5.5, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
 		...addDrone({length: 5, width: 6, aspect: 1.4, x: 8, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
-	)
-}
-Class.aggressorMinionTopSnowdread = {
-	SHAPE: "M -1.546 -0.108 L -1.546 0.108 L -0.175 0.303 L 0.679 1.393 L 0.867 1.285 L 0.35 0 L 0.867 -1.285 L 0.679 -1.393 L -0.175 -0.303 L -1.546 -0.108",
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
-}
-Class.aggressorMinionSnowdread = {
-	PARENT: ["minion"],
-	SHAPE: 3.5,
-	COLOR: 2,
-	BODY: { SPEED: 0.8, },
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}
-	]
-}
-for (let i = 0; i < 3; i++) {
-	Class.aggressorMinionSnowdread.GUNS.push(
-		...addGunner({length: 16, width: 8.5, angle: 120*i}, -2.5, [g.basic, g.sniper, g.assassin, g.minionGun, {speed: 0.93, maxSpeed: 0.93}])
 	)
 }
 Class.aggressorSnowdread = {
@@ -3372,19 +1171,6 @@ for(let i = 0; i < 3; i++) {
 		...addAutoTrap({length: 15.5, length2: 2, width: 10.5, aspect: 1.3, angle: 120*i}, -2.5, [g.trap, g.setTrap, {reload: 2.25}], 4, true)
 	)
 }
-Class.auraBlockAura = addAura(1/3, 1.6, 0.15, 0, "Small");
-Class.auraBlock = {
-	PARENT: 'unsetTrap',
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 45, 0, 1],
-			TYPE: 'unsetPillboxTopSnowdread'
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
-			TYPE: 'auraBlockAura'
-		}
-	]
-}
 Class.aegisSnowdread = { // aura-traps
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Aegis",
@@ -3428,14 +1214,13 @@ for (let i = 0; i < 3; i++) {
 	Class.mechanismSnowdread.TURRETS.push(
 		{
 			POSITION: [3.5, 6, 0, 120*i, 200, 1],
-			TYPE: "spamAutoTurret",
+			TYPE: "spamAutoTurretSnowdread",
 		}, {
 			POSITION: [3.5, 10, 0, 120*i+60, 200, 1],
-			TYPE: "spamAutoTurret",
+			TYPE: "spamAutoTurretSnowdread",
 		},
 	)
 }
-Class.trinoughtBigAura = addAura(2, 1.5);
 Class.fusionSnowdread = {
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Fusion",
@@ -3451,7 +1236,7 @@ Class.fusionSnowdread = {
 		...addTrinoughtTurretRing(),
 		{
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "trinoughtBigAura",
+			TYPE: "trinoughtBigAuraSnowdread",
 		},
 	],
 }
@@ -3474,7 +1259,6 @@ Class.binarySnowdread = {
 		},
 	],
 }
-Class.trinoughtBigHealAura = addAura(-1.5, 1.5);
 Class.exosphereSnowdread = {
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Exosphere",
@@ -3490,74 +1274,9 @@ Class.exosphereSnowdread = {
 		...addTrinoughtTurretRing(),
 		{
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "trinoughtBigHealAura",
+			TYPE: "trinoughtBigHealAuraSnowdread",
 		},
 	],
-}
-Class.megabyteTurretSnowdread = {
-	PARENT: ["autoTankGun"],
-	COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.65 },
-	INDEPENDENT: true,
-	GUNS: [
-		{
-			POSITION: [21, 14.5, -1.4, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-			},
-		}, { // Main gun
-			POSITION: [26, 13, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, {health: 1.2, speed: 0.8}]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.65 },
-			},
-		}, {
-			POSITION: [21.5, 8, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.75 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [16.5, 2.6, -1.6, 0, 6.1, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		}, {
-			POSITION: [16.5, 2.6, -1.6, 0, -6.1, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
-			},
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}
-	],
-	TURRETS: [
-		{
-			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [8.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
 }
 Class.megabyteSnowdread = {
 	PARENT: ["genericTrinoughtSnowdread"],
@@ -3576,7 +1295,6 @@ Class.megabyteSnowdread = {
 		},
 	],
 }
-Class.trinoughtSmallAura = addAura(1, 2.1, 0.15, 0, "Small");
 Class.trojanSnowdread = {
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Trojan",
@@ -3596,7 +1314,6 @@ Class.trojanSnowdread = {
 		},
 	],
 }
-Class.trinoughtSmallHealAura = addAura(-2/3, 2.1, 0.15, "red", "Small");
 Class.hardwareSnowdread = {
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Hardware",
@@ -3616,60 +1333,6 @@ Class.hardwareSnowdread = {
 		},
 	],
 }
-Class.burnerTurretSnowdread = {
-	PARENT: 'genericTank',
-	COLOR: -1,
-	CONTROLLERS: ['nearestDifferentMaster'],
-	INDEPENDENT: true,
-	GUNS: [
-		{
-			POSITION: [15, 11, 1, 0, 0, 140, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5, SATURATION_SHIFT: 0.9}},
-		}, {
-			POSITION: [16.5, 7, 1, 0, 0, 140, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}}
-		}, {
-			POSITION: [15, 11, 1, 0, 0, -140, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5, SATURATION_SHIFT: 0.9}},
-		}, {
-			POSITION: [16.5, 7, 1, 0, 0, -140, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}}
-		}, {
-			POSITION: [16, 2, 1, 0, 7.5, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 12.5}}
-		}, {
-			POSITION: [16, 2, 1, 0, -7.5, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 12.5}}
-		}, {
-			POSITION: [24, 8, 1.25, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.autoTurret, g.flame, {speed: 1.3, maxSpeed: 1.3}]),
-				TYPE: 'growBullet',
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.7},
-			}
-		}, {
-			POSITION: [21.5, 6.5, 1.3, 0, 0, 0, 0],
-			PROPERTIES: { 
-				SHOOT_SETTINGS: combineStats([g.basic, g.autoTurret, g.flame, g.fake]),
-				TYPE: 'bullet',
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.8}, 
-				BORDERLESS: true 
-			}
-		}, {
-			POSITION: [14, 8.5, -1.4, 0, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}}
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [15, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 } }],
-		}, {
-			POSITION: [9, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-};
 Class.burnerSnowdread = { // Flamethrower
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Burner",
@@ -3686,30 +1349,6 @@ Class.burnerSnowdread = { // Flamethrower
 			TYPE: 'burnerTurretSnowdread',
 		}
 	],
-}
-Class.tempestTurretSnowdread = {
-	PARENT: 'genericTank',
-	LABEL: "",
-	BODY: { FOV: 1.5 },
-	CONTROLLERS: [[ 'spin', {speed: 0.03}]],
-	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
-	INDEPENDENT: true,
-	MAX_CHILDREN: 9,
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.6 } }],
-		}, {
-			POSITION: [8.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-};
-for (let i = 0; i < 3; i++) {
-	Class.tempestTurretSnowdread.GUNS.push(
-		...addDroneOnAuto({length: 6, width: 12, x: 8, aspect: 1.2, angle: 120*i}, 7.5, [g.drone, g.overseer, {size: 1.4}]),
-	)
 }
 Class.tempestSnowdread = { // Drones
 	PARENT: ["genericTrinoughtSnowdread"],
@@ -3747,7 +1386,7 @@ Class.chromosphereSnowdread = {
 		...addTrinoughtAuraRing(),
 		{
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "trinoughtBigAura",
+			TYPE: "trinoughtBigAuraSnowdread",
 		},
 	],
 }
@@ -3766,7 +1405,7 @@ Class.mesosphereSnowdread = {
 		...addTrinoughtAuraRing(true),
 		{
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "trinoughtBigHealAura",
+			TYPE: "trinoughtBigHealAuraSnowdread",
 		},
 	],
 }
@@ -3866,18 +1505,6 @@ Class.siloSnowdread = { // HP + big auto
 			TYPE: "kilobyteTurretSnowdread",
 		},
 	],
-}
-Class.titanTopSnowdread = {
-	PARENT: ["genericTrinoughtSnowdread"],
-	GUNS: [],
-}
-for (let i = 0; i < 3; i++) {
-	Class.titanTopSnowdread.GUNS.push(
-		{
-			POSITION: [5, 26, 0.001, 8, 0, 120*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
 }
 Class.titanSnowdread = {
 	PARENT: ["genericTrinoughtSnowdread"],
@@ -4001,22 +1628,6 @@ Class.armadaSnowdread = { // Speed + HP
 		},
 	],
 }
-Class.featherTurretSnowdread = {
-	PARENT: ["genericTrinoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 3; i++) {
-	Class.featherTurretSnowdread.GUNS.push(
-		{
-			POSITION: [20, 17, 0.001, 3, 0, 120*i, 0],
-			PROPERTIES: {COLOR: 9}
-		}, {
-			POSITION: [15, 12, 0.001, 3, 0, 120*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true}
-		},
-	)
-}
 Class.featherSnowdread = { // Drifter
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Feather",
@@ -4034,43 +1645,6 @@ Class.featherSnowdread = { // Drifter
 			TYPE: ["triangleBaseDeco"],
 		}
 	],
-}
-Class.steelTopSnowdread = {
-	PARENT: ["genericTrinoughtSnowdread"],
-	SHAPE: 0,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 9; i++) {
-	Class.steelTopSnowdread.GUNS.push(
-		{
-			POSITION: [8, 6, 0.001, 17.5, 0, 40*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [8, 6, 0.001, -17.5, 0, 40*i+20, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
-Class.steelBottomSnowdread = {
-	PARENT: ["genericTrinoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 3; i++) {
-	Class.steelBottomSnowdread.GUNS.push(
-		{
-			POSITION: [3, 5, 0.001, 8, 7.5, 120*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [3, 5, 0.001, 8, 0, 120*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [3, 5, 0.001, 8, -7.5, 120*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
 }
 Class.steelSnowdread = { // Body damage increase
 	PARENT: ["genericTrinoughtSnowdread"],
@@ -4093,38 +1667,6 @@ Class.steelSnowdread = { // Body damage increase
 			TYPE: 'steelBottomSnowdread'
 		},
 	],
-}
-Class.flattenerTurretSnowdread = {
-	PARENT: ["genericTrinoughtSnowdread"],
-	SHAPE: "",
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.flattenerTurret2Snowdread = {
-	PARENT: ["genericTrinoughtSnowdread"],
-	SHAPE: "",
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 3; i++) {
-	Class.flattenerTurretSnowdread.GUNS.push(
-		{
-			POSITION: [18, 25, 0, 0, 0, 120*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [12, 17, 0, 4.5, 0, 120*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
-	Class.flattenerTurret2Snowdread.GUNS.push(
-		{
-			POSITION: [17, 20, 0, 0, 0, 120*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [11, 12, 0, 4, 0, 120*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
 }
 Class.flattenerSnowdread = { // Size increase
 	PARENT: ["genericTrinoughtSnowdread"],
@@ -4191,7 +1733,7 @@ Class.spotlightSnowdread = { // Size increase + big aura
 			TYPE: ["triangleBaseDeco"],
 		}, {
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "trinoughtBigAura",
+			TYPE: "trinoughtBigAuraSnowdread",
 		},
 	],
 }
@@ -4210,7 +1752,7 @@ Class.furnaceSnowdread = { // Size increase + big heal aura
 			TYPE: ["triangleBaseDeco"],
 		}, {
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "trinoughtBigHealAura",
+			TYPE: "trinoughtBigHealAuraSnowdread",
 		},
 	],
 }
@@ -4256,34 +1798,6 @@ Class.cardinalSnowdread = { // Size decrease
 		},
 	],
 }
-Class.cagerTurretSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [["spin", {speed: -0.035}]],
-	INDEPENDENT: true,
-	LABEL: "",
-	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10},
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 17.5}}]
-		}, {
-			POSITION: [10, 0, 0, 30, 0, 1],
-			TYPE: ['hexagon', {COLOR: -1, MIRROR_MASTER_ANGLE: true}]
-		},
-	]
-};
-for (let i = 0; i < 3; i++) {
-	Class.cagerTurretSnowdread.GUNS.push(
-		{ 
-			POSITION: [10, 22, 1, -5, 2.5, 120*i, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.8}}
-		}, { 
-			POSITION: [6, 30, 1, -3, 1.5, 120*i, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}
-		},
-	)
-}
 Class.cagerSnowdread = { // Minelayer
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Cager",
@@ -4314,22 +1828,6 @@ Class.cagerSnowdread = { // Minelayer
 		}
 	],
 }
-Class.monitorRadarSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
-	INDEPENDENT: true,
-	SHAPE: [[0.175, 1], [0.175, -1], [-0.175, -1], [-0.175, 1]],
-	COLOR: 17,
-	GUNS: [
-		{
-			POSITION: [6, 17, 1, -3, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.65}}
-		}, {
-			POSITION: [3.5, 26, 1, -1.75, 0, 0, 0],
-			PROPERTIES: {COLOR: 2}
-		}
-	]
-};
 Class.monitorSnowdread = { // FOV
 	PARENT: ["genericTrinoughtSnowdread"],
 	LABEL: "Monitor",
@@ -4449,30 +1947,6 @@ for (let i = 0; i < 5; i++) {
 		...addNormal({length: 7.5, width: 7.25, aspect: 1.25, x: 9.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.6, reload: 1}]),
 	)
 }
-Class.dissolverAutoSnowdread = {
-	PARENT: 'autoTankGun',
-	BODY: {FOV: 5},
-	GUNS: [
-		...addGunner({length: 25.5, width: 5, y: -3.5}, 0, [g.basic, g.sniper, g.assassin, g.flankGuard, g.flankGuard, g.autoTurret, {recoil: 0.9}]),
-		...addGunner({length: 25.5, width: 5, y: 3.5, delay: 0.5}, 0, [g.basic, g.sniper, g.assassin, g.flankGuard, g.flankGuard, g.autoTurret, {recoil: 0.9}]),
-		{
-			POSITION: [7, 13, -1.3, 6, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 }, },
-		}, {
-			POSITION: [7, 11, -1.3, 4.5, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } },
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [15.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [10, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-}
 Class.dissolverSnowdread = { // all auto
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Dissolver",
@@ -4510,23 +1984,6 @@ for(let i = 0; i < 5; i++) {
 		},
 	)
 }
-Class.gripperTurretSnowdread = {
-	PARENT: ["spamAutoTurret"],
-	INDEPENDENT: true,
-	GUNS: [
-		{
-			POSITION: [15, 14, -1.4, 0, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6 } },
-		},
-		...addGunner({length: 23, width: 13}, -2.5, [g.basic, g.pounder, g.flankGuard, g.flankGuard, g.autoTurret, {reload: 0.9, recoil: 0.25}])
-	],
-	TURRETS: [
-		{
-			POSITION: [13, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: -1}],
-		},
-	],
-};
 Class.gripperSnowdread = { // spread
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Gripper",
@@ -4622,145 +2079,6 @@ for (let i = 0; i < 5; i++) {
 		...addDrone({length: 4, width: 5, aspect: 2.1, x: 9, y: -3.25, angle: 72*i}, 0, [g.drone, g.overseer, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2, "drone"),
 		...addDrone({length: 6, width: 6.5, aspect: 1.4, x: 9, angle: 72*i}, 0, [g.drone, g.overseer, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
 	)
-}
-Class.gladiatorGenericMinionSnowdread = {
-	PARENT: ["minion"],
-	BODY: { SPEED: 1 },
-	SHAPE: 3.5,
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}
-	]
-}
-Class.gladiatorTritankMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	GUNS: [],
-}
-Class.gladiatorTritrapMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	GUNS: [],
-}
-Class.gladiatorTriswarmMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	GUNS: [],
-}
-Class.gladiatorAutoMinionTurretSnowdread = {
-	PARENT: "spamAutoTurret",
-	GUNS: [
-		{
-			POSITION: [18, 12, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, g.turret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-			},
-		}, { // Main gun
-			POSITION: [22, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, g.turret, {range: 0.5}]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.5 },
-			},
-		}, {
-			POSITION: [14.5, 2, 1, 0, 5, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, g.turret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 17.5 },
-			},
-		}, {
-			POSITION: [14.5, 2, 1, 0, -5, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, g.turret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 17.5 },
-			},
-		},
-	]
-}
-Class.gladiatorAutoMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}, {
-			POSITION: [12, 0, 0, 0, 360, 1],
-			TYPE: "gladiatorAutoMinionTurretSnowdread"
-		}
-	]
-}
-Class.gladiatorAuraMinionAuraSnowdread = addAura(1, 1.2, 0.3, 0, "Small");
-Class.gladiatorAuraMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}, {
-			POSITION: [12, 0, 0, 0, 360, 1],
-			TYPE: "gladiatorAuraMinionAuraSnowdread",
-		}
-	]
-}
-Class.gladiatorHealAuraMinionAuraSnowdread = addAura(-2/3, 1.2, 0.3, "red", "Small");
-Class.gladiatorHealAuraMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	TURRETS: [
-		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}, {
-			POSITION: [12, 0, 0, 0, 360, 1],
-			TYPE: "gladiatorHealAuraMinionAuraSnowdread",
-		}
-	]
-}
-for (let i = 0; i < 3; i++) {
-	Class.gladiatorTritankMinionSnowdread.GUNS.push(
-		{
-			POSITION: [15, 8.5, 1, 0, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.assassin, g.minionGun, {speed: 0.7, maxSpeed: 0.7, range: 0.6}]),
-				WAIT_TO_CYCLE: true,
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-				TYPE: 'bullet',
-			},
-		}, {
-			POSITION: [13.5, 5.5, 1, 0, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.assassin, g.minionGun, g.fake]),
-				WAIT_TO_CYCLE: true,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.85 },
-				TYPE: 'bullet',
-			},
-		},
-	);
-	Class.gladiatorTritrapMinionSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 3, width: 7, aspect: 1.7, angle: 120*i}, 5, [g.trap, g.flankGuard, g.minionGun, {reload: 1.6, shudder: 0.2}])
-	);
-	Class.gladiatorTriswarmMinionSnowdread.GUNS.push(
-		{
-			POSITION: [7, 8.5, -1.5, 7, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.swarm, g.minionGun, {size: 1.6, range: 0.5}]),
-				TYPE: 'swarm',
-				STAT_CALCULATOR: gunCalcNames.swarm,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.7}
-			},
-		}, {
-			POSITION: [10.5, 6.8, -1.5, 2.5, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.swarm, g.minionGun, g.fake]),
-				TYPE: 'swarm',
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.7},
-				BORDERLESS: true
-			},
-		},
-	);
 }
 Class.gladiatorSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
@@ -4890,7 +2208,7 @@ for (let i = 0; i < 5; i++) {
 	Class.skynetSnowdread.TURRETS.push(
 		{
 			POSITION: [3.25, 4.5, 0, 72*i, 200, 1],
-			TYPE: "spamAutoTurret",
+			TYPE: "spamAutoTurretSnowdread",
 		},
 	)
 }
@@ -4898,11 +2216,10 @@ for (let i = 0; i < 5; i++) {
 	Class.skynetSnowdread.TURRETS.push(
 		{
 			POSITION: [3.25, 8, 0, 72*i+36, 200, 1],
-			TYPE: "spamAutoTurret",
+			TYPE: "spamAutoTurretSnowdread",
 		},
 	)
 }
-Class.pentanoughtBigAura = addAura(2.5, 1.45, 0.3, 0, "Large");
 Class.supernovaSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Supernova",
@@ -4918,7 +2235,7 @@ Class.supernovaSnowdread = {
 		...addPentanoughtTurretRing(),
 		{
 			POSITION: [9, 0, 0, 0, 360, 1],
-			TYPE: "pentanoughtBigAura",
+			TYPE: "pentanoughtBigAuraSnowdread",
 		},
 	],
 }
@@ -4941,7 +2258,6 @@ Class.cipherSnowdread = {
 		},
 	],
 }
-Class.pentanoughtBigHealAura = addAura(-2, 1.45, 0.3, "red", "Large");
 Class.interstellarSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Interstellar",
@@ -4955,81 +2271,10 @@ Class.interstellarSnowdread = {
 			TYPE: ["pentagonBaseDeco"],
 		}, {
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "pentanoughtBigHealAura",
+			TYPE: "pentanoughtBigHealAuraSnowdread",
 		},
 		...addPentanoughtTurretRing(),
 	],
-}
-Class.gigabyteTurretSnowdread = {
-	PARENT: ["autoTankGun"],
-	INDEPENDENT: true,
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
-	GUNS: [
-		{
-			POSITION: [14, 8, 0.001, -2, -10.5, 140, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 7.5, SATURATION_SHIFT: 1.2 } },
-		}, {
-			POSITION: [14, 8, 0.001, -2, 10.5, -140, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 7.5, SATURATION_SHIFT: 1.2 } },
-		}, {
-			POSITION: [21, 16, 1.3, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-			},
-		}, { // Main gun
-			POSITION: [26, 16, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, {speed: 1.25, health: 0.7}]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.6 },
-			},
-		}, {
-			POSITION: [21.5, 10, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.7 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [16.5, 3, -1.6, 0, 6.1, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
-			},
-		}, {
-			POSITION: [16.5, 3, -1.6, 0, -6.1, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
-			},
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
-		}
-	],
-	TURRETS: [
-		{
-			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.5 } }],
-		}, {
-			POSITION: [9.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
 }
 Class.gigabyteSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
@@ -5048,7 +2293,6 @@ Class.gigabyteSnowdread = {
 		},
 	],
 }
-Class.pentanoughtSmallAura = addAura(1, 1.6, 0.15, 0, "Small");
 Class.malwareSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Malware",
@@ -5068,7 +2312,6 @@ Class.malwareSnowdread = {
 		},
 	],
 }
-Class.pentanoughtSmallHealAura = addAura(-2/3, 1.6, 0.15, "red", "Small");
 Class.softwareSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Software",
@@ -5088,53 +2331,6 @@ Class.softwareSnowdread = {
 		},
 	],
 }
-Class.roasterTurretSnowdread = {
-	PARENT: 'genericTank',
-	COLOR: -1,
-	CONTROLLERS: ['nearestDifferentMaster'],
-	INDEPENDENT: true,
-	GUNS: [
-		{
-			POSITION: [15, 12, 1.6, 0, 0, 180, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5, SATURATION_SHIFT: 0.9}},
-		}, {
-			POSITION: [16.5, 7, 1.5, 0, 0, 180, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}},
-		}, {
-			POSITION: [13, 2, 1, 0, -8, -10, 0],
-				PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 12.5}},
-		}, {
-			POSITION: [20.5, 7, 1.1, 0, -2, -10, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.twin, g.autoTurret, g.flame]),
-				TYPE: 'growBullet',
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.7},
-			}
-		}, {
-			POSITION: [13, 2, 1, 0, 8, 10, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 12.5}},
-		}, {
-			POSITION: [20.5, 7, 1.1, 0, 2, 10, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.twin, g.autoTurret, g.flame]),
-				TYPE: 'growBullet',
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.7},
-			}
-		}, {
-			POSITION: [13, 11.5, -1.4, 0, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}}
-		},
-	],
-	TURRETS: [
-		{
-			POSITION: [15.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 } }],
-		}, {
-			POSITION: [10, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5 } }]
-		},
-	]
-};
 Class.roasterSnowdread = { // Flamethrower
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Roaster",
@@ -5151,30 +2347,6 @@ Class.roasterSnowdread = { // Flamethrower
 			TYPE: 'roasterTurretSnowdread'
 		},
 	],
-}
-Class.monsoonTurretSnowdread = {
-	PARENT: 'genericTank',
-	LABEL: "",
-	BODY: { FOV: 1.5 },
-	CONTROLLERS: [[ 'spin', {speed: 0.03}]],
-	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
-	INDEPENDENT: true,
-	MAX_CHILDREN: 9,
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.6 } }],
-		}, {
-			POSITION: [9.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
-		},
-	]
-}
-for (let i = 0; i < 3; i++) {
-	Class.monsoonTurretSnowdread.GUNS.push(
-		...addDroneOnAuto({length: 6.5, width: 12.5, aspect: 1.2, x: 7.5, angle: 120*i}, 5, [g.drone, {size: 1.5, health: 1.1}])
-	)
 }
 Class.monsoonSnowdread = { // Drones
 	PARENT: ["genericPentanoughtSnowdread"],
@@ -5197,10 +2369,6 @@ Class.monsoonSnowdread = { // Drones
 		},
 	],
 }
-if (useOldPhotosphere) {
-	Class.photosphereSmallAuraSnowdread = addAura(1, 1.85, 0.1, 0, "Small");
-	Class.photosphereBigAuraSnowdread = addAura(1.5, 4, 0.15);
-}
 Class.photosphereSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Photosphere",
@@ -5217,17 +2385,19 @@ Class.photosphereSnowdread = {
 }
 if (useOldPhotosphere) {
 	for (let i = 0; i < 5; i++) {
+		let theta = (72 * i + 36) * Math.PI / 180;
 		Class.photosphereSnowdread.TURRETS.push(
 			{
-				POSITION: [3.5, 8.75, 0, 72*i+36, 360, 1],
+				POSITION: [3.5, 8.75 * Math.cos(theta), 8.75 * Math.sin(theta), 0, 360, 1],
 				TYPE: "photosphereSmallAuraSnowdread",
 			},
 		)
 	}
 	for (let i = 0; i < 5; i++) {
+		let theta = (72 * i) * Math.PI / 180;
 		Class.photosphereSnowdread.TURRETS.push(
 			{
-				POSITION: [3, 4, 0, 72*i, 360, 1],
+				POSITION: [3, 4 * Math.cos(theta), 4 * Math.sin(theta), 0, 360, 1],
 				TYPE: "photosphereBigAuraSnowdread",
 			},
 		)
@@ -5237,7 +2407,7 @@ if (useOldPhotosphere) {
 		...addPentanoughtAuraRing(),
 		{
 			POSITION: [9, 0, 0, 0, 360, 1],
-			TYPE: "pentanoughtBigAura",
+			TYPE: "pentanoughtBigAuraSnowdread",
 		},
 	)
 }
@@ -5256,7 +2426,7 @@ Class.stratosphereSnowdread = {
 		...addPentanoughtAuraRing(true),
 		{
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "pentanoughtBigHealAura",
+			TYPE: "pentanoughtBigHealAuraSnowdread",
 		},
 	],
 }
@@ -5370,124 +2540,6 @@ Class.arsenalSnowdread = { // HP + big auto
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
-}
-Class.pentagonLeviathanTopSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.pentagonLeviathanTop2Snowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.pentagonLeviathanTop3Snowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: 9,
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.pentagonLeviathanBottomSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	LABEL: "Leviathan",
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.pentagonLeviathanTopSnowdread.GUNS.push(
-		{
-			POSITION: [6, 13.5, 0.001, 9, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [4, 11.5, 0, 5.7, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9, DRAW_ABOVE: true},
-		},
-	);
-	Class.pentagonLeviathanTop2Snowdread.GUNS.push(
-		{
-			POSITION: [4.5, 13.5, 0.001, 9, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}},
-		}, {
-			POSITION: [3, 11.5, 0, 6.7, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true},
-		},
-	);
-	Class.pentagonLeviathanTop3Snowdread.GUNS.push(
-		{
-			POSITION: [3.5, 8, 0, 6.7, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true, BORDERLESS: true},
-		},
-	);
-	Class.pentagonLeviathanBottomSnowdread.GUNS.push(
-		{
-			POSITION: [7, 17, 0.001, 9, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}
-	);
-}
-Class.hexagonLeviathanTopSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.hexagonLeviathanTop2Snowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.hexagonLeviathanTop3Snowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: 9,
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.hexagonLeviathanBottomSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	LABEL: "Leviathan",
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for (let i = 0; i < 6; i++) {
-	Class.hexagonLeviathanTopSnowdread.GUNS.push(
-		{
-			POSITION: [6, 10, 0.001, 9.5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [3, 9, 0, 7, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9, DRAW_ABOVE: true},
-		},
-	)
-	Class.hexagonLeviathanTop2Snowdread.GUNS.push(
-		{
-			POSITION: [5, 10, 0.001, 9.5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}},
-		}, {
-			POSITION: [2.5, 9, 0, 7.5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true},
-		},
-	)
-	Class.hexagonLeviathanTop3Snowdread.GUNS.push(
-		{
-			POSITION: [3, 6.5, 0, 7, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true, BORDERLESS: true},
-		}
-	)
-	Class.hexagonLeviathanBottomSnowdread.GUNS.push(
-		{
-			POSITION: [7, 13.5, 0.001, 9.5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
 }
 Class.leviathanSnowdread = {
 	PARENT: ["genericPentanoughtSnowdread"],
@@ -5611,41 +2663,6 @@ Class.battalionSnowdread = { // Speed + HP
 		},
 	],
 }
-Class.pentagonWispTurretSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	SHAPE: 5,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.pentagonWispTurretSnowdread.GUNS.push(
-		{
-			POSITION: [26, 13, 0.001, 3, 0, 72*i+36, 0],
-			PROPERTIES: {COLOR: 9}
-		}, {
-			POSITION: [23.5, 10, 0.001, 0, 0, 72*i+36, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true}
-		},
-	)
-}
-Class.hexagonWispTurretSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	SHAPE: 6,
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 6; i++) {
-	Class.hexagonWispTurretSnowdread.GUNS.push(
-		{
-			POSITION: [26, 13, 0.001, 3, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9}
-		}, {
-			POSITION: [23.5, 10, 0.001, 0, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true}
-		},
-	)
-}
 Class.wispSnowdread = { // Drifter
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Wisp",
@@ -5663,74 +2680,6 @@ Class.wispSnowdread = { // Drifter
 			TYPE: ['pentagonWispTurretSnowdread']
 		}
 	],
-}
-Class.pentagonTitaniumTopSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	SHAPE: 0,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 10; i++) {
-	Class.pentagonTitaniumTopSnowdread.GUNS.push(
-		{
-			POSITION: [8, 6, 0.001, 20, 0, 36*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [8, 6, 0.001, -20, 0, 36*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
-Class.pentagonTitaniumBottomSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.pentagonTitaniumBottomSnowdread.GUNS.push(
-		{
-			POSITION: [5, 6, 0.001, 9.5, 3.5, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [5, 6, 0.001, 9.5, -3.5, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
-Class.hexagonTitaniumTopSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	SHAPE: 0,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 12; i++) {
-	Class.hexagonTitaniumTopSnowdread.GUNS.push(
-		{
-			POSITION: [7, 5, 0.001, 18, 0, 30*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [7, 5, 0.001, -18, 0, 30*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
-Class.hexagonTitaniumBottomSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 6; i++) {
-	Class.hexagonTitaniumBottomSnowdread.GUNS.push(
-		{
-			POSITION: [5, 5, 0.001, 9.5, 3.25, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [5, 5, 0.001, 9.5, -3.25, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
 }
 Class.titaniumSnowdread = { // Body damage increase
 	PARENT: ["genericPentanoughtSnowdread"],
@@ -5755,100 +2704,6 @@ Class.titaniumSnowdread = { // Body damage increase
 			TYPE: ['pentagonTitaniumBottomSnowdread']
 		},
 	],
-}
-Class.pentagonCrusherTurretSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-Class.pentagonCrusherTurret2Snowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-Class.pentagonCrusherTurret3Snowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.pentagonCrusherTurretSnowdread.GUNS.push(
-		{
-			POSITION: [20, 16, 0, 0, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [14, 10, 0, 3.5, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
-	Class.pentagonCrusherTurret2Snowdread.GUNS.push(
-		{
-			POSITION: [21, 11, 0, 0, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [15, 6, 0, 3.5, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
-	Class.pentagonCrusherTurret3Snowdread.GUNS.push(
-		{
-			POSITION: [17, 16, 0, 0, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [10, 11, 0, 5, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
-}
-Class.hexagonCrusherTurretSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-Class.hexagonCrusherTurret2Snowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-Class.hexagonCrusherTurret3Snowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-for(let i = 0; i < 6; i++) {
-	Class.hexagonCrusherTurretSnowdread.GUNS.push(
-		{
-			POSITION: [20, 13.5, 0, 0, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [14, 7.5, 0, 3.5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
-	Class.hexagonCrusherTurret2Snowdread.GUNS.push(
-		{
-			POSITION: [21, 8.5, 0, 0, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [15, 4, 0, 3.5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
-	Class.hexagonCrusherTurret3Snowdread.GUNS.push(
-		{
-			POSITION: [17, 13.5, 0, 0, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [10, 9, 0, 5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 6}, BORDERLESS: true},
-		},
-	)
 }
 Class.crusherSnowdread = { // Size increase
 	PARENT: ["genericPentanoughtSnowdread"],
@@ -5915,7 +2770,7 @@ Class.luminanceSnowdread = { // Size increase + big aura
 			TYPE: ['pentagonCrusherTurret3Snowdread']
 		}, {
 			POSITION: [9, 0, 0, 0, 360, 1],
-			TYPE: "pentanoughtBigAura",
+			TYPE: "pentanoughtBigAuraSnowdread",
 		},
 	],
 }
@@ -5934,7 +2789,7 @@ Class.foundrySnowdread = { // Size increase + big heal aura
 			TYPE: ['pentagonCrusherTurret3Snowdread']
 		}, {
 			POSITION: [9.5, 0, 0, 0, 360, 1],
-			TYPE: "pentanoughtBigHealAura",
+			TYPE: "pentanoughtBigHealAuraSnowdread",
 		},
 	],
 }
@@ -5957,28 +2812,6 @@ Class.planetoidSnowdread = { // Size increase + big auto
 		},
 	],
 }
-Class.pentagonFinchTurretSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: 9,
-	TURRETS: [
-		{
-			POSITION: [15.5, 0, 0, 0, 0, 1],
-			TYPE: ['pentagon', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}]
-		}
-	]
-}
-Class.hexagonFinchTurretSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	MIRROR_MASTER_ANGLE: true,
-	COLOR: 9,
-	TURRETS: [
-		{
-			POSITION: [16.5, 0, 0, 30, 0, 1],
-			TYPE: ['hexagon', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}]
-		}
-	]
-}
 Class.finchSnowdread = { // Size decrease
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Finch",
@@ -5998,56 +2831,6 @@ Class.finchSnowdread = { // Size decrease
 			TYPE: ["pentagonBaseDeco"],
 		},
 	],
-}
-Class.pentagonHoarderTurretSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [["spin", {speed: -0.035}]],
-	INDEPENDENT: true,
-	LABEL: "",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5},
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [17, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: -1}]
-		}, {
-			POSITION: [10, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}}]
-		},
-	]
-};
-Class.hexagonHoarderTurretSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [["spin", {speed: -0.035}]],
-	INDEPENDENT: true,
-	LABEL: "",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5},
-	GUNS: [],
-	TURRETS: [
-		{
-			POSITION: [17, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: -1}]
-		}, {
-			POSITION: [10, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}}]
-		},
-	]
-};
-for(let i = 0; i < 5; i++) {
-	Class.pentagonHoarderTurretSnowdread.GUNS.push(
-		{ 
-			POSITION: [15, 5.5, -2.5, 0, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}},
-		},
-	)
-}
-for(let i = 0; i < 6; i++) {
-	Class.hexagonHoarderTurretSnowdread.GUNS.push(
-		{ 
-			POSITION: [16, 5, -2.5, 0, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}},
-		},
-	)
 }
 Class.hoarderSnowdread = { // Minelayer
 	PARENT: ["genericPentanoughtSnowdread"],
@@ -6079,22 +2862,6 @@ Class.hoarderSnowdread = { // Minelayer
 		}
 	],
 }
-Class.trackerRadarSnowdread = {
-	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
-	INDEPENDENT: true,
-	SHAPE: [[0.16, 1], [0.16, -1], [-0.16, -1], [-0.16, 1]],
-	COLOR: 17,
-	GUNS: [
-		{
-			POSITION: [6.2, 17, 1, -3.1, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.65}}
-		}, {
-			POSITION: [3.2, 26, 1, -1.6, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 2.5}}
-		}
-	]
-};
 Class.trackerSnowdread = { // FOV
 	PARENT: ["genericPentanoughtSnowdread"],
 	LABEL: "Tracker",
@@ -6206,81 +2973,81 @@ Class.addons.UPGRADES_TIER_0.push("dreadSnowdread");
 
 			Class.automationSnowdread.UPGRADES_TIER_0 = ["mechanismSnowdread", "fusionSnowdread", "binarySnowdread", "exosphereSnowdread", "burgSnowdread", "batonSnowdread"];
 				Class.mechanismSnowdread.UPGRADES_TIER_0 = ["skynetSnowdread"];
-					Class.skynetSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("skynetSnowdread")];
+					Class.skynetSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("skynetSnowdread");
 				Class.fusionSnowdread.UPGRADES_TIER_0 = ["supernovaSnowdread"];
-					Class.supernovaSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("supernovaSnowdread")];
+					Class.supernovaSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("supernovaSnowdread");
 				Class.binarySnowdread.UPGRADES_TIER_0 = ["cipherSnowdread"];
-					Class.cipherSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("cipherSnowdread")];
+					Class.cipherSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("cipherSnowdread");
 				Class.exosphereSnowdread.UPGRADES_TIER_0 = ["interstellarSnowdread"];
-					Class.interstellarSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("interstellarSnowdread")];
+					Class.interstellarSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("interstellarSnowdread");
 				Class.burgSnowdread.UPGRADES_TIER_0 = ["bunkerSnowdread"];
-					Class.bunkerSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("bunkerSnowdread")];
+					Class.bunkerSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("bunkerSnowdread");
 				Class.batonSnowdread.UPGRADES_TIER_0 = ["maceSnowdread"];
-					Class.maceSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("maceSnowdread")];
+					Class.maceSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("maceSnowdread");
 
 			Class.kilobyteSnowdread.UPGRADES_TIER_0 = ["megabyteSnowdread", "binarySnowdread", "trojanSnowdread", "hardwareSnowdread", "siloSnowdread", "fireworkSnowdread"];
 				Class.megabyteSnowdread.UPGRADES_TIER_0 = ["gigabyteSnowdread"];
-					Class.gigabyteSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("gigabyteSnowdread")];
+					Class.gigabyteSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("gigabyteSnowdread");
 				// Class.binarySnowdread.UPGRADES_TIER_0 = ["cipherSnowdread"];
 				Class.trojanSnowdread.UPGRADES_TIER_0 = ["malwareSnowdread"];
-					Class.malwareSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("malwareSnowdread")];
+					Class.malwareSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("malwareSnowdread");
 				Class.hardwareSnowdread.UPGRADES_TIER_0 = ["softwareSnowdread"];
-					Class.softwareSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("softwareSnowdread")];
+					Class.softwareSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("softwareSnowdread");
 				Class.siloSnowdread.UPGRADES_TIER_0 = ["arsenalSnowdread"];
-					Class.arsenalSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("arsenalSnowdread")];
+					Class.arsenalSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("arsenalSnowdread");
 				Class.fireworkSnowdread.UPGRADES_TIER_0 = ["missileSnowdread"];
-					Class.missileSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("missileSnowdread")];
+					Class.missileSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("missileSnowdread");
 				
 			Class.lighterSnowdread.UPGRADES_TIER_0 = ["burnerSnowdread"];
 				Class.burnerSnowdread.UPGRADES_TIER_0 = ["roasterSnowdread"];
-					Class.roasterSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("roasterSnowdread")];
+					Class.roasterSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("roasterSnowdread");
 
 		Class.showerSnowdread.UPGRADES_TIER_0 = ["stormSnowdread"];
 			Class.stormSnowdread.UPGRADES_TIER_0 = ["tempestSnowdread"];
 				Class.tempestSnowdread.UPGRADES_TIER_0 = ["monsoonSnowdread"];
-					Class.monsoonSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("monsoonSnowdread")];
+					Class.monsoonSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("monsoonSnowdread");
 
 		Class.atmosphereSnowdread.UPGRADES_TIER_0 = ["coronaSnowdread", "thermosphereSnowdread"];
 
 			Class.coronaSnowdread.UPGRADES_TIER_0 = ["chromosphereSnowdread", "fusionSnowdread", "trojanSnowdread", "planetSnowdread", "sirenSnowdread", "towerSnowdread"];
 				Class.chromosphereSnowdread.UPGRADES_TIER_0 = ["photosphereSnowdread"];
-					Class.photosphereSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("photosphereSnowdread")];
+					Class.photosphereSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("photosphereSnowdread");
 				// Class.fusionSnowdread.UPGRADES_TIER_0 = ["supernovaSnowdread"];
 				// Class.trojanSnowdread.UPGRADES_TIER_0 = ["malwareSnowdread"];
 				Class.planetSnowdread.UPGRADES_TIER_0 = ["astronomicSnowdread"];
-					Class.astronomicSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("astronomicSnowdread")];
+					Class.astronomicSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("astronomicSnowdread");
 				Class.sirenSnowdread.UPGRADES_TIER_0 = ["valrayvnSnowdread"];
-					Class.valrayvnSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("valrayvnSnowdread")];
+					Class.valrayvnSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("valrayvnSnowdread");
 				Class.towerSnowdread.UPGRADES_TIER_0 = ["mountainSnowdread"];
-					Class.mountainSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("mountainSnowdread")];
+					Class.mountainSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("mountainSnowdread");
 
 			Class.thermosphereSnowdread.UPGRADES_TIER_0 = ["mesosphereSnowdread", "exosphereSnowdread", "hardwareSnowdread", "moonSnowdread", "harpySnowdread", "creatureSnowdread"];
 				Class.mesosphereSnowdread.UPGRADES_TIER_0 = ["stratosphereSnowdread"];
-					Class.stratosphereSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("stratosphereSnowdread")];
+					Class.stratosphereSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("stratosphereSnowdread");
 				// Class.exosphereSnowdread.UPGRADES_TIER_0 = ["interstellarSnowdread"];
 				// Class.hardwareSnowdread.UPGRADES_TIER_0 = ["softwareSnowdread"];
 				Class.moonSnowdread.UPGRADES_TIER_0 = ["grandioseSnowdread"];
-					Class.grandioseSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("grandioseSnowdread")];
+					Class.grandioseSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("grandioseSnowdread");
 				Class.harpySnowdread.UPGRADES_TIER_0 = ["pegasusSnowdread"];
-					Class.pegasusSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("pegasusSnowdread")];
+					Class.pegasusSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("pegasusSnowdread");
 				Class.creatureSnowdread.UPGRADES_TIER_0 = ["beastSnowdread"];
-					Class.beastSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("beastSnowdread")];
+					Class.beastSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("beastSnowdread");
 
 		Class.juggernautSnowdread.UPGRADES_TIER_0 = ["jumboSnowdread", "colossusSnowdread", "cottonSnowdread", "ironSnowdread"];
 
 			Class.jumboSnowdread.UPGRADES_TIER_0 = ["goliathSnowdread", "planetSnowdread", "moonSnowdread", "burgSnowdread", "siloSnowdread", "armadaSnowdread"];
 				Class.goliathSnowdread.UPGRADES_TIER_0 = ["behemothSnowdread"];
-					Class.behemothSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("behemothSnowdread")];
+					Class.behemothSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("behemothSnowdread");
 				// Class.planetSnowdread.UPGRADES_TIER_0 = ["astronomicSnowdread"];
 				// Class.moonSnowdread.UPGRADES_TIER_0 = ["grandioseSnowdread"];
 				// Class.burgSnowdread.UPGRADES_TIER_0 = ["bunkerSnowdread"];
 				// Class.siloSnowdread.UPGRADES_TIER_0 = ["arsenalSnowdread"];
 				Class.armadaSnowdread.UPGRADES_TIER_0 = ["battalionSnowdread"];
-					Class.battalionSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("battalionSnowdread")];
+					Class.battalionSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("battalionSnowdread");
 
 			Class.colossusSnowdread.UPGRADES_TIER_0 = ["titanSnowdread", "sirenSnowdread", "harpySnowdread", "batonSnowdread", "fireworkSnowdread", "armadaSnowdread"];
 				Class.titanSnowdread.UPGRADES_TIER_0 = ["leviathanSnowdread"];
-					Class.leviathanSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("leviathanSnowdread")];
+					Class.leviathanSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("leviathanSnowdread");
 				// Class.sirenSnowdread.UPGRADES_TIER_0 = ["valrayvnSnowdread"];
 				// Class.harpySnowdread.UPGRADES_TIER_0 = ["pegasusSnowdread"];
 				// Class.batonSnowdread.UPGRADES_TIER_0 = ["maceSnowdread"];
@@ -6289,39 +3056,39 @@ Class.addons.UPGRADES_TIER_0.push("dreadSnowdread");
 
 			Class.cottonSnowdread.UPGRADES_TIER_0 = ["featherSnowdread"];
 				Class.featherSnowdread.UPGRADES_TIER_0 = ["wispSnowdread"];
-					Class.wispSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("wispSnowdread")];
+					Class.wispSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("wispSnowdread");
 
 			Class.ironSnowdread.UPGRADES_TIER_0 = ["steelSnowdread"];
 				Class.steelSnowdread.UPGRADES_TIER_0 = ["titaniumSnowdread"];
-					Class.titaniumSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("titaniumSnowdread")];
+					Class.titaniumSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("titaniumSnowdread");
 		
 		Class.stomperSnowdread.UPGRADES_TIER_0 = ["rollerSnowdread", "owlSnowdread"];
 
 			Class.rollerSnowdread.UPGRADES_TIER_0 = ["flattenerSnowdread", "towerSnowdread", "creatureSnowdread", "spotlightSnowdread", "furnaceSnowdread", "asteroidSnowdread"];
 				Class.flattenerSnowdread.UPGRADES_TIER_0 = ["crusherSnowdread"];
-					Class.crusherSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("crusherSnowdread")];
+					Class.crusherSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("crusherSnowdread");
 				// Class.towerSnowdread.UPGRADES_TIER_0 = ["mountainSnowdread"];
 				// Class.creatureSnowdread.UPGRADES_TIER_0 = ["beastSnowdread"];
 				Class.spotlightSnowdread.UPGRADES_TIER_0 = ["luminanceSnowdread"];
-					Class.luminanceSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("luminanceSnowdread")];
+					Class.luminanceSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("luminanceSnowdread");
 				Class.furnaceSnowdread.UPGRADES_TIER_0 = ["foundrySnowdread"];
-					Class.foundrySnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("foundrySnowdread")];
+					Class.foundrySnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("foundrySnowdread");
 				Class.asteroidSnowdread.UPGRADES_TIER_0 = ["planetoidSnowdread"];
-					Class.planetoidSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("planetoidSnowdread")];
+					Class.planetoidSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("planetoidSnowdread");
 
 			Class.owlSnowdread.UPGRADES_TIER_0 = ["cardinalSnowdread"];
 				Class.cardinalSnowdread.UPGRADES_TIER_0 = ["finchSnowdread"];
-					Class.finchSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("finchSnowdread")];
+					Class.finchSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("finchSnowdread");
 
 		Class.dropperSnowdread.UPGRADES_TIER_0 = ["baiterSnowdread"];
 			Class.baiterSnowdread.UPGRADES_TIER_0 = ["cagerSnowdread"];
 				Class.cagerSnowdread.UPGRADES_TIER_0 = ["hoarderSnowdread"];
-					Class.hoarderSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("hoarderSnowdread")];
+					Class.hoarderSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("hoarderSnowdread");
 
 		Class.spotterSnowdread.UPGRADES_TIER_0 = ["spySnowdread"];
 			Class.spySnowdread.UPGRADES_TIER_0 = ["monitorSnowdread"];
 				Class.monitorSnowdread.UPGRADES_TIER_0 = ["trackerSnowdread"];
-					Class.trackerSnowdread.UPGRADES_TIER_0 = [makeHexnoughtBodyV2("trackerSnowdread")];
+					Class.trackerSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("trackerSnowdread");
 
 const hexDreadNames = {
 	Javelin: {
@@ -6702,8 +3469,8 @@ const hexDreadNames = {
 };
 
 function mergeHexnoughtWeaponV2(weapon1, weapon2) {
-	weapon1 = ensureIsClass(Class, weapon1);
-	weapon2 = ensureIsClass(Class, weapon2);
+	weapon1 = ensureIsClass(weapon1);
+	weapon2 = ensureIsClass(weapon2);
 
 	let PARENT = Class.genericHexnoughtSnowdread,
 		BODY = JSON.parse(JSON.stringify(PARENT.BODY)),
@@ -6815,9 +3582,9 @@ function mergeHexnoughtWeaponV2(weapon1, weapon2) {
 }
 
 function makeHexnoughtBodyV2(body) {
-	if (!buildHexnoughts) return;
+	if (!buildHexnoughts) return [];
 	
-	body = ensureIsClass(Class, body);
+	body = ensureIsClass(body);
 
 	let PARENT = Class.genericHexnoughtSnowdread,
 		SIZE = body.SIZE ?? 1,
@@ -6887,7 +3654,7 @@ function makeHexnoughtBodyV2(body) {
 	Class[className] = {
 		PARENT, SIZE, BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS,
 	};
-	return className;
+	return [className];
 }
 
 // Merge hexdreads
