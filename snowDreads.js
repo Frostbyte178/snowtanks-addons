@@ -597,14 +597,22 @@ function addShotgun({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0
 		}, {
 			POSITION: [6, width, -1.3, x, y, angle, 0],
 			PROPERTIES: {
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.6 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
 			POSITION: [length - x - 1, width / 2, -0.6, x, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.7 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.75 },
+			},
+		}, {
+			POSITION: [length - x - 2.5, width * 0.35, -0.85, x, y, angle, delay],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
+				TYPE: "bullet",
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.6 },
+				BORDERLESS: true,
 			},
 		}, {
 			POSITION: [length - x - 4, width * 0.5, 0.001, x, y, angle, 0],
@@ -2209,7 +2217,7 @@ Class.doserSnowdread = { // shotgun
 }
 for(let i = 0; i < 4; i++) {
 	Class.doserSnowdread.GUNS.push(
-		...addShotgun({length: 21, width: 10.5, x: 6, angle: 90*i}, 2.5, [
+		...addShotgun({length: 21, width: 10.5, x: 6, angle: 90*i}, 7.5, [
 			{l: 15, w: 3, y: -3},
 			{l: 14, w: 3, y: 3},
 			{l: 17, w: 4, y: 0},
@@ -4573,7 +4581,7 @@ for(let i = 0; i < 5; i++) {
 			{l: 12, w: 1.5, y: -1, small: true},
 			{l: 12, w: 2, y: 1, small: true},
 			{l: 12, w: 2, y: 2, small: true},
-		], [g.basic, g.machineGun, g.shotgun, {reload: 1.2, health: 1.75, damage: 1.1}], [g.basic, g.machineGun, g.shotgun, {speed: 1.55, maxSpeed: 1.3, reload: 1.2, damage: 0.9}])
+		], [g.basic, g.machineGun, g.shotgun, {reload: 1.2, health: 1.8, damage: 1.1, speed: 0.85, maxSpeed: 0.85}], [g.basic, g.machineGun, g.shotgun, {speed: 1.55, maxSpeed: 1.3, reload: 1.2, damage: 0.9}])
 	)
 }
 Class.helixSnowdread = { // twister
