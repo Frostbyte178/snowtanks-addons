@@ -27,6 +27,7 @@ Class.dreadSnowdread = {
 	LABEL: "Dreadnought",
 	UPGRADE_LABEL: "Snowdreads",
 	UPGRADE_TOOLTIP: "The explosions of gunfire pierce\nthrough the quiet drifting of snow.",
+	UPGRADE_COLOR: "aqua",
 	LEVEL: 90,
 	EXTRA_SKILL: 18,
 }
@@ -279,7 +280,7 @@ Class.sabreSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.sabreSnowdread.GUNS.push(
-		...addAssassin({length: 24, width: 7, x: 7, angle: 90*i}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, {reload: 0.85}])
+		...addAssassin({length: 24, width: 7, x: 7, angle: 90*i}, 12.5, [g.basic, g.sniper, g.assassin, g.assassin, {reload: 0.85}])
 	)
 }
 Class.gladiusSnowdread = {
@@ -303,7 +304,7 @@ Class.slingSnowdread = { // hunter
 }
 for (let i = 0; i < 4; i++) {
 	Class.slingSnowdread.GUNS.push(
-		...addHunter({length: 17, width: 9, angle: 90*i}, -10, [g.basic, g.sniper, g.hunter, {health: 1.1, speed: 1.05}])
+		...addHunter({length: 17, width: 9, angle: 90*i}, -5, [g.basic, g.sniper, g.hunter, {health: 1.1, speed: 1.05}])
 	)
 }
 Class.catapultSnowdread = { // mega-sniper
@@ -314,7 +315,7 @@ Class.catapultSnowdread = { // mega-sniper
 }
 for (let i = 0; i < 4; i++) {
 	Class.catapultSnowdread.GUNS.push(
-		...addHeavySniper({length: 22, width: 9, angle: 90*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.333, size: 2}])
+		...addHeavySniper({length: 22, width: 9, x: 7.5, angle: 90*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.333, size: 2}])
 	)
 }
 Class.dartSnowdread = { // railgun
@@ -336,8 +337,8 @@ Class.mediatorSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.mediatorSnowdread.GUNS.push(
-		...addNormal({length: 15, width: 7, y: 4.25, angle: 90*i}, 7.5, [g.basic, g.twin, {reload: 0.85}]),
-		...addNormal({length: 15, width: 7, y: -4.25, angle: 90*i, delay: 0.5}, 7.5, [g.basic, g.twin, {reload: 0.85}]),
+		...addNormal({length: 15, width: 7, y: 4.25, angle: 90*i}, 12.5, [g.basic, g.twin, {reload: 0.85}]),
+		...addNormal({length: 15, width: 7, y: -4.25, angle: 90*i, delay: 0.5}, 12.5, [g.basic, g.twin, {reload: 0.85}]),
 	)
 }
 Class.negotiatorSnowdread = {
@@ -348,7 +349,7 @@ Class.negotiatorSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.negotiatorSnowdread.GUNS.push(
-		...addNormal({length: 9, width: 8, aspect: 1.4, x: 6, angle: 90*i}, 7.5, [g.basic, g.machineGun, {size: 0.8, health: 1.3}]),
+		...addNormal({length: 9, width: 8, aspect: 1.4, x: 6, angle: 90*i}, 12.5, [g.basic, g.machineGun, {size: 0.8, health: 1.3}]),
 	)
 }
 Class.melderSnowdread = { // all auto
@@ -373,9 +374,9 @@ Class.crackerSnowdread = { // ultra bullet spam
 }
 for(let i = 0; i < 4; i++) {
 	Class.crackerSnowdread.GUNS.push(
-		...addSpam({length: 19, width: 8, angle: 90*i}, -10, [g.basic, g.minigun, {reload: 0.85}]),
-		...addSpam({length: 17, width: 8, angle: 90*i, delay: 1/3}, -10, [g.basic, g.minigun, {reload: 0.85}]),
-		...addSpam({length: 15, width: 8, angle: 90*i, delay: 2/3}, -10, [g.basic, g.minigun, {reload: 0.85}]),
+		...addSpam({length: 19, width: 7, angle: 90*i}, 0, [g.basic, g.minigun, {reload: 0.85}]),
+		...addSpam({length: 17, width: 7, angle: 90*i, delay: 1/3}, 0, [g.basic, g.minigun, {reload: 0.85}]),
+		...addSpam({length: 15, width: 7, angle: 90*i, delay: 2/3}, 0, [g.basic, g.minigun, {reload: 0.85}]),
 	)
 }
 Class.grabberSnowdread = { // spread
@@ -386,9 +387,9 @@ Class.grabberSnowdread = { // spread
 }
 for(let i = 0; i < 4; i++) {
 	Class.grabberSnowdread.GUNS.push(
-		...addNormal({length: 17, width: 7, y: -1.5, angle: 90 * i - 15, delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17, width: 7, y: 1.5, angle: 90 * i + 15, delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 19, width: 7, angle: 90 * i, delay: 0}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 17, width: 6.5, y: -1.25, angle: 90 * i - 15, delay: 0.5}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 17, width: 6.5, y: 1.25, angle: 90 * i + 15, delay: 0.5}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 19, width: 6.5, angle: 90 * i, delay: 0}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
 	)
 }
 Class.enforcerSnowdread = {
@@ -438,7 +439,7 @@ Class.swirlSnowdread = { // twister
 }
 for(let i = 0; i < 4; i++) {
 	Class.swirlSnowdread.GUNS.push(
-		...addTwister({length: 16, width: 8.5, angle: 90*i}, 0, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.3, maxSpeed: 1.3, reload: 1.333}], "swirlMissileSnowdread")
+		...addTwister({length: 16, width: 8.5, angle: 90*i}, 2.5, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.3, maxSpeed: 1.3, reload: 1.333}], "swirlMissileSnowdread")
 	)
 }
 Class.pelterSnowdread = { // artillery
@@ -449,9 +450,9 @@ Class.pelterSnowdread = { // artillery
 }
 for(let i = 0; i < 4; i++) {
 	Class.pelterSnowdread.GUNS.push(
-		...addGunner({length: 15, width: 3, y: -3.5, angle: 90*i-7, delay: 0.25}, -2.5, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
-		...addGunner({length: 15, width: 3, y: 3.5, angle: 90*i+7, delay: 0.75}, -2.5, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
-		...addHeavy({length: 17, width: 8, angle: 90*i}, 2.5, [g.basic, g.pounder, g.artillery, {health: 1.1}]),
+		...addGunner({length: 15, width: 3, y: -3.5, angle: 90*i-7, delay: 0.25}, 0, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
+		...addGunner({length: 15, width: 3, y: 3.5, angle: 90*i+7, delay: 0.75}, 0, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
+		...addHeavy({length: 17, width: 8, angle: 90*i}, 7.5, [g.basic, g.pounder, g.artillery, {health: 1.1}]),
 	)
 }
 Class.inquisitorSnowdread = {
@@ -462,7 +463,7 @@ Class.inquisitorSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.inquisitorSnowdread.GUNS.push(
-		...addDrone({length: 5, width: 11, aspect: 1.1, x: 8, angle: 90*i}, -7.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 3)
+		...addDrone({length: 5, width: 10, aspect: 1.1, x: 8, angle: 90*i}, -2.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 3)
 	)
 }
 Class.assailantMinionTopSnowdread = {
@@ -478,7 +479,7 @@ Class.assailantSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.assailantSnowdread.GUNS.push(
-		...addMinion({length: 12, gap: 3, width: 11, angle: 90*i}, -2.5, [g.factory, {size: 0.9, reload: 0.5}])
+		...addMinion({length: 12, gap: 3, width: 11, angle: 90*i}, 2.5, [g.factory, {size: 0.9, reload: 0.5}])
 	)
 }
 Class.radiationSnowdread = { // auto-drones
@@ -489,7 +490,7 @@ Class.radiationSnowdread = { // auto-drones
 }
 for(let i = 0; i < 4; i++) {
 	Class.radiationSnowdread.GUNS.push(
-		...addAutoDrone({length: 6, width: 10, angle: 90*i}, -5, [g.drone, g.overseer, {reload: 0.8}], 3)
+		...addAutoDrone({length: 6, width: 10, angle: 90*i}, 0, [g.drone, g.overseer, {reload: 0.8}], 3)
 	)
 };
 Class.boxerSnowdread = { // honcho
@@ -500,7 +501,7 @@ Class.boxerSnowdread = { // honcho
 }
 for(let i = 0; i < 4; i++) {
 	Class.boxerSnowdread.GUNS.push(
-		...addHoncho({length: 5, width: 11, aspect: 1.5, x: 8, angle: 90*i}, -5, [g.drone, g.overseer, g.overseer, g.honcho], i % 2 + 1)
+		...addHoncho({length: 5, width: 9, aspect: 1.5, x: 8, angle: 90*i}, 0, [g.drone, g.overseer, g.overseer, g.honcho], i % 2 + 1)
 	)
 };
 Class.disablerSnowdread = { // swarms
@@ -511,8 +512,8 @@ Class.disablerSnowdread = { // swarms
 }
 for(let i = 0; i < 4; i++) {
 	Class.disablerSnowdread.GUNS.push(
-		...addSwarm({length: 7, width: 7, x: 6, y: 3.5, angle: 90*i}, -5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
-		...addSwarm({length: 7, width: 7, x: 6, y: -3.5, angle: 90*i, delay: 0.5}, -5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
+		...addSwarm({length: 7, width: 7, x: 6, y: 3.5, angle: 90*i}, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
+		...addSwarm({length: 7, width: 7, x: 6, y: -3.5, angle: 90*i, delay: 0.5}, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
 	)
 };
 Class.daemonSnowdread = {
@@ -523,8 +524,8 @@ Class.daemonSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.daemonSnowdread.GUNS.push(
-		...addTrap({length: 11, length2: 2, width: 4.5, aspect: 1.7, y: 4.5, angle: 90*i}, 5, [g.trap, g.twin, {reload: 2, health: 3.5}]),
-		...addTrap({length: 11, length2: 2, width: 4.5, aspect: 1.7, y: -4.5, angle: 90*i}, 5, [g.trap, g.twin, {reload: 2, health: 3.5}]),
+		...addTrap({length: 11.5, length2: 2, width: 4.5, aspect: 1.7, y: 4.5, angle: 90*i}, 10, [g.trap, g.twin, {reload: 2, health: 3.5}]),
+		...addTrap({length: 11.5, length2: 2, width: 4.5, aspect: 1.7, y: -4.5, angle: 90*i}, 10, [g.trap, g.twin, {reload: 2, health: 3.5}]),
 	)
 }
 Class.minotaurSnowdread = {
@@ -535,7 +536,7 @@ Class.minotaurSnowdread = {
 }
 for (let i = 0; i < 4; i++) {
 	Class.minotaurSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 2.5, [g.trap, g.setTrap, {reload: 2, health: 2}], true),
+		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 5, [g.trap, g.setTrap, {reload: 2, health: 2}], true),
 	)
 }
 Class.cleanerSnowdread = { // auto-traps
@@ -546,7 +547,7 @@ Class.cleanerSnowdread = { // auto-traps
 }
 for(let i = 0; i < 4; i++) {
 	Class.cleanerSnowdread.GUNS.push(
-		...addAutoTrap({length: 15, width: 6, aspect: 1.7, angle: 90*i}, 0, [g.trap, {health: 1.2, reload: 1.15, speed: 0.8}], 7)
+		...addAutoTrap({length: 15, width: 6, aspect: 1.7, angle: 90*i}, 5, [g.trap, {health: 1.2, reload: 1.15, speed: 0.8}], 7)
 	)
 }
 Class.shadeSnowdread = { // aura-traps
@@ -557,7 +558,7 @@ Class.shadeSnowdread = { // aura-traps
 }
 for(let i = 0; i < 4; i++) {
 	Class.shadeSnowdread.GUNS.push(
-		...addAuraTrap({length: 14, length2: 3, width: 7, aspect: 1.6, angle: 90*i}, -5, [g.trap, g.hexaTrapper, {shudder: 0.6, health: 1.25}], 100)
+		...addAuraTrap({length: 14, length2: 3, width: 7, aspect: 1.6, x: 8, angle: 90*i}, 5, [g.trap, g.hexaTrapper, {shudder: 0.6, health: 1.25}], 100)
 	)
 }
 Class.screwdriverSnowdread = { // trap + gun
@@ -568,8 +569,8 @@ Class.screwdriverSnowdread = { // trap + gun
 }
 for(let i = 0; i < 4; i++) {
 	Class.screwdriverSnowdread.GUNS.push(
-		...addNormal({length: 19, width: 7, angle: 90*i}, 2.5, [g.basic, g.flankGuard]),
-		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 3.5, [g.trap, g.hexaTrapper]),
+		...addNormal({length: 19, width: 7, angle: 90*i}, 10, [g.basic, g.flankGuard]),
+		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 10, [g.trap, g.hexaTrapper]),
 	)
 }
 
@@ -874,7 +875,7 @@ Class.bayonetSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.bayonetSnowdread.GUNS.push(
-		...addAssassin({length: 28, width: 7, x: 7, angle: 120*i}, 2.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
+		...addAssassin({length: 28, width: 7, x: 7, angle: 120*i}, 0, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
 	)
 }
 Class.bladeSnowdread = {
@@ -885,7 +886,7 @@ Class.bladeSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.bladeSnowdread.GUNS.push(
-		...addRifle({length: 18, width: 5, angle: 120*i}, -5, [g.basic, g.sniper, g.rifle, g.twin, {speed: 0.8, health: 1.5}], true)
+		...addRifle({length: 18, width: 5, angle: 120*i}, -2.5, [g.basic, g.sniper, g.rifle, g.twin, {speed: 0.8, health: 1.5}], true)
 	)
 }
 Class.atlatlSnowdread = { // hunter
@@ -898,7 +899,7 @@ Class.atlatlSnowdread = { // hunter
 }
 for (let i = 0; i < 3; i++) {
 	Class.atlatlSnowdread.GUNS.push(
-		...addHunter({length: 18, width: 9, dimensionDifference: 3, angle: 120*i}, -10, [g.basic, g.sniper, g.assassin, g.hunter, {health: 1.1}]),
+		...addHunter({length: 18, width: 9, dimensionDifference: 3, angle: 120*i}, -5, [g.basic, g.sniper, g.assassin, g.hunter, {health: 1.1}]),
 		{
 			POSITION: [5, 9, -1.6, 6, 0, 120*i, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -20, SATURATION_SHIFT: 0.5 } },
@@ -916,7 +917,7 @@ Class.ballistaSnowdread = { // mega-sniper
 }
 for (let i = 0; i < 3; i++) {
 	Class.ballistaSnowdread.GUNS.push(
-		...addHeavySniper({length: 22, width: 10.5, angle: 120*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.2, size: 2}])
+		...addHeavySniper({length: 23.5, width: 9.5, x: 6.5, angle: 120*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.2, size: 2}])
 	)
 }
 Class.barbSnowdread = { // railgun
@@ -938,8 +939,8 @@ Class.mitigatorSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.mitigatorSnowdread.GUNS.push(
-		...addNormal({length: 10, width: 8, x: 3, y: 5, angle: 120*i}, 5, [g.basic, {reload: 0.85}]),
-		...addNormal({length: 10, width: 8, x: 3, y: -5, angle: 120*i, delay: 0.5}, 5, [g.basic, {reload: 0.85}]),
+		...addNormal({length: 10, width: 7, x: 3, y: 4.5, angle: 120*i}, 5, [g.basic, {reload: 0.85}]),
+		...addNormal({length: 10, width: 7, x: 3, y: -4.5, angle: 120*i, delay: 0.5}, 5, [g.basic, {reload: 0.85}]),
 	)
 }
 Class.appeaserSnowdread = {
@@ -950,8 +951,8 @@ Class.appeaserSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.appeaserSnowdread.GUNS.push(
-		...addNormal({length: 7, width: 10, aspect: 1.35, x: 6, angle: 120*i}, 5, [g.basic, g.machineGun, {size: 0.8}], false),
-		...addNormal({length: 7, width: 9, aspect: 1.3, x: 8, angle: 120*i}, 5, [g.basic, g.machineGun, {size: 0.8, reload: 0.9}]),
+		...addNormal({length: 7, width: 10, aspect: 1.35, x: 6, angle: 120*i}, 7.5, [g.basic, g.machineGun, {size: 0.8}], false),
+		...addNormal({length: 7, width: 9, aspect: 1.3, x: 8, angle: 120*i}, 7.5, [g.basic, g.machineGun, {size: 0.8, reload: 0.9}]),
 	)
 }
 Class.amalgamSnowdread = { // all auto
@@ -977,9 +978,9 @@ Class.breakerSnowdread = { // ultra bullet spam
 }
 for(let i = 0; i < 3; i++) {
 	Class.breakerSnowdread.GUNS.push(
-		...addGunner({length: 19, width: 2.75, y: -3, angle: 120*i, delay: 1/3}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
-		...addGunner({length: 19, width: 2.75, y: 3, angle: 120*i, delay: 2/3}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
-		...addGunner({length: 21.5, width: 3.25, y: 0, angle: 120*i}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05, size: 2.75/3.25}]),
+		...addGunner({length: 18.5, width: 2.75, y: -3, angle: 120*i, delay: 1/3}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
+		...addGunner({length: 18.5, width: 2.75, y: 3, angle: 120*i, delay: 2/3}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
+		...addGunner({length: 21, width: 3.25, y: 0, angle: 120*i}, -5, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05, size: 2.75/3.25}]),
 		{
 			POSITION: [10, 8.5, 0.6, 5, 0, 120*i, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } },
@@ -1027,7 +1028,7 @@ Class.inhibitorSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.inhibitorSnowdread.GUNS.push(
-		...addLauncher({length: 15, width: 12.5, angle: 120*i}, -5, [g.basic, g.pounder, g.artillery, g.skimmer, {size: 0.9, reload: 1.5}], true, "superMissileSnowdread")
+		...addLauncher({length: 15, width: 11.5, angle: 120*i}, -5, [g.basic, g.pounder, g.artillery, g.skimmer, {size: 0.9, reload: 1.5}], true, "superMissileSnowdread")
 	)
 }
 Class.tranquilizerSnowdread = { // shotgun
@@ -1038,7 +1039,7 @@ Class.tranquilizerSnowdread = { // shotgun
 }
 for(let i = 0; i < 3; i++) {
 	Class.tranquilizerSnowdread.GUNS.push(
-		...addShotgun({length: 20, width: 12, x: 5, angle: 120*i}, 0, [
+		...addShotgun({length: 20, width: 11.5, x: 5, angle: 120*i}, 0, [
 			{l: 15, w: 3, y: -3},
 			{l: 15, w: 3, y: 3},
 			{l: 17, w: 4, y: 0},
@@ -1056,7 +1057,7 @@ Class.spiralSnowdread = { // twister
 }
 for(let i = 0; i < 3; i++) {
 	Class.spiralSnowdread.GUNS.push(
-		...addTwister({length: 14, width: 9.25, x: 2, aspect: -1.4, angle: 120*i}, -5, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.55, maxSpeed: 1.3, reload: 1.333}], "spiralMissileSnowdread")
+		...addTwister({length: 14, width: 9, x: 2, aspect: -1.4, angle: 120*i}, -5, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.55, maxSpeed: 1.3, reload: 1.333}], "spiralMissileSnowdread")
 	)
 }
 Class.shellerSnowdread = { // artillery
@@ -1067,11 +1068,11 @@ Class.shellerSnowdread = { // artillery
 }
 for(let i = 0; i < 3; i++) {
 	Class.shellerSnowdread.GUNS.push(
-		...addGunner({length: 12.5, width: 3, y: -6.5, angle: 120*i-7, delay: 0.6}, -5, [g.basic, g.pelleter, g.artillery]),
-		...addGunner({length: 12.5, width: 3, y: 6.5, angle: 120*i+7, delay: 0.8}, -5, [g.basic, g.pelleter, g.artillery]),
-		...addGunner({length: 15.5, width: 3, y: -4.5, angle: 120*i-7, delay: 0.2}, -5, [g.basic, g.pelleter, g.artillery, g.twin]),
-		...addGunner({length: 15.5, width: 3, y: 4.5, angle: 120*i+7, delay: 0.4}, -5, [g.basic, g.pelleter, g.artillery, g.twin]),
-		...addHeavy({length: 17.5, width: 10, angle: 120*i}, -2.5, [g.basic, g.destroyer, g.artillery])
+		...addGunner({length: 12.5, width: 3, y: -6, angle: 120*i-7, delay: 0.6}, -5, [g.basic, g.pelleter, g.artillery]),
+		...addGunner({length: 12.5, width: 3, y: 6, angle: 120*i+7, delay: 0.8}, -5, [g.basic, g.pelleter, g.artillery]),
+		...addGunner({length: 15.5, width: 3, y: -4, angle: 120*i-7, delay: 0.2}, -5, [g.basic, g.pelleter, g.artillery, g.twin]),
+		...addGunner({length: 15.5, width: 3, y: 4, angle: 120*i+7, delay: 0.4}, -5, [g.basic, g.pelleter, g.artillery, g.twin]),
+		...addHeavy({length: 17.5, width: 9, angle: 120*i}, 0, [g.basic, g.destroyer, g.artillery])
 	)
 }
 Class.infiltratorSnowdread = {
@@ -1082,9 +1083,9 @@ Class.infiltratorSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.infiltratorSnowdread.GUNS.push(
-		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: 5.5, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
-		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: -5.5, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
-		...addDrone({length: 5, width: 6, aspect: 1.4, x: 8, angle: 120*i}, -7.5, [g.drone, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
+		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: 5.5, angle: 120*i}, -5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
+		...addDrone({length: 5, width: 6, aspect: 1.4, x: 6, y: -5.5, angle: 120*i}, -5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2),
+		...addDrone({length: 5, width: 6, aspect: 1.4, x: 8, angle: 120*i}, -5, [g.drone, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
 	)
 }
 Class.aggressorSnowdread = {
@@ -1095,7 +1096,7 @@ Class.aggressorSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.aggressorSnowdread.GUNS.push(
-		...addMinion({length: 12, gap: 3, width: 13, angle: 120*i}, 0, [g.factory, {size: 0.9, reload: 0.5}], "aggressorMinionSnowdread", 2)
+		...addMinion({length: 12, gap: 3, width: 12, angle: 120*i}, 0, [g.factory, {size: 0.9, reload: 0.5}], "aggressorMinionSnowdread", 2)
 	)
 }
 Class.haloSnowdread = { // auto-drones
@@ -1106,7 +1107,7 @@ Class.haloSnowdread = { // auto-drones
 }
 for(let i = 0; i < 3; i++) {
 	Class.haloSnowdread.GUNS.push(
-		...addAutoDrone({length: 5, width: 14.5, aspect: 1.2, x: 8, angle: 120*i}, 0, [g.drone, g.overseer, {reload: 1.2, size: 0.8, speed: 1.15, maxSpeed: 1.15}], 4)
+		...addAutoDrone({length: 5, width: 12.5, aspect: 1.2, x: 8, angle: 120*i}, -7.5, [g.drone, g.overseer, {reload: 1.2, size: 0.8, speed: 1.15, maxSpeed: 1.15}], 4)
 	)
 }
 Class.sluggerSnowdread = { // honcho
@@ -1117,7 +1118,7 @@ Class.sluggerSnowdread = { // honcho
 }
 for(let i = 0; i < 3; i++) {
 	Class.sluggerSnowdread.GUNS.push(
-		...addHoncho({length: 5, width: 13, aspect: 1.5, x: 8, angle: 120*i}, 0, [g.drone, g.overseer, g.honcho, {maxSpeed: 0.9, size: 0.75}], 2)
+		...addHoncho({length: 5, width: 10.5, aspect: 1.5, x: 8, angle: 120*i}, -7.5, [g.drone, g.overseer, g.honcho, {maxSpeed: 0.9, size: 0.75}], 2)
 	)
 };
 Class.debilitatorSnowdread = { // swarms
@@ -1128,10 +1129,10 @@ Class.debilitatorSnowdread = { // swarms
 }
 for(let i = 0; i < 3; i++) {
 	Class.debilitatorSnowdread.GUNS.push(
-		...addSwarm({length: 6, width: 9, aspect: 0.6, x: 6, y: 5, angle: 120*i}, 0, [g.swarm, g.flankGuard, {reload: 1.3}]),
-		...addSwarm({length: 6, width: 9, aspect: 0.6, x: 6, y: -5, angle: 120*i, delay: 0.5}, 0, [g.swarm, g.flankGuard, {reload: 1.3}]),
+		...addSwarm({length: 7, width: 8, aspect: 0.6, x: 6, y: 4, angle: 120*i}, 0, [g.swarm, g.flankGuard, {reload: 1.3}]),
+		...addSwarm({length: 7, width: 8, aspect: 0.6, x: 6, y: -4, angle: 120*i, delay: 0.5}, 0, [g.swarm, g.flankGuard, {reload: 1.3}]),
 		{
-			POSITION: [2, 15, 0.85, 8, 0, 120*i, 0],
+			POSITION: [2.5, 12, 0.85, 8, 0, 120*i, 0],
 			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}},
 		},
 	)
@@ -1144,8 +1145,8 @@ Class.hydraSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.hydraSnowdread.GUNS.push(
-		...addTrap({length: 6, length2: 2, width: 3.5, aspect: 1.8, x: 4, y: 8.5, angle: 120*i, delay: 2/3}, 0, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
-		...addTrap({length: 6, length2: 2, width: 3.5, aspect: 1.8, x: 4, y: -8.5, angle: 120*i, delay: 1/3}, 0, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
+		...addTrap({length: 6, length2: 2, width: 3.5, aspect: 1.8, x: 4, y: 7.5, angle: 120*i, delay: 2/3}, 0, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
+		...addTrap({length: 6, length2: 2, width: 3.5, aspect: 1.8, x: 4, y: -7.5, angle: 120*i, delay: 1/3}, 0, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
 		...addTrap({length: 12, length2: 2.5, width: 5, aspect: 1.7, angle: 120*i}, 0, [g.trap, g.setTrap, g.twin, g.pounder, {speed: 1.2, reload: 1/1.1}], true),
 	)
 }
@@ -1168,7 +1169,7 @@ Class.sweeperSnowdread = { // auto-traps
 }
 for(let i = 0; i < 3; i++) {
 	Class.sweeperSnowdread.GUNS.push(
-		...addAutoTrap({length: 15.5, length2: 2, width: 10.5, aspect: 1.3, angle: 120*i}, -2.5, [g.trap, g.setTrap, {reload: 2.25}], 4, true)
+		...addAutoTrap({length: 15.5, length2: 2, width: 9.5, aspect: 1.3, angle: 120*i}, -2.5, [g.trap, g.setTrap, {reload: 2.25}], 4, true)
 	)
 }
 Class.aegisSnowdread = { // aura-traps
@@ -1179,7 +1180,7 @@ Class.aegisSnowdread = { // aura-traps
 }
 for(let i = 0; i < 3; i++) {
 	Class.aegisSnowdread.GUNS.push(
-		...addAuraTrap({length: 14, length2: 3, width: 10, aspect: 1.6, angle: 120*i}, 0, [g.trap, g.setTrap, g.hexaTrapper, {reload: 1.85, range: 1.4, health: 2.4}], 6, true)
+		...addAuraTrap({length: 14, length2: 3, width: 9.5, aspect: 1.45, x: 7, angle: 120*i}, 0, [g.trap, g.setTrap, g.hexaTrapper, {reload: 1.85, range: 1.4, health: 2.4}], 6, true)
 	)
 }
 Class.drillSnowdread = { // trap + gun
@@ -1190,8 +1191,8 @@ Class.drillSnowdread = { // trap + gun
 }
 for(let i = 0; i < 3; i++) {
 	Class.drillSnowdread.GUNS.push(
-		...addNormal({length: 19, width: 7.5, angle: 120*i}, 0, [g.basic, g.flankGuard]),
-		...addTrap({length: 13.5, length2: 3, width: 9.5, aspect: 1.4, angle: 120*i}, 0, [g.trap, g.setTrap, g.hexaTrapper], true)
+		...addNormal({length: 18, width: 7, angle: 120*i}, 2.5, [g.basic, g.flankGuard]),
+		...addTrap({length: 12, length2: 3, width: 8.5, aspect: 1.4, angle: 120*i}, 2.5, [g.trap, g.setTrap, g.hexaTrapper, {size: 0.85}], true)
 	)
 }
 
@@ -1865,7 +1866,7 @@ Class.javelinSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.javelinSnowdread.GUNS.push(
-		...addAssassin({length: 28, width: 7, x: 7, angle: 72*i}, 10, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
+		...addAssassin({length: 28, width: 7, x: 7, angle: 72*i}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
 	)
 }
 Class.rapierSnowdread = {
@@ -1876,7 +1877,7 @@ Class.rapierSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.rapierSnowdread.GUNS.push(
-		...addRifle({length: 18, width: 4.5, angle: 72*i}, 5, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
+		...addRifle({length: 18, width: 4.5, angle: 72*i}, 0, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
 	)
 }
 Class.woomeraSnowdread = { // hunter
@@ -1889,12 +1890,12 @@ Class.woomeraSnowdread = { // hunter
 }
 for (let i = 0; i < 5; i++) {
 	Class.woomeraSnowdread.GUNS.push(
-		...addHunter({length: 20, width: 10.5, dimensionDifference: 2.5, angle: 72*i, barrelCount: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, g.predator, {health: 1.1}]),
+		...addHunter({length: 20, width: 9.5, dimensionDifference: 2.5, angle: 72*i, barrelCount: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, g.predator, {health: 1.1}]),
 		{
-			POSITION: [5, 10.5, -1.6, 7.5, 0, 72*i, 0],
+			POSITION: [5, 9.5, -1.6, 7.5, 0, 72*i, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 }, },
 		}, {
-			POSITION: [5, 9, -1.6, 6, 0, 72*i, 0],
+			POSITION: [5, 8, -1.6, 6, 0, 72*i, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 } },
 		},
 	)
@@ -1907,7 +1908,7 @@ Class.trebuchetSnowdread = { // mega-sniper
 }
 for (let i = 0; i < 5; i++) {
 	Class.trebuchetSnowdread.GUNS.push(
-		...addHeavySniper({length: 24, width: 9.5, angle: 72*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.4, size: 2}])
+		...addHeavySniper({length: 24, width: 9, x: 8.5, angle: 72*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.4, size: 2}])
 	)
 }
 Class.boltSnowdread = { // railgun
@@ -1929,9 +1930,9 @@ Class.diplomatSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.diplomatSnowdread.GUNS.push(
-		...addNormal({length: 13, width: 7, y: 3.15, angle: 72*i, delay: 0.5}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
-		...addNormal({length: 13, width: 7, y: -3.15, angle: 72*i, delay: 0.5}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
-		...addNormal({length: 15, width: 7, angle: 72*i}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
+		...addNormal({length: 14, width: 7, y: 3.15, angle: 72*i, delay: 0.5}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
+		...addNormal({length: 14, width: 7, y: -3.15, angle: 72*i, delay: 0.5}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
+		...addNormal({length: 16, width: 7, angle: 72*i}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
 	)
 }
 Class.arbitratorSnowdread = {
@@ -1942,9 +1943,9 @@ Class.arbitratorSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.arbitratorSnowdread.GUNS.push(
-		...addNormal({length: 7.5, width: 10.75, aspect: 1.33, x: 5.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.8, reload: 1.2}], false),
-		...addNormal({length: 7.5, width: 9.5, aspect: 1.33, x: 7.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.7, reload: 1.1}]),
-		...addNormal({length: 7.5, width: 7.25, aspect: 1.25, x: 9.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.6, reload: 1}]),
+		...addNormal({length: 8, width: 10.75, aspect: 1.33, x: 5.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.7, reload: 1.2}], false),
+		...addNormal({length: 8, width: 9.5, aspect: 1.33, x: 7.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.65, reload: 1.1}]),
+		...addNormal({length: 8, width: 7.25, aspect: 1.25, x: 9.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.6, reload: 1}]),
 	)
 }
 Class.dissolverSnowdread = { // all auto
@@ -2085,11 +2086,11 @@ Class.gladiatorSnowdread = {
 	LABEL: "Gladiator",
 	UPGRADE_TOOLTIP: "Minions",
 	GUNS: [
-		...addMinion({length: 13, width: 13, gap: 2.75, angle: 0}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTritankMinionSnowdread", 2),
-		...addMinion({length: 13, width: 13, gap: 2.75, angle: 72}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTritrapMinionSnowdread", 2),
-		...addMinion({length: 13, width: 13, gap: 2.75, angle: 144}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTriswarmMinionSnowdread", 2),
-		...addMinion({length: 13, width: 13, gap: 2.75, angle: -144}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorAutoMinionSnowdread", 2),
-		...addMinion({length: 13, width: 13, gap: 2.75, angle: -72}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorAuraMinionSnowdread", 2),
+		...addMinion({length: 13, width: 11, gap: 2.75, angle: 0}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTritankMinionSnowdread", 2),
+		...addMinion({length: 13, width: 11, gap: 2.75, angle: 72}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTritrapMinionSnowdread", 2),
+		...addMinion({length: 13, width: 11, gap: 2.75, angle: 144}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTriswarmMinionSnowdread", 2),
+		...addMinion({length: 13, width: 11, gap: 2.75, angle: -144}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorAutoMinionSnowdread", 2),
+		...addMinion({length: 13, width: 11, gap: 2.75, angle: -72}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorAuraMinionSnowdread", 2),
 	],
 }
 Class.starlightSnowdread = { // auto-drones
@@ -2100,7 +2101,7 @@ Class.starlightSnowdread = { // auto-drones
 }
 for(let i = 0; i < 5; i++) {
 	Class.starlightSnowdread.GUNS.push(
-		...addAutoDrone({length: 5, width: 10, aspect: 1.2, x: 9, angle: 72*i}, 0, [g.drone, g.overseer, {reload: 1.5, speed: 1.15, maxSpeed: 1.15}], 3)
+		...addAutoDrone({length: 5, width: 9.5, aspect: 1.2, x: 9, angle: 72*i}, 0, [g.drone, g.overseer, {reload: 1.5, speed: 1.15, maxSpeed: 1.15}], 3)
 	)
 }
 Class.bruiserSnowdread = { // honcho
@@ -2111,7 +2112,7 @@ Class.bruiserSnowdread = { // honcho
 }
 for(let i = 0; i < 5; i++) {
 	Class.bruiserSnowdread.GUNS.push(
-		...addHoncho({length: 5, width: 8.5, aspect: 1.5, x: 9, angle: 72*i}, 0, [g.drone, g.overseer, g.overseer, g.honcho, {maxSpeed: 0.85}], 2)
+		...addHoncho({length: 5, width: 8, aspect: 1.5, x: 9, angle: 72*i}, -2.5, [g.drone, g.overseer, g.overseer, g.honcho, {maxSpeed: 0.85}], 2)
 	)
 };
 Class.incapacitatorSnowdread = { // swarms
@@ -2125,7 +2126,7 @@ for(let i = 0; i < 5; i++) {
 		...addSwarm({length: 6, width: 6, x: 8, y: 3.25, angle: 72*i, delay: 0}, 0, [g.swarm, g.flankGuard, g.flankGuard, {maxSpeed: 1.2}]),
 		...addSwarm({length: 6, width: 6, x: 8, y: -3.25, angle: 72*i, delay: 0.5}, 0, [g.swarm, g.flankGuard, g.flankGuard, {maxSpeed: 1.2}]),
 		{
-			POSITION: [3, 10, 0.85, 9, 0, 72*i, 0],
+			POSITION: [3, 9, 0.85, 9, 0, 72*i, 0],
 			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}},
 		},
 	)
@@ -2138,8 +2139,8 @@ Class.cerberusSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.cerberusSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 1.5, width: 4, y: 2.1, angle: 72*i+10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
-		...addTrap({length: 13, length2: 1.5, width: 4, y: -2.1, angle: 72*i-10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
+		...addTrap({length: 13, length2: 1.5, width: 4, y: 2, angle: 72*i+10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
+		...addTrap({length: 13, length2: 1.5, width: 4, y: -2, angle: 72*i-10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
 		...addTrap({length: 15, length2: 2, width: 5.5, aspect: 1.7, angle: 72*i}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.2, reload: 1.09}], true),
 	)
 }
@@ -2151,7 +2152,7 @@ Class.luciferSnowdread = {
 }
 for (let i = 0; i < 5; i++) {
 	Class.luciferSnowdread.GUNS.push(
-		...addTrap({length: 13.5, length2: 3.5, width: 8.5, angle: 72*i}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.3, maxSpeed: 1.3, size: 1.3, health: 2}], true),
+		...addTrap({length: 13.5, length2: 3.5, width: 8, angle: 72*i}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.3, maxSpeed: 1.3, size: 1.3, health: 2}], true),
 	)
 }
 Class.sterilizerSnowdread = { // auto-traps
@@ -2162,7 +2163,7 @@ Class.sterilizerSnowdread = { // auto-traps
 }
 for(let i = 0; i < 5; i++) {
 	Class.sterilizerSnowdread.GUNS.push(
-		...addAutoTrap({length: 16.5, length2: 2, width: 9.5, aspect: 1.3, angle: 72*i}, 0, [g.trap, g.setTrap, {reload: 2.667}], 4, true)
+		...addAutoTrap({length: 16.5, length2: 2, width: 9, aspect: 1.3, angle: 72*i}, 0, [g.trap, g.setTrap, {reload: 2.667}], 4, true)
 	)
 }
 Class.hielamanSnowdread = { // aura-traps
@@ -2173,7 +2174,7 @@ Class.hielamanSnowdread = { // aura-traps
 }
 for(let i = 0; i < 5; i++) {
 	Class.hielamanSnowdread.GUNS.push(
-		...addAuraTrap({length: 15, length2: 3, width: 9, aspect: 1.6, angle: 72*i}, 0, [g.trap, g.setTrap, g.hexaTrapper, {reload: 2.4, range: 1.6, health: 2.4}], 5, true)
+		...addAuraTrap({length: 15, length2: 3, width: 9, aspect: 1.5, x: 8, angle: 72*i}, 0, [g.trap, g.setTrap, g.hexaTrapper, {reload: 2.4, range: 1.6, health: 2.4}], 5, true)
 	)
 }
 Class.jackhammerSnowdread = { // trap + gun
@@ -2184,8 +2185,8 @@ Class.jackhammerSnowdread = { // trap + gun
 }
 for(let i = 0; i < 5; i++) {
 	Class.jackhammerSnowdread.GUNS.push(
-		...addNormal({length: 19, width: 6.75, angle: 72*i}, 7.5),
-		...addTrap({length: 13.5, length2: 3, width: 8.5, aspect: 1.4, angle: 72*i}, 0, [g.trap, g.setTrap, g.hexaTrapper], true)
+		...addNormal({length: 19, width: 6.75, angle: 72*i}, 10),
+		...addTrap({length: 13, length2: 3, width: 8.25, aspect: 1.4, angle: 72*i}, 2.5, [g.trap, g.setTrap, g.hexaTrapper], true)
 	)
 }
 
@@ -3521,8 +3522,14 @@ function mergeHexnoughtWeaponV2(weapon1, weapon2) {
 
 	// Scale to fit size constraints
 	for (let g in gunsOnOneSide) {
-		gunsOnOneSide[g].POSITION[1] *= hexnoughtScaleFactor ** 2;
-		gunsOnOneSide[g].POSITION[4] *= hexnoughtScaleFactor ** 2;
+		// Scales X and length instead of Y and width if the gun is sideways, only needed for trebuchet
+		let isTrebuchetSpecial = Math.abs(gunsOnOneSide[g].POSITION[5]) == 90 || gunsOnOneSide[g].POSITION[5] == 150 || gunsOnOneSide[g].POSITION[5] == -30;
+		let offset = 0;
+		if (isTrebuchetSpecial) {
+			offset = -1
+		}
+		gunsOnOneSide[g].POSITION[1 + offset] *= hexnoughtScaleFactor ** 2;
+		gunsOnOneSide[g].POSITION[4 + offset] *= hexnoughtScaleFactor ** 2;
 	}
 
 	for (let t in turretsOnOneSide) {

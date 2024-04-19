@@ -16,7 +16,7 @@ exports.addSniper = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 }
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.55 }
 			},
 		}, {
 			POSITION: [length - 3.3, width * 0.8, -0.65, x, y, angle, delay],
@@ -212,7 +212,7 @@ exports.addHunter = ({length = 18, width = 8, dimensionDifference = 3, barrelCou
 				POSITION: [length + i * dimensionDifference, width - i * dimensionDifference - 3, -aspect + 0.3, x, y, angle, delay + delayOffset * (barrelCount - i - 1)],
 				PROPERTIES: {
 					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.75 },
+					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.65 },
 					TYPE: "bullet",
 				},
 			},
@@ -235,38 +235,50 @@ exports.addHunter = ({length = 18, width = 8, dimensionDifference = 3, barrelCou
 exports.addHeavySniper = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
 	return [
 		{
-			POSITION: [length, width, 1, x, y, angle, delay],
+			POSITION: [length, width, 1, 0, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
-			POSITION: [length - 1.5, width * 0.7, -1.3, x, y, angle, delay],
+			POSITION: [length - 1.5, width * 0.7, -1.3, 0, y, angle, delay],
 			PROPERTIES: { 
 				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.6}, 
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.65 }, 
 				BORDERLESS: true
 			},
 		}, {
-			POSITION: [length - 7, width * 0.4, -1.4, x, y, angle, 0],
+			POSITION: [width / 2, width, -0.5, y + width * 0.15, -x, angle + 90, 0],
+			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 } },
+		}, {
+			POSITION: [width / 2, width, -0.5, y + width * 0.15, x, angle - 90, 0],
+			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 } },
+		}, {
+			POSITION: [width / 2, width * 0.7, -0.35, y + width * 0.07, -x, angle + 90, 0],
+			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 }, BORDERLESS: true },
+		}, {
+			POSITION: [width / 2, width * 0.7, -0.35, y + width * 0.07, x, angle - 90, 0],
+			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 }, BORDERLESS: true },
+		}, {
+			POSITION: [length - 7, width * 0.4, -1.4, 0, y, angle, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5 } },
 		}, {
-			POSITION: [4, width + 2, 1, x + length - 7, y, angle, delay],
+			POSITION: [4, width + 2, 1, length - 7, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.6 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.8 },
 			},
 		}, {
-			POSITION: [2, width + 2.5, 1, x + length - 6, y, angle, delay],
+			POSITION: [2, width + 2.5, 1, length - 6, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 				TYPE: "bullet",
 				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 },
 			},
-		},
+		}, 
 	];
 }
 exports.addRailgun = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
@@ -291,16 +303,17 @@ exports.addRailgun = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle =
 			},
 		}, {
 			POSITION: [5, width + 3, -1.7, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15 },}
+			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15 } }
 		}, {
 			POSITION: [3.5, width + 1.5, -1.7, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65 },}
+			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65 } }
 		},
 	];
 	for (let i = 0; i < 3; i++) {
 		output.splice(1, 0,
 			{
 				POSITION: [0.6, width + 4, 1, length - 4 - 2.5 * i, y, angle, delay],
+				PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5 } }
 			}
 		)
 	}
@@ -314,7 +327,7 @@ exports.addNormal = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 }
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.55 }
 			},
 		},
 	];
@@ -325,7 +338,7 @@ exports.addNormal = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 
 				PROPERTIES: {
 					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 					TYPE: "bullet",
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 27.5, SATURATION_SHIFT: 0.5 },
+					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 27.5, SATURATION_SHIFT: 0.55 },
 					BORDERLESS: true,
 				},
 			}, {
@@ -333,7 +346,7 @@ exports.addNormal = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 
 				PROPERTIES: {
 					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 					TYPE: "bullet",
-					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 32.5, SATURATION_SHIFT: 0.5 },
+					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 32.5, SATURATION_SHIFT: 0.55 },
 					BORDERLESS: true,
 				},
 			}, {
@@ -474,12 +487,20 @@ exports.addLauncher = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 	}
 	return [
 		{
-			POSITION: [length - 6, width - 3, 1, x+8, y, angle, delay],
+			POSITION: [length - 6, width - 3, 1, x + 8, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE,
 				STAT_CALCULATOR: gunCalcNames.sustained,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6 },
+			},
+		}, {
+			POSITION: [length - 7, width - 5, 0, x + 8, y, angle, delay],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
+				TYPE: "bullet",
+				STAT_CALCULATOR: gunCalcNames.sustained,
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift },
 			},
 		}, {
 			POSITION: [length, width, -1.15, x, y, angle, 0],
@@ -522,14 +543,14 @@ exports.addShotgun = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle =
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.75 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.75 },
 			},
 		}, {
 			POSITION: [length - x - 2.5, width * 0.35, -0.85, x, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...bigStats, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.6 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.55 },
 				BORDERLESS: true,
 			},
 		}, {
@@ -663,6 +684,9 @@ exports.addMinion = ({length = 18, gap = 3, width = 8, aspect = 1, x = 0, y = 0,
 exports.addAutoDrone = ({length = 18, width = 8, aspect = 1.2, x = 8, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.drone], MAX_CHILDREN = 4) => {
 	return [
 		{
+			POSITION: [3, width * 0.75, 0.001, x + length - 1.5, y, angle, delay],
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.55}},
+		}, {
 			POSITION: [length, width, aspect, x, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
@@ -708,6 +732,9 @@ exports.addHoncho = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 
 		}, {
 			POSITION: [1.5, width * 1.1, 1, x + length - 4.5, y, angle, 0],
 			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5}}
+		}, {
+			POSITION: [3, width * 0.6, 0.001, x + length - 5, y, angle, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15}}
 		}, {
 			POSITION: [length + 11, 4, 0.001, x + xShift, y + width * 0.25, angle + sideAngle * 180 / Math.PI, 0],
 			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 12.5},}
@@ -802,16 +829,19 @@ exports.addAutoTrap = ({length = 18, length2 = 3, width = 8, aspect = 1, x = 0, 
 exports.addAuraTrap = ({length = 18, length2 = 3, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.trap], MAX_CHILDREN = 6, isBox = false) => {
 	return [
 		{
-			POSITION: [length, width, 1, x, y, angle, 0],
+			POSITION: [length, width, 1, 0, y, angle, 0],
 			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6}}
 		}, {
-			POSITION: [length2 + 1, width - 1.5, -1.7, x + length - length2 - 3, y, angle, 0],
+			POSITION: [length2 + 1, width - 1.5, -1.7, x, y, angle, 0],
 			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5}}
 		}, {
-			POSITION: [length, width * 0.6, -0.1, x, y, angle, 0],
+			POSITION: [length2, width - 2.5, -1.55, x, y, angle, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: brightShift + 15}, BORDERLESS: true}
+		}, {
+			POSITION: [length, width * 0.6, -0.1, 0, y, angle, 0],
 			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.75}}
 		}, {
-			POSITION: [length2, width, aspect, x + length, y, angle, delay],
+			POSITION: [length2, width, aspect, length, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: isBox ? 'auraBlock' : 'auraTrap',
@@ -821,7 +851,7 @@ exports.addAuraTrap = ({length = 18, length2 = 3, width = 8, aspect = 1, x = 0, 
 				DESTROY_OLDEST_CHILD: true,
 			},
 		}, {
-			POSITION: [length2 - 1, width - 2, aspect, x + length + 1, y, angle, delay],
+			POSITION: [length2 - 1, width - 2, aspect, length + 1, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 				TYPE: 'bullet',

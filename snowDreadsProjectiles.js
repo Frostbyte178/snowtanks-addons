@@ -50,7 +50,7 @@ Class.superMissileSnowdread = {
 			TYPE: ["egg", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [9, 0, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.6}, BORDERLESS: true}],
+			TYPE: ["egg", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 2.5, SATURATION_SHIFT: 0.8}, BORDERLESS: true}],
 		},
 	],
 }
@@ -122,7 +122,7 @@ Class.honchoDroneSnowdread = {
 // Minions
 Class.assailantMinionSnowdread = {
 	PARENT: ["minion"],
-	BODY: { SPEED: 0.5 },
+	BODY: { SPEED: 2 },
 	SHAPE: 4,
 	COLOR: 13,
 	GUNS: [],
@@ -145,7 +145,7 @@ Class.aggressorMinionSnowdread = {
 	PARENT: ["minion"],
 	SHAPE: 3.5,
 	COLOR: 2,
-	BODY: { SPEED: 0.8, },
+	BODY: { SPEED: 2 },
 	GUNS: [],
 	TURRETS: [
 		{

@@ -1,8 +1,8 @@
-const { combineStats } = require('../facilitators.js');
+const { combineStats, menu, addAura: addAuraOld } = require('../facilitators.js');
 const { smshskl } = require('../constants.js');
 const g = require('../gunvals.js');
 const { eggnoughtBody, squarenoughtBody, trinoughtBody, pentanoughtBody, hexnoughtBody } = require('./snowDreadsConstants.js');
-const { addGunner, addDroneOnAuto } = require('./snowDreadsFacilitators.js');
+const { addGunner, addDroneOnAuto, addAura: addAuraNew } = require('./snowDreadsFacilitators.js');
 const { enableSnowDreads } = require('./snowDreadsConstants.js');
 
 // Navigate to [snowDreadsConstants.js] and the "enableSnowDreads" variable to enable/disable this addon.
@@ -58,7 +58,7 @@ Class.genericHexnoughtSnowdread = {
 }
 Class.gladiatorGenericMinionSnowdread = {
 	PARENT: ["minion"],
-	BODY: { SPEED: 1 },
+	BODY: { SPEED: 2 },
 	SHAPE: 3.5,
 	GUNS: [],
 	TURRETS: [
@@ -180,14 +180,14 @@ Class.melderAutoSnowdread = {
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, {reload: 1.1}]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.5 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.5 },
 			},
 		}, {
 			POSITION: [18.5, 6.5, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.autoTurret, {reload: 1.1}, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.5 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.6 },
 				BORDERLESS: true,
 			},
 		}, {
@@ -209,7 +209,7 @@ Class.melderAutoSnowdread = {
 	TURRETS: [
 		{
 			POSITION: [14.5, 0, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 } }],
+			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.5 } }],
 		}, {
 			POSITION: [8, 0, 0, 0, 0, 1],
 			TYPE: ["egg", { COLOR: { BASE: -1 } }]
@@ -220,9 +220,9 @@ Class.amalgamAutoSnowdread = {
 	PARENT: 'autoTankGun',
 	BODY: {FOV: 2},
 	GUNS: [
-		...addGunner({length: 16, width: 4, y: -3.5, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
-		...addGunner({length: 16, width: 4, y: 3.5, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
-		...addGunner({length: 18, width: 4, delay: 0}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
+		...addGunner({length: 17, width: 4, y: -3.5, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
+		...addGunner({length: 17, width: 4, y: 3.5, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
+		...addGunner({length: 19, width: 4, delay: 0}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot]),
 		{
 			POSITION: [7, 11, -1.3, 5, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 } },
@@ -874,3 +874,37 @@ Class.roasterTurretSnowdread = {
 		},
 	]
 }
+
+// Debug
+Class.snowdreadsDebug = menu("Snowdreads Debug", "teal", -6);
+
+// FPS testing
+Class.auraBenchmark1 = {
+	PARENT: 'genericTank',
+	LABEL: "Basic Aura Benchmark",
+	UPGRADE_TOOLTIP: "169 Basic Dread v2 Auras",
+	TURRETS: []
+}
+Class.auraBenchmark2 = {
+	PARENT: 'genericTank',
+	LABEL: "Complex Aura Benchmark",
+	UPGRADE_TOOLTIP: "169 Large Snowdread Auras",
+	TURRETS: []
+}
+Class.auraBenchmark1Aura = addAuraOld();
+Class.auraBenchmark2Aura = addAuraNew(1, 1, 0.3, 0, "Large");
+for (let i = -6; i <= 6; i++) {
+	for (let j = -6; j <= 6; j++) {
+		Class.auraBenchmark1.TURRETS.push({
+			POSITION: [7.5, 20 * i, 20 * j, 0, 360, 0],
+			TYPE: 'auraBenchmark1Aura'
+		})
+		Class.auraBenchmark2.TURRETS.push({
+			POSITION: [7.5, 20 * i, 20 * j, 0, 360, 0],
+			TYPE: 'auraBenchmark2Aura'
+		})
+	}
+}
+
+Class.addons.UPGRADES_TIER_0.push("snowdreadsDebug");
+	Class.snowdreadsDebug.UPGRADES_TIER_0 = ["auraBenchmark1", "auraBenchmark2"];
