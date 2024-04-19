@@ -23,19 +23,20 @@ g.honcho = {size: 2, damage: 2.5, health: 1.2, reload: 2, speed: 0.7};
 
 // Body helpers
 exports.hpBuffBodyStats = [
-	{ HEALTH: 2.1, SHIELD: 2.1, REGEN: 2,   SPEED: 0.8  },
-	{ HEALTH: 2.9, SHIELD: 2.9, REGEN: 2.2, SPEED: 0.65 },
-	{ HEALTH: 3.5, SHIELD: 3.4, REGEN: 2.5, SPEED: 0.55 },
+	{ HEALTH: 1.5,  SPEED: 1.2,  SHIELD: 1.6,  REGEN: 1.3  },
+	{ HEALTH: 1.8,  SPEED: 1.33, SHIELD: 1.95, REGEN: 1.45 },
+	{ HEALTH: 2.05, SPEED: 1.45, SHIELD: 2.2,  REGEN: 1.6  },
+	{ HEALTH: 2.3,  SPEED: 1.55, SHIELD: 2.5,  REGEN: 1.7  },
 ];
 exports.speedBuffBodyStats = [
-	{ SPEED: 1.95, HEALTH: 0.65 },
-	{ SPEED: 2.3,  HEALTH: 0.5  },
-	{ SPEED: 2.55, HEALTH: 0.35 },
+	{ HEALTH: 0.65, SPEED: 2.1,  SHIELD: 0.75, REGEN: 1   },
+	{ HEALTH: 0.55, SPEED: 2.45, SHIELD: 0.65, REGEN: 0.9 },
+	{ HEALTH: 0.45, SPEED: 2.75, SHIELD: 0.5,  REGEN: 0.8 },
 ];
-exports.sizeBuffBodyStats = [
-	{ SPEED: 0.9,  HEALTH: 2   },
-	{ SPEED: 0.85, HEALTH: 2.4 },
-	{ SPEED: 0.8,  HEALTH: 2.8 },
+exports.shieldBuffBodyStats = [
+	{ HEALTH: 1.2,  SPEED: 1.45, SHIELD: 2.2,  REGEN: 1.7 },
+	{ HEALTH: 1.4,  SPEED: 1.6,  SHIELD: 2.85, REGEN: 1.9 },
+	{ HEALTH: 1.55, SPEED: 1.72, SHIELD: 3.45, REGEN: 2.1 },
 ];
 
 // Body stats

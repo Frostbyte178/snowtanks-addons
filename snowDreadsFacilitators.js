@@ -869,12 +869,12 @@ exports.addDroneOnAuto = ({length = 6, width = 12, aspect = 1.2, x = 8, y = 0, a
 			POSITION: [length, width, 1.2, x, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: ['drone', {INDEPENDENT: true}],
+				TYPE: 'drone',
 				AUTOFIRE: true,
 				SYNCS_SKILLS: true,
 				STAT_CALCULATOR: gunCalcNames.drone,
 				WAIT_TO_CYCLE: true,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.55 },
 			},
 		}, {
 			POSITION: [length - 2, width * 2/3, 1, x - 1, y, angle, 0],
