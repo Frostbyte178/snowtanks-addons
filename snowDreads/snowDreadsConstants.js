@@ -1,5 +1,5 @@
-const { base } = require('../constants.js');
-const g = require('../gunvals.js');
+const { base } = require('../../constants.js');
+const g = require('../../gunvals.js');
 
 // Set the below variable to true to enable all of the snowDreads addons.
 exports.enableSnowDreads = true;

@@ -1,6 +1,6 @@
-const { combineStats, makeAuto } = require('../facilitators.js');
-const { gunCalcNames } = require('../constants.js');
-const g = require('../gunvals.js');
+const { combineStats, makeAuto } = require('../../facilitators.js');
+const { gunCalcNames } = require('../../constants.js');
+const g = require('../../gunvals.js');
 const { addGunner, addTrap, addThruster } = require('./snowDreadsFacilitators.js');
 const { enableSnowDreads } = require('./snowDreadsConstants.js');
 

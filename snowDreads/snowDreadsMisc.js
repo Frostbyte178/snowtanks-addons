@@ -1,6 +1,6 @@
-const { combineStats, menu, addAura: addAuraOld } = require('../facilitators.js');
-const { smshskl } = require('../constants.js');
-const g = require('../gunvals.js');
+const { combineStats, menu, addAura: addAuraOld } = require('../../facilitators.js');
+const { smshskl } = require('../../constants.js');
+const g = require('../../gunvals.js');
 const { eggnoughtBody, squarenoughtBody, trinoughtBody, pentanoughtBody, hexnoughtBody } = require('./snowDreadsConstants.js');
 const { addGunner, addDroneOnAuto, addAura: addAuraNew } = require('./snowDreadsFacilitators.js');
 const { enableSnowDreads } = require('./snowDreadsConstants.js');

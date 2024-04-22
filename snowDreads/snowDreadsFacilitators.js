@@ -1,6 +1,6 @@
-const { combineStats } = require('../facilitators.js');
-const { gunCalcNames } = require('../constants.js');
-const g = require('../gunvals.js');
+const { combineStats } = require('../../facilitators.js');
+const { gunCalcNames } = require('../../constants.js');
+const g = require('../../gunvals.js');
 const { enableSnowDreads } = require('./snowDreadsConstants.js');
 
 // Navigate to [snowDreadsConstants.js] and the "enableSnowDreads" variable to enable/disable this addon.

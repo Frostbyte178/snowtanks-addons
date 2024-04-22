@@ -1,6 +1,6 @@
-const { combineStats } = require('../facilitators.js');
-const { gunCalcNames } = require('../constants.js');
-const g = require('../gunvals.js');
+const { combineStats } = require('../../facilitators.js');
+const { gunCalcNames } = require('../../constants.js');
+const g = require('../../gunvals.js');
 const { 
 	addSniper, addAssassin, addRifle, addHunter, addHeavySniper, addRailgun, 
 	addNormal, addSpam, addGunner, 
