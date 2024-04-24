@@ -171,6 +171,11 @@ Class.ring085 = {
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5},
 	SHAPE: "M -0.85 0 A 0.85 0.85 0 0 0 0.85 0 A 0.85 0.85 0 0 0 -0.85 0 M -1 0 A 1 1 0 0 1 1 0 A 1 1 0 0 1 -1 0 Z"
 }
+Class.assailantMinionTopSnowdread = {
+	SHAPE: "M 0.5 0 L 1 1 L 0 0.5 L -1 1 L -0.5 0 L -1 -1 L 0 -0.5 L 1 -1 L 0.5 0",
+	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.75},
+	MIRROR_MASTER_ANGLE: true,
+}
 Class.aggressorMinionTopSnowdread = {
 	SHAPE: "M -1.546 -0.108 L -1.546 0.108 L -0.175 0.303 L 0.679 1.393 L 0.867 1.285 L 0.35 0 L 0.867 -1.285 L 0.679 -1.393 L -0.175 -0.303 L -1.546 -0.108",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },

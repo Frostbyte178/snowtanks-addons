@@ -1,5 +1,4 @@
-const { combineStats } = require('../../facilitators.js');
-const { gunCalcNames } = require('../../constants.js');
+const { weaponArray } = require('../../facilitators.js');
 const g = require('../../gunvals.js');
 const { 
 	addSniper, addAssassin, addRifle, addHunter, addHeavySniper, addRailgun, 
@@ -48,12 +47,9 @@ Class.swordSnowdread = {
 	PARENT: "genericEggnoughtSnowdread",
 	LABEL: "Sword",
 	UPGRADE_TOOLTIP: "Snipers",
-	GUNS: [],
-}
-for (let i = 0; i < 2; i++) {
-	Class.swordSnowdread.GUNS.push(
-		...addSniper({length: 20, width: 7, angle: 180 * i}, 0, [g.basic, g.sniper, g.assassin, {reload: 0.85}])
-	)
+	GUNS: weaponArray(
+		addSniper({length: 20, width: 7}, 0, [g.basic, g.sniper, g.assassin, {reload: 0.85}])
+	, 2),
 }
 Class.sword2Snowdread = {
 	PARENT: "swordSnowdread",
@@ -63,12 +59,9 @@ Class.pacifierSnowdread = {
 	PARENT: "genericEggnoughtSnowdread",
 	LABEL: "Pacifier",
 	UPGRADE_TOOLTIP: "Bullet Spam",
-	GUNS: [],
-}
-for (let i = 0; i < 2; i++) {
-	Class.pacifierSnowdread.GUNS.push(
-		...addNormal({length: 15, width: 7.5, angle: 180 * i}, 0, [g.basic, {reload: 0.8}])
-	)
+	GUNS: weaponArray(
+		addNormal({length: 15, width: 7.5}, 0, [g.basic, {reload: 0.8}])
+	, 2),
 }
 Class.pacifier2Snowdread = {
 	PARENT: "pacifierSnowdread",
@@ -78,12 +71,9 @@ Class.peacekeeperSnowdread = {
 	PARENT: "genericEggnoughtSnowdread",
 	LABEL: "Peacekeeper",
 	UPGRADE_TOOLTIP: "Heavy Bullets",
-	GUNS: [],
-}
-for (let i = 0; i < 2; i++) {
-	Class.peacekeeperSnowdread.GUNS.push(
-		...addHeavy({length: 17, width: 9, angle: 180*i}, 0, [g.basic, {reload: 1.2, damage: 1.5}]),
-	)
+	GUNS: weaponArray(
+		addHeavy({length: 17, width: 9}, 0, [g.basic, {reload: 1.2, damage: 1.5}])
+	, 2),
 }
 Class.peacekeeper2Snowdread = {
 	PARENT: "peacekeeperSnowdread",
@@ -93,12 +83,9 @@ Class.invaderSnowdread = {
 	PARENT: "genericEggnoughtSnowdread",
 	LABEL: "Invader",
 	UPGRADE_TOOLTIP: "Drones",
-	GUNS: [],
-}
-for (let i = 0; i < 2; i++) {
-	Class.invaderSnowdread.GUNS.push(
-		...addDrone({length: 5, width: 9, angle: 180*i}, 0, [g.drone, g.overseer, {reload: 0.85}])
-	)
+	GUNS: weaponArray(
+		addDrone({length: 5, width: 9}, 0, [g.drone, g.overseer, {reload: 0.85}])
+	, 2),
 }
 Class.invader2Snowdread = {
 	PARENT: "invaderSnowdread",
@@ -108,12 +95,9 @@ Class.centaurSnowdread = {
 	PARENT: "genericEggnoughtSnowdread",
 	LABEL: "Centaur",
 	UPGRADE_TOOLTIP: "Traps",
-	GUNS: [],
-}
-for (let i = 0; i < 2; i++) {
-	Class.centaurSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 3, width: 7, angle: 180*i}, 0, [g.trap, {reload: 2, health: 4, range: 0.75}])
-	)
+	GUNS: weaponArray(
+		addTrap({length: 13, length2: 3, width: 7}, 0, [g.trap, {reload: 2, health: 4, range: 0.75}])
+	, 2),
 }
 Class.centaur2Snowdread = {
 	PARENT: "centaurSnowdread",
@@ -238,23 +222,17 @@ Class.sabreSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Sabre",
 	UPGRADE_TOOLTIP: "Assassins",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.sabreSnowdread.GUNS.push(
-		...addAssassin({length: 24, width: 7, x: 7, angle: 90*i}, 12.5, [g.basic, g.sniper, g.assassin, g.assassin, {reload: 0.85}])
-	)
+	GUNS: weaponArray(
+		addAssassin({length: 24, width: 7, x: 7}, 12.5, [g.basic, g.sniper, g.assassin, g.assassin, {reload: 0.85}])
+	, 4)
 }
 Class.gladiusSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Gladius",
 	UPGRADE_TOOLTIP: "Rifles",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.gladiusSnowdread.GUNS.push(
-		...addRifle({length: 19.5, width: 5, angle: 90*i}, -2.5, [g.basic, g.sniper, g.rifle, {health: 1.3}])
-	)
+	GUNS: weaponArray(
+		addRifle({length: 19.5, width: 5}, -2.5, [g.basic, g.sniper, g.rifle, {health: 1.3}])
+	, 4)
 }
 Class.slingSnowdread = { // hunter
 	PARENT: "genericSquarenoughtSnowdread",
@@ -262,278 +240,203 @@ Class.slingSnowdread = { // hunter
 	UPGRADE_TOOLTIP: "Hunters",
 	CONTROLLERS: [["zoom", { distance: 300 }]],
 	TOOLTIP: "Hold right click to zoom.",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.slingSnowdread.GUNS.push(
-		...addHunter({length: 17, width: 9, angle: 90*i}, -5, [g.basic, g.sniper, g.hunter, {health: 1.1, speed: 1.05}])
-	)
+	GUNS: weaponArray(
+		addHunter({length: 17, width: 9}, -5, [g.basic, g.sniper, g.hunter, {health: 1.1, speed: 1.05}])
+	, 4)
 }
 Class.catapultSnowdread = { // mega-sniper
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Catapult",
 	UPGRADE_TOOLTIP: "Mega-Snipers",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.catapultSnowdread.GUNS.push(
-		...addHeavySniper({length: 22, width: 9, x: 7.5, angle: 90*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.333, size: 2}])
-	)
+	GUNS: weaponArray(
+		addHeavySniper({length: 22, width: 9, x: 7.5}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.333, size: 2}])
+	, 4)
 }
 Class.dartSnowdread = { // railgun
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Dart",
 	UPGRADE_TOOLTIP: "Railguns",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.dartSnowdread.GUNS.push(
-		...addRailgun({length: 25, width: 4, x: 7, angle: 90*i}, -2.5, [g.basic, g.sniper, g.sniper, g.sniper, g.pounder, {reload: 1.5}])
-	)
+	GUNS: weaponArray(
+		addRailgun({length: 25, width: 4, x: 7}, -2.5, [g.basic, g.sniper, g.sniper, g.sniper, g.pounder, {reload: 1.5}])
+	, 4)
 }
 Class.mediatorSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Mediator",
 	UPGRADE_TOOLTIP: "Twins",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.mediatorSnowdread.GUNS.push(
-		...addNormal({length: 15, width: 7, y: 4.25, angle: 90*i, delay: 0   }, 12.5, [g.basic, g.twin, {reload: 0.85}]),
-		...addNormal({length: 15, width: 7, y: -4.25, angle: 90*i, delay: 0.5}, 12.5, [g.basic, g.twin, {reload: 0.85}]),
-	)
+	GUNS: weaponArray([
+		...addNormal({length: 15, width: 7, y: 4.25,  delay: 0  }, 12.5, [g.basic, g.twin, {reload: 0.85}]),
+		...addNormal({length: 15, width: 7, y: -4.25, delay: 0.5}, 12.5, [g.basic, g.twin, {reload: 0.85}]),
+	], 4)
 }
 Class.negotiatorSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Negotiator",
 	UPGRADE_TOOLTIP: "Machine Guns",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.negotiatorSnowdread.GUNS.push(
-		...addNormal({length: 9, width: 8, aspect: 1.4, x: 6, angle: 90*i}, 12.5, [g.basic, g.machineGun, {size: 0.8, health: 1.3}]),
-	)
+	GUNS: weaponArray(
+		addNormal({length: 9, width: 8, aspect: 1.4, x: 6}, 12.5, [g.basic, g.machineGun, {size: 0.8, health: 1.3}])
+	, 4)
 }
 Class.melderSnowdread = { // all auto
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Melder",
 	UPGRADE_TOOLTIP: "All Autos",
-	TURRETS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.melderSnowdread.TURRETS.push(
-		{
-			POSITION: [10, 9, 0, 90*i, 195, 0],
-			TYPE: 'melderAutoSnowdread',
-		},
-	)
+	TURRETS: weaponArray({
+		POSITION: [10, 9, 0, 0, 195, 0],
+		TYPE: 'melderAutoSnowdread',
+	}, 4)
 }
 Class.crackerSnowdread = { // ultra bullet spam
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Cracker",
 	UPGRADE_TOOLTIP: "Miniguns",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.crackerSnowdread.GUNS.push(
-		...addSpam({length: 19, width: 7, angle: 90*i, delay: 0  }, 0, [g.basic, g.minigun, {reload: 0.85}]),
-		...addSpam({length: 17, width: 7, angle: 90*i, delay: 1/3}, 0, [g.basic, g.minigun, {reload: 0.85}]),
-		...addSpam({length: 15, width: 7, angle: 90*i, delay: 2/3}, 0, [g.basic, g.minigun, {reload: 0.85}]),
-	)
+	GUNS: weaponArray([
+		...addSpam({length: 19, width: 7, delay: 0  }, 0, [g.basic, g.minigun, {reload: 0.85}]),
+		...addSpam({length: 17, width: 7, delay: 1/3}, 0, [g.basic, g.minigun, {reload: 0.85}]),
+		...addSpam({length: 15, width: 7, delay: 2/3}, 0, [g.basic, g.minigun, {reload: 0.85}]),
+	], 4)
 }
 Class.grabberSnowdread = { // spread
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Grabber",
 	UPGRADE_TOOLTIP: "Triple Shots",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.grabberSnowdread.GUNS.push(
-		...addNormal({length: 17, width: 6.5, y: -1.25, angle: 90 * i - 15, delay: 0.5}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17, width: 6.5, y: 1.25, angle: 90 * i + 15, delay: 0.5 }, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 19, width: 6.5, y: 0, angle: 90 * i, delay: 0           }, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-	)
+	GUNS: weaponArray([
+		...addNormal({length: 17, width: 6.5, y: -1.25, angle: -15, delay: 0.5}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 17, width: 6.5, y: 1.25,  angle: 15,  delay: 0.5}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 19, width: 6.5, y: 0,     angle: 0,   delay: 0  }, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+	], 4)
 }
 Class.enforcerSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Enforcer",
 	UPGRADE_TOOLTIP: "Heavy Bullets",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.enforcerSnowdread.GUNS.push(
-		...addHeavy({length: 17, width: 9, angle: 90*i}, 2.5, [g.basic, g.pounder, {reload: 0.9}])
-	)
+	GUNS: weaponArray(
+		addHeavy({length: 17, width: 9}, 2.5, [g.basic, g.pounder, {reload: 0.9}])
+	, 4)
 }
 Class.executorSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Executor",
 	UPGRADE_TOOLTIP: "Launchers",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.executorSnowdread.GUNS.push(
-		...addLauncher({length: 17, width: 9, angle: 90*i}, -5, [g.basic, g.pounder, g.artillery, {size: 0.9, speed: 0.5, maxSpeed: 0.4, reload: 0.8}])
-	)
+	GUNS: weaponArray(
+		addLauncher({length: 17, width: 9}, -5, [g.basic, g.pounder, g.artillery, {size: 0.9, speed: 0.5, maxSpeed: 0.4, reload: 0.8}])
+	, 4)
 }
 Class.doserSnowdread = { // shotgun
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Doser",
 	UPGRADE_TOOLTIP: "Shotguns",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.doserSnowdread.GUNS.push(
-		...addShotgun({length: 21, width: 10.5, x: 6, angle: 90*i}, 7.5, [
+	GUNS: weaponArray(
+		addShotgun({length: 21, width: 10.5, x: 6}, 7.5, [
 			{l: 15, w: 3, y: -3},
 			{l: 14, w: 3, y: 3},
 			{l: 17, w: 4, y: 0},
 			{l: 13, w: 4, y: -1},
 			{l: 12, w: 4, y: 1},
-		], [g.basic, g.machineGun, g.shotgun, {health: 1.5, damage: 1.5}]),
-	)
+		], [g.basic, g.machineGun, g.shotgun, {health: 1.5, damage: 1.5}])
+	, 4)
 }
 Class.swirlSnowdread = { // twister
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Swirl",
 	UPGRADE_TOOLTIP: "Twisters",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.swirlSnowdread.GUNS.push(
-		...addTwister({length: 16, width: 8.5, angle: 90*i}, 2.5, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.3, maxSpeed: 1.3, reload: 1.333}], "swirlMissileSnowdread")
-	)
+	GUNS: weaponArray(
+		addTwister({length: 16, width: 8.5}, 2.5, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.3, maxSpeed: 1.3, reload: 1.333}], "swirlMissileSnowdread")
+	, 4)
 }
 Class.pelterSnowdread = { // artillery
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Pelter",
 	UPGRADE_TOOLTIP: "Artillery",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.pelterSnowdread.GUNS.push(
-		...addGunner({length: 15, width: 3, y: -3.5, angle: 90*i-7, delay: 0.25}, 0, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
-		...addGunner({length: 15, width: 3, y: 3.5, angle: 90*i+7, delay: 0.75 }, 0, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
-		...addHeavy({length: 17, width: 8, angle: 90*i}, 7.5, [g.basic, g.pounder, g.artillery, {health: 1.1}]),
-	)
+	GUNS: weaponArray([
+		...addGunner({length: 15, width: 3, y: -3.5, angle: -7, delay: 0.25}, 0, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
+		...addGunner({length: 15, width: 3, y: 3.5,  angle: 7,  delay: 0.75}, 0, [g.basic, g.pelleter, g.artillery, {health: 1.1}]),
+		...addHeavy({length: 17, width: 8}, 7.5, [g.basic, g.pounder, g.artillery, {health: 1.1}]),
+	], 4)
 }
 Class.inquisitorSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Inquisitor",
 	UPGRADE_TOOLTIP: "Drones",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.inquisitorSnowdread.GUNS.push(
-		...addDrone({length: 5, width: 10, aspect: 1.1, x: 8, angle: 90*i}, -2.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 3)
-	)
-}
-Class.assailantMinionTopSnowdread = {
-	SHAPE: "M 0.5 0 L 1 1 L 0 0.5 L -1 1 L -0.5 0 L -1 -1 L 0 -0.5 L 1 -1 L 0.5 0",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.75},
-	MIRROR_MASTER_ANGLE: true,
+	GUNS: weaponArray(
+		addDrone({length: 5, width: 10, aspect: 1.1, x: 8}, -2.5, [g.drone, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 3)
+	, 4)
 }
 Class.assailantSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Assailant",
 	UPGRADE_TOOLTIP: "Minions",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.assailantSnowdread.GUNS.push(
-		...addMinion({length: 12, gap: 3, width: 11, angle: 90*i}, 2.5, [g.factory, {size: 0.9, reload: 0.5}])
-	)
+	GUNS: weaponArray(
+		addMinion({length: 12, gap: 3, width: 11}, 2.5, [g.factory, {size: 0.9, reload: 0.5}])
+	, 4)
 }
 Class.radiationSnowdread = { // auto-drones
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Radiation",
 	UPGRADE_TOOLTIP: "Auto-Drones",
-	GUNS: [],
+	GUNS: weaponArray(
+		addAutoDrone({length: 6, width: 10}, 0, [g.drone, g.overseer, {reload: 0.8}], 3)
+	, 4)
 }
-for(let i = 0; i < 4; i++) {
-	Class.radiationSnowdread.GUNS.push(
-		...addAutoDrone({length: 6, width: 10, angle: 90*i}, 0, [g.drone, g.overseer, {reload: 0.8}], 3)
-	)
-};
 Class.boxerSnowdread = { // honcho
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Boxer",
 	UPGRADE_TOOLTIP: "Heavy Drones",
-	GUNS: [],
+	GUNS: weaponArray([
+		...addHoncho({length: 5, width: 9, aspect: 1.5, angle: 0,  x: 8}, 0, [g.drone, g.overseer, g.overseer, g.honcho], 2),
+		...addHoncho({length: 5, width: 9, aspect: 1.5, angle: 90, x: 8}, 0, [g.drone, g.overseer, g.overseer, g.honcho], 1),
+	], 2)
 }
-for(let i = 0; i < 4; i++) {
-	Class.boxerSnowdread.GUNS.push(
-		...addHoncho({length: 5, width: 9, aspect: 1.5, x: 8, angle: 90*i}, 0, [g.drone, g.overseer, g.overseer, g.honcho], i % 2 + 1)
-	)
-};
 Class.disablerSnowdread = { // swarms
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Disabler",
 	UPGRADE_TOOLTIP: "Swarms",
-	GUNS: [],
+	GUNS: weaponArray([
+		...addSwarm({length: 7, width: 7, x: 6, y: 3.5,  delay: 0  }, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
+		...addSwarm({length: 7, width: 7, x: 6, y: -3.5, delay: 0.5}, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
+	], 4)
 }
-for(let i = 0; i < 4; i++) {
-	Class.disablerSnowdread.GUNS.push(
-		...addSwarm({length: 7, width: 7, x: 6, y: 3.5, angle: 90*i, delay: 0   }, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
-		...addSwarm({length: 7, width: 7, x: 6, y: -3.5, angle: 90*i, delay: 0.5}, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
-	)
-};
 Class.daemonSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Daemon",
 	UPGRADE_TOOLTIP: "Trap Spam",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.daemonSnowdread.GUNS.push(
-		...addTrap({length: 11.5, length2: 2, width: 4.5, aspect: 1.7, y: 4.5, angle: 90*i }, 10, [g.trap, g.twin, {reload: 2, health: 3.5}]),
-		...addTrap({length: 11.5, length2: 2, width: 4.5, aspect: 1.7, y: -4.5, angle: 90*i}, 10, [g.trap, g.twin, {reload: 2, health: 3.5}]),
-	)
+	GUNS: weaponArray([
+		...addTrap({length: 11.5, length2: 2, width: 4.5, aspect: 1.7, y: 4.5 }, 10, [g.trap, g.twin, {reload: 2, health: 3.5}]),
+		...addTrap({length: 11.5, length2: 2, width: 4.5, aspect: 1.7, y: -4.5}, 10, [g.trap, g.twin, {reload: 2, health: 3.5}]),
+	], 4)
 }
 Class.minotaurSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Minotaur",
 	UPGRADE_TOOLTIP: "Blocks",
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.minotaurSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 5, [g.trap, g.setTrap, {reload: 2, health: 2}], true),
-	)
+	GUNS: weaponArray(
+		addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75}, 5, [g.trap, g.setTrap, {reload: 2, health: 2}], true)
+	, 4)
 }
 Class.cleanerSnowdread = { // auto-traps
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Cleaner",
 	UPGRADE_TOOLTIP: "Auto-Traps",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.cleanerSnowdread.GUNS.push(
-		...addAutoTrap({length: 15, width: 6, aspect: 1.7, angle: 90*i}, 5, [g.trap, {health: 1.2, reload: 1.15, speed: 0.8}], 7)
-	)
+	GUNS: weaponArray(
+		addAutoTrap({length: 15, width: 6, aspect: 1.7}, 5, [g.trap, {health: 1.2, reload: 1.15, speed: 0.8}], 7)
+	, 4)
 }
 Class.shadeSnowdread = { // aura-traps
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Shade",
 	UPGRADE_TOOLTIP: "Aura-Traps",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.shadeSnowdread.GUNS.push(
-		...addAuraTrap({length: 14, length2: 3, width: 7, aspect: 1.6, x: 8, angle: 90*i}, 5, [g.trap, g.hexaTrapper, {shudder: 0.6, health: 1.25}], 100)
-	)
+	GUNS: weaponArray(
+		addAuraTrap({length: 14, length2: 3, width: 7, aspect: 1.6, x: 8}, 5, [g.trap, g.hexaTrapper, {shudder: 0.6, health: 1.25}], 100)
+	, 4)
 }
 Class.screwdriverSnowdread = { // trap + gun
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Screwdriver",
 	UPGRADE_TOOLTIP: "Traps + Bullets",
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.screwdriverSnowdread.GUNS.push(
-		...addNormal({length: 19, width: 7, angle: 90*i}, 10, [g.basic, g.flankGuard]),
-		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75, angle: 90*i}, 10, [g.trap, g.hexaTrapper]),
-	)
+	GUNS: weaponArray([
+		...addNormal({length: 19, width: 7}, 10, [g.basic, g.flankGuard]),
+		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75}, 10, [g.trap, g.hexaTrapper]),
+	], 4)
 }
 
 // T2 Bodies
