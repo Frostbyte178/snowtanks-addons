@@ -670,8 +670,8 @@ Class.stormTurretSnowdread = {
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 6,
 	GUNS: [
-		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: 90}, 15, [g.drone, {size: 1.2}]),
-		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: -90}, 15, [g.drone, {size: 1.2}]),
+		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: 90}, 12.5, [g.drone, {size: 1.2}]),
+		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: -90}, 12.5, [g.drone, {size: 1.2}]),
 	],
 	TURRETS: [
 		{

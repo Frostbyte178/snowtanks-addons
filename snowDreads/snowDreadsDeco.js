@@ -1,3 +1,4 @@
+const { weaponArray } = require('../../facilitators.js');
 const { enableSnowDreads } = require('./snowDreadsConstants.js');
 
 // Navigate to [snowDreadsConstants.js] and the "enableSnowDreads" variable to enable/disable this addon.
@@ -263,40 +264,24 @@ Class.trackerRadarSnowdread = {
 
 // Speed buff body deco
 Class.colossusTopSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
+	PARENT: "genericSquarenoughtSnowdread",
 	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.colossusTopSnowdread.GUNS.push(
+	GUNS: weaponArray([
 		{
-			POSITION: [3.5, 17.5, 0.001, 9, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [2.5, 9, 0, 7, 0, 90*i, 0],
+			POSITION: [2.5, 9, 0, 7, 0, 0, 0],
 			PROPERTIES: {COLOR: 9, DRAW_ABOVE: true},
+		}, {
+			POSITION: [3.5, 17.5, 0.001, 9, 0, 0, 0],
+			PROPERTIES: {COLOR: 9},
 		},
-	)
+	], 4),
 }
 Class.colossusBottomSnowdread = {
-	PARENT: ["genericSquarenoughtSnowdread"],
-	GUNS: [],
-}
-for (let i = 0; i < 4; i++) {
-	Class.colossusTopSnowdread.GUNS.push(
-		{
-			POSITION: [3.5, 17.5, 0.001, 9, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
-}
-for (let i = 0; i < 4; i++) {
-	Class.colossusBottomSnowdread.GUNS.push(
-		{
-			POSITION: [4, 17.5, 0.001, 9, 0, 90*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
+	PARENT: "genericSquarenoughtSnowdread",
+	GUNS: weaponArray({
+		POSITION: [4, 17.5, 0.001, 9, 0, 0, 0],
+		PROPERTIES: {COLOR: 9},
+	}, 4),
 }
 Class.titanTopSnowdread = {
 	PARENT: ["genericTrinoughtSnowdread"],

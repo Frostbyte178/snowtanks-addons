@@ -383,8 +383,8 @@ Class.boxerSnowdread = { // honcho
 	LABEL: "Boxer",
 	UPGRADE_TOOLTIP: "Heavy Drones",
 	GUNS: weaponArray([
-		...addHoncho({length: 5, width: 9, aspect: 1.5, angle: 0,  x: 8}, 0, [g.drone, g.overseer, g.overseer, g.honcho], 2),
-		...addHoncho({length: 5, width: 9, aspect: 1.5, angle: 90, x: 8}, 0, [g.drone, g.overseer, g.overseer, g.honcho], 1),
+		...addHoncho({length: 5, width: 9, aspect: 1.5, angle: 0,  x: 8}, -2.5, [g.drone, g.overseer, g.overseer, g.honcho], 2),
+		...addHoncho({length: 5, width: 9, aspect: 1.5, angle: 90, x: 8}, -2.5, [g.drone, g.overseer, g.overseer, g.honcho], 1),
 	], 2)
 }
 Class.disablerSnowdread = { // swarms
@@ -392,8 +392,8 @@ Class.disablerSnowdread = { // swarms
 	LABEL: "Disabler",
 	UPGRADE_TOOLTIP: "Swarms",
 	GUNS: weaponArray([
-		...addSwarm({length: 7, width: 7, x: 6, y: 3.5,  delay: 0  }, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
-		...addSwarm({length: 7, width: 7, x: 6, y: -3.5, delay: 0.5}, 2.5, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
+		...addSwarm({length: 7, width: 7, x: 6, y: 3.5,  delay: 0  }, 0, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
+		...addSwarm({length: 7, width: 7, x: 6, y: -3.5, delay: 0.5}, 0, [g.swarm, g.overseer, g.overseer, {reload: 1.5}]),
 	], 4)
 }
 Class.daemonSnowdread = {
@@ -444,26 +444,22 @@ Class.automationSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Automation",
 	UPGRADE_TOOLTIP: "Small Auto Turrets",
-	TURRETS: [
+	TURRETS: weaponArray({
+		POSITION: [4, 9, 0, 45, 200, 2],
+		TYPE: "spamAutoTurretSnowdread",
+	}, 4),
+	PROPS: [
 		{
-			POSITION: [11, 0, 0, 0, 0, 1],
+			POSITION: [11, 0, 0, 0, 1],
 			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
 		}, {
-			POSITION: [8, 0, 0, 0, 0, 1],
+			POSITION: [8, 0, 0, 0, 1],
 			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, BORDERLESS: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 15}}],
 		},
 	],
-}
-for (let i = 0; i < 4; i++) {
-	Class.automationSnowdread.TURRETS.push(
-		{
-			POSITION: [4, 9, 0, 90*i+45, 200, 1],
-			TYPE: "spamAutoTurretSnowdread",
-		},
-	)
 }
 Class.kilobyteSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
@@ -471,15 +467,18 @@ Class.kilobyteSnowdread = {
 	UPGRADE_TOOLTIP: "Heavy Auto Turret",
 	TURRETS: [
 		{
-			POSITION: [12, 0, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: "kilobyteTurretSnowdread",
 		},
+	],
+	PROPS: [
+		{
+			POSITION: [12, 0, 0, 0, 1],
+			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
+		}, 
 	],
 }
 Class.lighterSnowdread = { // Flamethrower
@@ -488,16 +487,19 @@ Class.lighterSnowdread = { // Flamethrower
 	UPGRADE_TOOLTIP: "Flamethrower",
 	TURRETS: [
 		{
-			POSITION: [13, 0, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
-		}, {
-			POSITION: [9, 0, 0, 0, 360, 1],
+			POSITION: [9, 0, 0, 0, 360, 2],
 			TYPE: 'lighterTurretSnowdread',
 		}
 	],
+	PROPS: [
+		{
+			POSITION: [13, 0, 0, 0, 1],
+			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
+		}
+	]
 }
 Class.stormSnowdread = { // Drones
 	PARENT: "genericSquarenoughtSnowdread",
@@ -509,16 +511,19 @@ Class.stormSnowdread = { // Drones
 	},
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: 'stormTurretSnowdread',
 		}
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 0, 1],
+			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
+		}
+	]
 }
 Class.coronaSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
@@ -526,16 +531,19 @@ Class.coronaSnowdread = {
 	UPGRADE_TOOLTIP: "Damage Aura",
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
-		}, {
-			POSITION: [11, 0, 0, 0, 360, 1],
+			POSITION: [11, 0, 0, 0, 360, 2],
 			TYPE: "coronaAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 0, 1],
+			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
+		}, 
+	]
 }
 Class.thermosphereSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
@@ -543,34 +551,37 @@ Class.thermosphereSnowdread = {
 	UPGRADE_TOOLTIP: "Healing Aura",
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
-		}, {
-			POSITION: [11, 0, 0, 0, 360, 1],
+			POSITION: [11, 0, 0, 0, 360, 2],
 			TYPE: "thermosphereAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 0, 1],
+			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
+		}
+	]
 }
 Class.jumboSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Jumbo",
 	UPGRADE_TOOLTIP: "Health Buff",
 	BODY: hpBuffBodyStats[1],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [13, 0, 0, 0, 0, 1],
+			POSITION: [13, 0, 0, 0, 1],
 			TYPE: ['square', {MIRROR_MASTER_ANGLE: true, COLOR: 9}]
 		}, {
-			POSITION: [7, 0, 0, 0, 0, 1],
+			POSITION: [7, 0, 0, 0, 1],
 			TYPE: ['octogon', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
 		}, {
-			POSITION: [24, 0, 0, 0, 0, -1],
+			POSITION: [24, 0, 0, 0, -1],
 			TYPE: ['square', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		},
 	],
@@ -581,16 +592,16 @@ Class.colossusSnowdread = {
 	UPGRADE_TOOLTIP: "Speed Buff",
 	BODY: speedBuffBodyStats[0],
 	GUNS: [],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [13, 0, 0, 0, 0, 1],
-			TYPE: ['colossusTopSnowdread', {MIRROR_MASTER_ANGLE: true}]
+			POSITION: [13, 0, 0, 0, 1],
+			TYPE: 'colossusTopSnowdread',
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
-			TYPE: ['colossusBottomSnowdread', {MIRROR_MASTER_ANGLE: true}]
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: 'colossusBottomSnowdread',
 		},
 	],
 }
@@ -599,12 +610,12 @@ Class.brassSnowdread = { // Shield buff
 	LABEL: "Brass",
 	UPGRADE_TOOLTIP: "Shield Buff",
 	BODY: shieldBuffBodyStats[0],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
 		}, {
-			POSITION: [6, 0, 0, 0, 0, 1],
+			POSITION: [6, 0, 0, 0, 1],
 			TYPE: ['square', {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -15}, MIRROR_MASTER_ANGLE: true}]
 		},
 	],
@@ -619,22 +630,25 @@ Class.spySnowdread = { // FOV
 	},
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 0, 0, 1],
-			TYPE: ['square', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}]
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["squareBaseDeco"],
-		}, {
-			POSITION: [10.5, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 15}, MIRROR_MASTER_ANGLE: true}]
-		}, {
-			POSITION: [7.5, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: 13, MIRROR_MASTER_ANGLE: true}]
-		}, {
-			POSITION: [15, 0, 0, 0, 360, 1],
+			POSITION: [15, 0, 0, 0, 360, 2],
 			TYPE: 'spyRadarSnowdread',
 		}
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 0, 1],
+			TYPE: ['square', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}]
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "squareBaseDeco",
+		}, {
+			POSITION: [10.5, 0, 0, 0, 1],
+			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 15}, MIRROR_MASTER_ANGLE: true}]
+		}, {
+			POSITION: [7.5, 0, 0, 0, 1],
+			TYPE: ['egg', {COLOR: 13, MIRROR_MASTER_ANGLE: true}]
+		}
+	]
 }
 
 // T3 Weapons
