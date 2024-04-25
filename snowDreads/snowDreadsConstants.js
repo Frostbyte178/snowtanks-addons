@@ -29,14 +29,14 @@ exports.hpBuffBodyStats = [
 	{ HEALTH: 2.55, SPEED: 1.55, SHIELD: 2.15, REGEN: 1.7  },
 ];
 exports.speedBuffBodyStats = [
-	{ HEALTH: 0.65, SPEED: 2.1,  SHIELD: 0.75, REGEN: 1   },
-	{ HEALTH: 0.55, SPEED: 2.45, SHIELD: 0.65, REGEN: 0.9 },
-	{ HEALTH: 0.45, SPEED: 2.75, SHIELD: 0.5,  REGEN: 0.8 },
+	{ HEALTH: 0.75, SPEED: 2.1,  SHIELD: 0.85, REGEN: 1   },
+	{ HEALTH: 0.62, SPEED: 2.45, SHIELD: 0.72, REGEN: 0.9 },
+	{ HEALTH: 0.55, SPEED: 2.75, SHIELD: 0.6,  REGEN: 0.8 },
 ];
 exports.shieldBuffBodyStats = [
 	{ HEALTH: 1.2,  SPEED: 1.45, SHIELD: 2.2,  REGEN: 1.7 },
-	{ HEALTH: 1.4,  SPEED: 1.6,  SHIELD: 2.85, REGEN: 1.9 },
-	{ HEALTH: 1.55, SPEED: 1.72, SHIELD: 3.45, REGEN: 2.1 },
+	{ HEALTH: 1.4,  SPEED: 1.6,  SHIELD: 2.75, REGEN: 1.9 },
+	{ HEALTH: 1.55, SPEED: 1.72, SHIELD: 3.25, REGEN: 2.1 },
 ];
 
 // Body stats

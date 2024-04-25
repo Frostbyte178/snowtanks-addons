@@ -477,11 +477,17 @@ exports.addLauncher = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
 				},
 			}, {
+				POSITION: [length + 0.5 - 10, width * 0.7, 0.001, x + 10, y, angle, 0],
+				PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 2.5 }}
+			}, {
 				POSITION: [length - 2, width - 2, 0.8, x, y, angle, 0],
 				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6 }}
 			}, {
 				POSITION: [length, width - 2, 0.75, x - 3.5, y, angle, 0],
 				PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.7 }, BORDERLESS: true}
+			}, {
+				POSITION: [length * 0.65 - 2.5, width * 0.55, 0.6, x + 2.5, y, angle, 0],
+				PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 7.5 }}
 			},
 		];
 	}
@@ -608,13 +614,16 @@ exports.addTwister = ({length = 18, width = 8, aspect = -1.4, x = 0, y = 0, angl
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.7 },
 			},
 		}, {
-			POSITION: [length, width * 0.8, aspect - 0.1, x - length / 5 - 1.5, y, angle, delay],
+			POSITION: [length, width * 0.85, aspect - 0.1, x - length / 5 - 1, y, angle, delay],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 				TYPE: 'bullet',
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 6.25, SATURATION_SHIFT: 0.7 },
 				BORDERLESS: true
 			},
+		}, {
+			POSITION: [length, width * 0.9, aspect - 0.1, x - length / 5 - 3, y, angle, delay],
+			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 }}
 		}, {
 			POSITION: [length - 2, width * 0.65, 0.7, x, y, angle, 0],
 			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.65 }}
