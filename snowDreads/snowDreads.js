@@ -726,14 +726,6 @@ Class.amalgamSnowdread = { // all auto
 		TYPE: 'amalgamAutoSnowdread',
 	}, 3)
 }
-for(let i = 0; i < 3; i++) {
-	Class.amalgamSnowdread.TURRETS.push(
-		{
-			POSITION: [11, 7, 0, 120*i, 190, 0],
-			TYPE: 'amalgamAutoSnowdread',
-		},
-	)
-}
 Class.breakerSnowdread = { // ultra bullet spam
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Breaker",
@@ -913,83 +905,87 @@ Class.mechanismSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Mechanism",
 	UPGRADE_TOOLTIP: "Small Auto Spam",
-	TURRETS: [
+	TURRETS: weaponArray([
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
+			POSITION: [3.5, 6, 0, 0, 180, 2],
+			TYPE: "spamAutoTurretSnowdread",
+		}, {
+			POSITION: [3.5, 10, 0, 60, 200, 2],
+			TYPE: "spamAutoTurretSnowdread",
+		},
+	], 3),
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
 	],
-}
-for (let i = 0; i < 3; i++) {
-	Class.mechanismSnowdread.TURRETS.push(
-		{
-			POSITION: [3.5, 6, 0, 120*i, 200, 1],
-			TYPE: "spamAutoTurretSnowdread",
-		}, {
-			POSITION: [3.5, 10, 0, 120*i+60, 200, 1],
-			TYPE: "spamAutoTurretSnowdread",
-		},
-	)
 }
 Class.fusionSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Fusion",
 	UPGRADE_TOOLTIP: "Damage Aura + Small Autos",
 	TURRETS: [
-		{
-			POSITION: [15, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		},
 		...addTrinoughtTurretRing(),
 		{
-			POSITION: [9.5, 0, 0, 0, 360, 1],
+			POSITION: [9.5, 0, 0, 0, 360, 2],
 			TYPE: "trinoughtBigAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [15, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.binarySnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Binary",
 	UPGRADE_TOOLTIP: "Heavy Auto + Small Autos",
 	TURRETS: [
-		{
-			POSITION: [15, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		},
 		...addTrinoughtTurretRing(),
 		{
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: "kilobyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [15, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.exosphereSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Exosphere",
 	UPGRADE_TOOLTIP: "Healing Aura + Small Autos",
 	TURRETS: [
-		{
-			POSITION: [15, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		},
 		...addTrinoughtTurretRing(),
 		{
-			POSITION: [9.5, 0, 0, 0, 360, 1],
+			POSITION: [9.5, 0, 0, 0, 360, 2],
 			TYPE: "trinoughtBigHealAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [15, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.megabyteSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
@@ -997,54 +993,61 @@ Class.megabyteSnowdread = {
 	UPGRADE_TOOLTIP: "Heavy Auto Turret",
 	TURRETS: [
 		{
-			POSITION: [15.5, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		}, {
-			POSITION: [12, 0, 0, 0, 360, 1],
+			POSITION: [12, 0, 0, 0, 360, 2],
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [15.5, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.trojanSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Trojan",
 	UPGRADE_TOOLTIP: "Heavy Auto + Damage Auras",
 	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		},
 		...addTrinoughtAuraRing(),
 		{
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: "kilobyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.hardwareSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Hardware",
 	UPGRADE_TOOLTIP: "Heavy Auto + Healing Auras",
 	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		},
 		...addTrinoughtAuraRing(true),
 		{
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: "kilobyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.burnerSnowdread = { // Flamethrower
 	PARENT: "genericTrinoughtSnowdread",
@@ -1052,16 +1055,19 @@ Class.burnerSnowdread = { // Flamethrower
 	UPGRADE_TOOLTIP: "Flamethrower",
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		}, {
-			POSITION: [9, 0, 0, 0, 360, 1],
+			POSITION: [9, 0, 0, 0, 360, 2],
 			TYPE: 'burnerTurretSnowdread',
 		}
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.tempestSnowdread = { // Drones
 	PARENT: "genericTrinoughtSnowdread",
@@ -1073,14 +1079,17 @@ Class.tempestSnowdread = { // Drones
 	},
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
+			TYPE: 'tempestTurretSnowdread',
+		},
+	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
-			TYPE: 'tempestTurretSnowdread',
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
 	]
 }
@@ -1089,54 +1098,58 @@ Class.chromosphereSnowdread = {
 	LABEL: "Chromosphere",
 	UPGRADE_TOOLTIP: "Damage Auras",
 	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		},
 		...addTrinoughtAuraRing(),
 		{
-			POSITION: [9.5, 0, 0, 0, 360, 1],
+			POSITION: [9.5, 0, 0, 0, 360, 2],
 			TYPE: "trinoughtBigAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.mesosphereSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Mesosphere",
 	UPGRADE_TOOLTIP: "Healing Auras",
 	TURRETS: [
-		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		},
 		...addTrinoughtAuraRing(true),
 		{
-			POSITION: [9.5, 0, 0, 0, 360, 1],
+			POSITION: [9.5, 0, 0, 0, 360, 2],
 			TYPE: "trinoughtBigHealAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.goliathSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Goliath",
 	UPGRADE_TOOLTIP: "Health Buff",
 	BODY: hpBuffBodyStats[2],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
+			POSITION: [14, 0, 0, 180, 1],
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
 	],
 }
@@ -1145,57 +1158,57 @@ Class.planetSnowdread = {
 	LABEL: "Planet",
 	UPGRADE_TOOLTIP: "Health Buff + Damage Auras",
 	BODY: hpBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addTrinoughtAuraRing(),
+	PROPS: [
 		{
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [13, 0, 0, 180, 0, 1],
+			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
-		...addTrinoughtAuraRing(),
-	],
+	]
 }
 Class.moonSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Moon",
 	UPGRADE_TOOLTIP: "Health Buff + Healing Auras",
 	BODY: hpBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addTrinoughtAuraRing(true),
+	PROPS: [
 		{
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [13, 0, 0, 180, 0, 1],
+			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
-		...addTrinoughtAuraRing(true),
-	],
+	]
 }
 Class.burgSnowdread = { // HP + auto spam
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Burg",
 	UPGRADE_TOOLTIP: "Health Buff + Small Autos",
 	BODY: hpBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addTrinoughtTurretRing(),
+	PROPS: [
 		{
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [13, 0, 0, 180, 0, 1],
+			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
-		...addTrinoughtTurretRing(),
-	],
+	]
 }
 Class.siloSnowdread = { // HP + big auto
 	PARENT: "genericTrinoughtSnowdread",
@@ -1204,36 +1217,37 @@ Class.siloSnowdread = { // HP + big auto
 	BODY: hpBuffBodyStats[1],
 	TURRETS: [
 		{
-			POSITION: [24, 0, 0, 180, 0, -1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
-		},
-		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: "kilobyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [24, 0, 0, 180, -1],
+			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+		}, {
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		},
+	]
 }
 Class.titanSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Titan",
 	UPGRADE_TOOLTIP: "Speed Buff",
 	BODY: speedBuffBodyStats[1],
-	GUNS: [],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [11, 0, 0, 0, 0, 1],
+			POSITION: [11, 0, 0, 0, 1],
 			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
 	],
@@ -1243,59 +1257,57 @@ Class.sirenSnowdread = {
 	LABEL: "Siren",
 	UPGRADE_TOOLTIP: "Speed Buff + Damage Auras",
 	BODY: speedBuffBodyStats[0],
-	GUNS: [],
-	TURRETS: [
+	TURRETS: addTrinoughtAuraRing(),
+	PROPS: [
 		{
-			POSITION: [13, 0, 0, 180, 0, 1],
+			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
-		...addTrinoughtAuraRing(),
-	],
+	]
 }
 Class.harpySnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Harpy",
 	UPGRADE_TOOLTIP: "Speed Buff + Healing Auras",
 	BODY: speedBuffBodyStats[0],
-	GUNS: [],
-	TURRETS: [
+	TURRETS: addTrinoughtAuraRing(true),
+	PROPS: [
 		{
-			POSITION: [13, 0, 0, 180, 0, 1],
+			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
-		...addTrinoughtAuraRing(true),
-	],
+	]
 }
 Class.batonSnowdread = { // Speed + auto spam
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Baton",
 	UPGRADE_TOOLTIP: "Speed Buff + Small Autos",
 	BODY: speedBuffBodyStats[0],
-	TURRETS: [
+	TURRETS: addTrinoughtTurretRing(),
+	PROPS: [
 		{
-			POSITION: [13, 0, 0, 180, 0, 1],
+			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
-		...addTrinoughtTurretRing(),
-	],
+	]
 }
 Class.fireworkSnowdread = { // Speed + big auto
 	PARENT: "genericTrinoughtSnowdread",
@@ -1304,19 +1316,22 @@ Class.fireworkSnowdread = { // Speed + big auto
 	BODY: speedBuffBodyStats[0],
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: "kilobyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+		},
+	]
 }
 Class.armadaSnowdread = { // Speed + HP
 	PARENT: "genericTrinoughtSnowdread",
@@ -1328,15 +1343,15 @@ Class.armadaSnowdread = { // Speed + HP
 		SHIELD: 1.4, 
 		REGEN: 1.3,
 	},
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
+			POSITION: [14, 0, 0, 180, 1],
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
 	],
@@ -1349,7 +1364,7 @@ Class.steelSnowdread = { // Shield buff
 	TURRETS: [
 		{
 			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			TYPE: "triangleBaseDeco",
 		}
 	],
 }
@@ -1358,12 +1373,12 @@ Class.flintSnowdread = { // Shield buff + auras
 	LABEL: "Flint",
 	UPGRADE_TOOLTIP: "Shielf Buff + Damage Auras",
 	BODY: shieldBuffBodyStats[0],
-	TURRETS: [
+	TURRETS: addTrinoughtAuraRing(),
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
-		...addTrinoughtAuraRing(),
 	],
 }
 Class.martensiteSnowdread = { // Shield buff + heal auras
@@ -1371,12 +1386,12 @@ Class.martensiteSnowdread = { // Shield buff + heal auras
 	LABEL: "Martensite",
 	UPGRADE_TOOLTIP: "Shield Buff + Healing Auras",
 	BODY: shieldBuffBodyStats[0],
-	TURRETS: [
+	TURRETS: addTrinoughtAuraRing(true),
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
-		...addTrinoughtAuraRing(true),
 	],
 }
 Class.ceramicSnowdread = { // Shield buff + auto spam
@@ -1384,12 +1399,12 @@ Class.ceramicSnowdread = { // Shield buff + auto spam
 	LABEL: "Ceramic",
 	UPGRADE_TOOLTIP: "Shielf Buff + Small Autos",
 	BODY: shieldBuffBodyStats[0],
-	TURRETS: [
+	TURRETS: addTrinoughtTurretRing(),
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
-		...addTrinoughtTurretRing(),
 	],
 }
 Class.tungstenSnowdread = { // Shield buff + big auto
@@ -1399,11 +1414,14 @@ Class.tungstenSnowdread = { // Shield buff + big auto
 	BODY: shieldBuffBodyStats[0],
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: "kilobyteTurretSnowdread",
+		},
+	],
+	PROPS: [
+		{
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
 	],
 }
@@ -1417,10 +1435,10 @@ Class.diamondSnowdread = { // Shield + HP
 		SHIELD: 1.9,
 		REGEN: 1.6,
 	},
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
 		},
 	],
 }
@@ -1434,21 +1452,24 @@ Class.monitorSnowdread = { // FOV
 	},
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ['triangle', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["triangleBaseDeco"],
-		}, {
-			POSITION: [9, 0, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}}]
-		}, {
-			POSITION: [6, 0, 0, 0, 0, 1],
-			TYPE:['egg', {COLOR: 2}]
-		}, {
-			POSITION: [16, 0, 0, 0, 360, 1],
+			POSITION: [16, 0, 0, 0, 360, 2],
 			TYPE: 'monitorRadarSnowdread'
 		}
+	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ['triangle', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "triangleBaseDeco",
+		}, {
+			POSITION: [9, 0, 0, 0, 1],
+			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}}]
+		}, {
+			POSITION: [6, 0, 0, 0, 1],
+			TYPE:['egg', {COLOR: 2}]
+		}, 
 	]
 }
 

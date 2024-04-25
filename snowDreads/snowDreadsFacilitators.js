@@ -923,7 +923,7 @@ exports.addTrinoughtAuraRing = (heal = false) => {
 		let theta = (120 * i + 60) * Math.PI / 180;
 		output.push(
 			{
-				POSITION: [3.5, 10.5 * Math.cos(theta), 10.5 * Math.sin(theta), 0, 360, 1],
+				POSITION: [3.5, 10.5 * Math.cos(theta), 10.5 * Math.sin(theta), 0, 360, 2],
 				TYPE,
 			},
 		);
@@ -935,7 +935,7 @@ exports.addTrinoughtTurretRing = () => {
 	for (let i = 0; i < 3; i++) {
 		output.push(
 			{
-				POSITION: [3.5, 10.5, 0, 120*i+60, 180, 1],
+				POSITION: [3.5, 10.5, 0, 120*i+60, 180, 2],
 				TYPE: "spamAutoTurretSnowdread",
 			},
 		);
@@ -949,7 +949,7 @@ exports.addPentanoughtAuraRing = (heal = false) => {
 		let theta = (72 * i + 36) * Math.PI / 180;
 		output.push(
 			{
-				POSITION: [4, 8.5 * Math.cos(theta), 8.5 * Math.sin(theta), 0, 360, 1],
+				POSITION: [4, 8.5 * Math.cos(theta), 8.5 * Math.sin(theta), 0, 360, 2],
 				TYPE,
 			},
 		)
@@ -961,7 +961,7 @@ exports.addPentanoughtTurretRing = () => {
 	for (let i = 0; i < 5; i++) {
 		output.push(
 			{
-				POSITION: [3.25, 9, 0, 72*i+36, 180, 1],
+				POSITION: [3.25, 9, 0, 72*i+36, 180, 2],
 				TYPE: "spamAutoTurretSnowdread",
 			},
 		)
