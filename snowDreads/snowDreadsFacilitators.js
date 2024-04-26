@@ -9,67 +9,6 @@ if (!enableSnowDreads) {
 }
 
 // Guns
-exports.addSniper = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
-	let output = [
-		{ // Main barrel
-			POSITION: [length, width, 1, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats(stats),
-				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.55 }
-			},
-		}, {
-			POSITION: [length - 3.3, width * 0.8, -0.65, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10 },
-				BORDERLESS: true,
-			},
-		}, {
-			POSITION: [length - 1.6, width * 0.6, -0.65, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 25, SATURATION_SHIFT: 0.5 },
-				BORDERLESS: true,
-			},
-		},
-	];
-	for (let i = 0; i < 2; i++) {
-		output.push(
-			{
-				POSITION: [0.6, width * 0.7, -0.9, x + length - 2 - i * 2.5, y, angle, delay],
-				PROPERTIES: {
-					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-					TYPE: "bullet",
-					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift - 12.5 },
-				},
-			},
-		)
-	}
-	return output;
-}
-exports.addAssassin = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
-	return [
-		{
-			POSITION: [(length - x) * 0.6, width, -1.6, x, y, angle, delay],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift },
-			},
-		},
-		...exports.addSniper({length, width, aspect, x: 0, y, angle, delay}, brightShift, stats),
-		{
-			POSITION: [5, width, -1.6, x, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 } },
-		}, {
-			POSITION: [5, width - 1.5, -1.6, x - 1.5, y, angle, 0],
-			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 } },
-		},
-	];
-}
 exports.addRifle = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper], isMusket = false) => {
 	if (isMusket) {
 		return [
@@ -187,6 +126,67 @@ exports.addRifle = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 2.5, SATURATION_SHIFT: 0.65 },
 				BORDERLESS: true
 			}
+		},
+	];
+}
+exports.addSniper = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
+	let output = [
+		{ // Main barrel
+			POSITION: [length, width, 1, x, y, angle, delay],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats(stats),
+				TYPE: "heavyBulletSnowdread",
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.55 }
+			},
+		}, {
+			POSITION: [length - 3.3, width * 0.8, -0.65, x, y, angle, delay],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
+				TYPE: "bullet",
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10 },
+				BORDERLESS: true,
+			},
+		}, {
+			POSITION: [length - 1.6, width * 0.6, -0.65, x, y, angle, delay],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
+				TYPE: "bullet",
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 25, SATURATION_SHIFT: 0.5 },
+				BORDERLESS: true,
+			},
+		},
+	];
+	for (let i = 0; i < 2; i++) {
+		output.push(
+			{
+				POSITION: [0.6, width * 0.7, -0.9, x + length - 2 - i * 2.5, y, angle, delay],
+				PROPERTIES: {
+					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
+					TYPE: "bullet",
+					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift - 12.5 },
+				},
+			},
+		)
+	}
+	return output;
+}
+exports.addAssassin = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
+	return [
+		{
+			POSITION: [(length - x) * 0.6, width, -1.6, x, y, angle, delay],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
+				TYPE: "bullet",
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift },
+			},
+		},
+		...exports.addSniper({length, width, aspect, x: 0, y, angle, delay}, brightShift, stats),
+		{
+			POSITION: [5, width, -1.6, x, y, angle, 0],
+			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.5 } },
+		}, {
+			POSITION: [5, width - 1.5, -1.6, x - 1.5, y, angle, 0],
+			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 } },
 		},
 	];
 }

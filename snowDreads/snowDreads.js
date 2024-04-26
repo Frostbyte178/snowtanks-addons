@@ -218,20 +218,20 @@ Class.spotterSnowdread = { // FOV
 }
 
 // T2 Weapons
+Class.gladiusSnowdread = {
+	PARENT: "genericSquarenoughtSnowdread",
+	LABEL: "Gladius",
+	UPGRADE_TOOLTIP: "Rifles",
+	GUNS: weaponArray(
+		addRifle({length: 19.5, width: 5}, 2.5, [g.basic, g.sniper, g.rifle, {health: 1.3}])
+	, 4)
+}
 Class.sabreSnowdread = {
 	PARENT: "genericSquarenoughtSnowdread",
 	LABEL: "Sabre",
 	UPGRADE_TOOLTIP: "Assassins",
 	GUNS: weaponArray(
 		addAssassin({length: 24, width: 7, x: 7}, 12.5, [g.basic, g.sniper, g.assassin, g.assassin, {reload: 0.85}])
-	, 4)
-}
-Class.gladiusSnowdread = {
-	PARENT: "genericSquarenoughtSnowdread",
-	LABEL: "Gladius",
-	UPGRADE_TOOLTIP: "Rifles",
-	GUNS: weaponArray(
-		addRifle({length: 19.5, width: 5}, -2.5, [g.basic, g.sniper, g.rifle, {health: 1.3}])
 	, 4)
 }
 Class.slingSnowdread = { // hunter
@@ -649,20 +649,20 @@ Class.spySnowdread = { // FOV
 }
 
 // T3 Weapons
-Class.bayonetSnowdread = {
-	PARENT: "genericTrinoughtSnowdread",
-	LABEL: "Bayonet",
-	UPGRADE_TOOLTIP: "Assassins",
-	GUNS: weaponArray(
-		addAssassin({length: 28, width: 7, x: 7}, 0, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
-	, 3)
-}
 Class.bladeSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Blade",
 	UPGRADE_TOOLTIP: "Muskets",
 	GUNS: weaponArray(
 		addRifle({length: 18, width: 5}, -2.5, [g.basic, g.sniper, g.rifle, g.twin, {speed: 0.8, health: 1.5}], true)
+	, 3)
+}
+Class.bayonetSnowdread = {
+	PARENT: "genericTrinoughtSnowdread",
+	LABEL: "Bayonet",
+	UPGRADE_TOOLTIP: "Assassins",
+	GUNS: weaponArray(
+		addAssassin({length: 28, width: 7, x: 7}, 0, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
 	, 3)
 }
 Class.atlatlSnowdread = { // hunter
@@ -1474,17 +1474,6 @@ Class.monitorSnowdread = { // FOV
 }
 
 // T4 Weapons
-Class.javelinSnowdread = {
-	PARENT: "genericPentanoughtSnowdread",
-	LABEL: "Javelin",
-	UPGRADE_TOOLTIP: "Assassins",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.javelinSnowdread.GUNS.push(
-		...addAssassin({length: 28, width: 7, x: 7, angle: 72*i}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
-	)
-}
 Class.rapierSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Rapier",
@@ -1494,6 +1483,17 @@ Class.rapierSnowdread = {
 for (let i = 0; i < 5; i++) {
 	Class.rapierSnowdread.GUNS.push(
 		...addRifle({length: 18, width: 4.5, angle: 72*i}, 0, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
+	)
+}
+Class.javelinSnowdread = {
+	PARENT: "genericPentanoughtSnowdread",
+	LABEL: "Javelin",
+	UPGRADE_TOOLTIP: "Assassins",
+	GUNS: [],
+}
+for (let i = 0; i < 5; i++) {
+	Class.javelinSnowdread.GUNS.push(
+		...addAssassin({length: 28, width: 7, x: 7, angle: 72*i}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
 	)
 }
 Class.woomeraSnowdread = { // hunter
