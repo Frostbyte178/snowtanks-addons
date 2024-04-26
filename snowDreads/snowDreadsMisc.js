@@ -12,12 +12,12 @@ if (!enableSnowDreads) {
 
 // Generics
 Class.genericDreadnoughtSnowdread = {
-	PARENT: ["genericTank"],
+	PARENT: "genericTank",
 	SKILL_CAP: Array(10).fill(smshskl),
 	REROOT_UPGRADE_TREE: ["dreadWeaponSnowdread", "dreadBodySnowdread"],
 }
 Class.genericEggnoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
+	PARENT: "genericDreadnoughtSnowdread",
 	BODY: eggnoughtBody,
 	SHAPE: 0,
 	COLOR: 'egg',
@@ -25,7 +25,7 @@ Class.genericEggnoughtSnowdread = {
 	DANGER: 8,
 }
 Class.genericSquarenoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
+	PARENT: "genericDreadnoughtSnowdread",
 	BODY: squarenoughtBody,
 	SHAPE: 4,
 	COLOR: 'square',
@@ -33,7 +33,7 @@ Class.genericSquarenoughtSnowdread = {
 	DANGER: 9,
 }
 Class.genericTrinoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
+	PARENT: "genericDreadnoughtSnowdread",
 	BODY: trinoughtBody,
 	SHAPE: 3.5,
 	COLOR: 'triangle',
@@ -41,7 +41,7 @@ Class.genericTrinoughtSnowdread = {
 	DANGER: 10,
 }
 Class.genericPentanoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
+	PARENT: "genericDreadnoughtSnowdread",
 	BODY: pentanoughtBody,
 	SHAPE: 5.5,
 	COLOR: 'pentagon',
@@ -49,7 +49,7 @@ Class.genericPentanoughtSnowdread = {
 	DANGER: 11,
 }
 Class.genericHexnoughtSnowdread = {
-	PARENT: ["genericDreadnoughtSnowdread"],
+	PARENT: "genericDreadnoughtSnowdread",
 	BODY: hexnoughtBody,
 	SHAPE: 6,
 	COLOR: 'hexagon',
@@ -57,7 +57,7 @@ Class.genericHexnoughtSnowdread = {
 	DANGER: 12,
 }
 Class.gladiatorGenericMinionSnowdread = {
-	PARENT: ["minion"],
+	PARENT: "minion",
 	BODY: { SPEED: 2 },
 	SHAPE: 3.5,
 	GUNS: [],
@@ -267,7 +267,7 @@ Class.dissolverAutoSnowdread = {
 }
 
 Class.grabberTurretSnowdread = {
-	PARENT: ["spamAutoTurretSnowdread"],
+	PARENT: "spamAutoTurretSnowdread",
 	GUNS: [
 		{
 			POSITION: [17, 14, 1, 0, 0, 0, 0],
@@ -294,7 +294,7 @@ Class.grabberTurretSnowdread = {
 	],
 }
 Class.clasperTurretSnowdread = {
-	PARENT: ["spamAutoTurretSnowdread"],
+	PARENT: "spamAutoTurretSnowdread",
 	INDEPENDENT: true,
 	GUNS: [
 		{
@@ -312,7 +312,7 @@ Class.clasperTurretSnowdread = {
 	],
 }
 Class.gripperTurretSnowdread = {
-	PARENT: ["spamAutoTurretSnowdread"],
+	PARENT: "spamAutoTurretSnowdread",
 	INDEPENDENT: true,
 	GUNS: [
 		{
@@ -331,7 +331,7 @@ Class.gripperTurretSnowdread = {
 
 // Dread body turrets
 Class.spamAutoTurretSnowdread = {
-	PARENT: ["autoTankGun"],
+	PARENT: "autoTankGun",
 	INDEPENDENT: true,
 	COLOR: 17,
 	GUNS: [
@@ -367,7 +367,7 @@ Class.spamAutoTurretSnowdread = {
 }
 
 Class.byteTurretSnowdread = {
-	PARENT: ["genericTank"],
+	PARENT: "genericTank",
 	CONTROLLERS: ["nearestDifferentMaster"],
 	INDEPENDENT: true,
 	COLOR: {
@@ -437,7 +437,7 @@ Class.byteTurretSnowdread = {
 	]
 }
 Class.kilobyteTurretSnowdread = {
-	PARENT: ["genericTank"],
+	PARENT: "genericTank",
 	CONTROLLERS: ["nearestDifferentMaster"],
 	INDEPENDENT: true,
 	COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.65 },
@@ -453,7 +453,7 @@ Class.kilobyteTurretSnowdread = {
 			POSITION: [26, 10, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, {health: 1.2, speed: 0.8}]),
-				TYPE: "bullet",
+				TYPE: "heavyBulletSnowdread",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
@@ -500,7 +500,9 @@ Class.kilobyteTurretSnowdread = {
 	]
 }
 Class.megabyteTurretSnowdread = {
-	PARENT: ["autoTankGun"],
+	PARENT: "genericTank",
+	CONTROLLERS: ["nearestDifferentMaster"],
+	INDEPENDENT: true,
 	COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.65 },
 	INDEPENDENT: true,
 	GUNS: [
@@ -515,7 +517,7 @@ Class.megabyteTurretSnowdread = {
 			POSITION: [26, 13, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, {health: 1.2, speed: 0.8}]),
-				TYPE: "bullet",
+				TYPE: "heavyBulletSnowdread",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
@@ -565,7 +567,8 @@ Class.megabyteTurretSnowdread = {
 	]
 }
 Class.gigabyteTurretSnowdread = {
-	PARENT: ["autoTankGun"],
+	PARENT: "genericTank",
+	CONTROLLERS: ["nearestDifferentMaster"],
 	INDEPENDENT: true,
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
 	GUNS: [
@@ -586,7 +589,7 @@ Class.gigabyteTurretSnowdread = {
 			POSITION: [26, 16, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, {speed: 1.25, health: 0.7}]),
-				TYPE: "bullet",
+				TYPE: "heavyBulletSnowdread",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.6 },
 			},
 		}, {
@@ -640,8 +643,7 @@ Class.showerTurretSnowdread = {
 	PARENT: "genericTank",
 	LABEL: "",
 	BODY: { FOV: 1.5 },
-	FACING_TYPE: ["spin", {speed: 0.03}],
-	FORCE_FACING_TYPE: true,
+	FACING_TYPE: ["spin", {speed: 0.05}],
 	COLOR: {
 		BASE: 6,
 		BRIGHTNESS_SHIFT: -20,
@@ -665,8 +667,7 @@ Class.stormTurretSnowdread = {
 	PARENT: 'genericTank',
 	LABEL: "",
 	BODY: { FOV: 1.5 },
-	FACING_TYPE: ["spin", {speed: 0.03}],
-	FORCE_FACING_TYPE: true,
+	FACING_TYPE: ["spin", {speed: 0.05}],
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 6,
 	GUNS: [
@@ -687,8 +688,7 @@ Class.tempestTurretSnowdread = {
 	PARENT: 'genericTank',
 	LABEL: "",
 	BODY: { FOV: 1.5 },
-	FACING_TYPE: ["spin", {speed: 0.03}],
-	FORCE_FACING_TYPE: true,
+	FACING_TYPE: ["spin", {speed: 0.05}],
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 9,
 	GUNS: [],
@@ -711,8 +711,7 @@ Class.monsoonTurretSnowdread = {
 	PARENT: 'genericTank',
 	LABEL: "",
 	BODY: { FOV: 1.5 },
-	FACING_TYPE: ["spin", {speed: 0.03}],
-	FORCE_FACING_TYPE: true,
+	FACING_TYPE: ["spin", {speed: 0.05}],
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 9,
 	GUNS: [],
