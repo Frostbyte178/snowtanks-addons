@@ -883,7 +883,7 @@ exports.addDroneOnAuto = ({length = 6, width = 12, aspect = 1.2, x = 8, y = 0, a
 				SYNCS_SKILLS: true,
 				STAT_CALCULATOR: gunCalcNames.drone,
 				WAIT_TO_CYCLE: true,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.55 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
 			POSITION: [length - 2, width * 2/3, 1, x - 1, y, angle, 0],
@@ -975,7 +975,7 @@ exports.addAura = (damageFactor = 1, sizeFactor = 1, opacity = 0.3, auraColor, a
 	let symbolType = isHeal ? "healAuraSymbolSnowdreads" : "auraSymbolSnowdreads";
 	auraColor = auraColor ?? (isHeal ? 12 : 0);
 	return {
-		PARENT: ["genericTank"],
+		PARENT: "genericTank",
 		INDEPENDENT: true,
 		LABEL: "",
 		COLOR: 17,

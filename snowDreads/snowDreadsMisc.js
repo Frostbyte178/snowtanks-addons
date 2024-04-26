@@ -650,9 +650,7 @@ Class.showerTurretSnowdread = {
 		SATURATION_SHIFT: 0.5,
 	},
 	MAX_CHILDREN: 4,
-	GUNS: [
-		...addDroneOnAuto({length: 6, width: 12, x: 8}, 0, [g.drone, {size: 1.3}])
-	],
+	GUNS: addDroneOnAuto({length: 6, width: 12, x: 8}, 0, [g.drone, {size: 1.3}]),
 	TURRETS: [
 		{
 			POSITION: [14.5, 0, 0, 0, 0, 1],
@@ -727,7 +725,7 @@ Class.monsoonTurretSnowdread = {
 }
 for (let i = 0; i < 3; i++) {
 	Class.monsoonTurretSnowdread.GUNS.push(
-		...addDroneOnAuto({length: 6.5, width: 12.5, aspect: 1.2, x: 7.5, angle: 120*i}, 7.5, [g.drone, {size: 1.35, health: 1.1}])
+		...addDroneOnAuto({length: 6.5, width: 12.5, aspect: 1.2, x: 7.5, angle: 120*i}, 10, [g.drone, {size: 1.35, health: 1.1}])
 	)
 }
 

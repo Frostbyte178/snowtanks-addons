@@ -199,7 +199,7 @@ Class.unsetPillboxTopSnowdread = {
 // FOV boost body deco
 Class.spotterRadarSnowdread = {
 	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
+	FACING_TYPE: ["spin", {speed: 0.03}],
 	INDEPENDENT: true,
 	SHAPE: [[0.225, 1], [0.225, -1], [-0.225, -1], [-0.225, 1]],
 	COLOR: 17,
@@ -215,7 +215,7 @@ Class.spotterRadarSnowdread = {
 }
 Class.spyRadarSnowdread = {
 	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
+	FACING_TYPE: ["spin", {speed: 0.03}],
 	INDEPENDENT: true,
 	SHAPE: [[0.2, 1], [0.2, -1], [-0.2, -1], [-0.2, 1]],
 	COLOR: 17,
@@ -231,7 +231,7 @@ Class.spyRadarSnowdread = {
 }
 Class.monitorRadarSnowdread = {
 	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
+	FACING_TYPE: ["spin", {speed: 0.03}],
 	INDEPENDENT: true,
 	SHAPE: [[0.175, 1], [0.175, -1], [-0.175, -1], [-0.175, 1]],
 	COLOR: 17,
@@ -247,7 +247,7 @@ Class.monitorRadarSnowdread = {
 }
 Class.trackerRadarSnowdread = {
 	PARENT: 'genericTank',
-	CONTROLLERS: [['spin', {speed: 0.02}]],
+	FACING_TYPE: ["spin", {speed: 0.03}],
 	INDEPENDENT: true,
 	SHAPE: [[0.16, 1], [0.16, -1], [-0.16, -1], [-0.16, 1]],
 	COLOR: 17,
