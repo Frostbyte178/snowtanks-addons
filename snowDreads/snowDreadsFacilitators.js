@@ -1,7 +1,7 @@
-const { combineStats } = require('../../facilitators.js');
+const { combineStats, dereference } = require('../../facilitators.js');
 const { gunCalcNames } = require('../../constants.js');
 const g = require('../../gunvals.js');
-const { enableSnowDreads } = require('./snowDreadsConstants.js');
+const { enableSnowDreads, buildHexnoughts, hexnoughtBody, hexnoughtScaleFactor, hexDreadNames } = require('./snowDreadsConstants.js');
 
 // Navigate to [snowDreadsConstants.js] and the "enableSnowDreads" variable to enable/disable this addon.
 if (!enableSnowDreads) {
@@ -998,4 +998,214 @@ exports.addAura = (damageFactor = 1, sizeFactor = 1, opacity = 0.3, auraColor, a
 			},
 		]
 	};
+}
+
+exports.mergeHexnoughtWeaponV2 = (weapon1, weapon2) => {
+	weapon1 = ensureIsClass(weapon1);
+	weapon2 = ensureIsClass(weapon2);
+
+	let PARENT = "genericHexnoughtSnowdread",
+		BODY = hexnoughtBody,
+		GUNS = [],
+		gunsOnOneSide = [],
+		weapon2GunsOnOneSide = [],
+		TURRETS = [],
+		turretsOnOneSide = [],
+		weapon2TurretsOnOneSide = [],
+		CONTROLLERS = weapon2.CONTROLLERS,
+		TOOLTIP,
+		UPGRADE_TOOLTIP = weapon1.UPGRADE_TOOLTIP + " + " + weapon2.UPGRADE_TOOLTIP;
+
+	// Label
+	let name1 = hexDreadNames[weapon1.LABEL][weapon2.LABEL],
+		name2 = hexDreadNames[weapon2.LABEL][weapon1.LABEL],
+		weaponName = weapon1.LABEL + weapon2.LABEL,
+		orientationId = 0;
+	if (name1) {
+		weaponName = name1;
+	} else if (name2) {
+		weaponName = name2,
+		orientationId = 1;
+	}
+	let LABEL = weaponName,
+		className = weapon1.LABEL.toLowerCase() + weapon2.LABEL + orientationId + "Snowdread";
+	
+	// Tooltip
+	if (weapon1.TOOLTIP) TOOLTIP = weapon1.TOOLTIP + " ";
+	if (weapon2.TOOLTIP && weapon1.LABEL != weapon2.LABEL) TOOLTIP += weapon2.TOOLTIP;
+
+	// Upgrade Tooltip
+	if (weapon1.LABEL == weapon2.LABEL) UPGRADE_TOOLTIP = weapon1.UPGRADE_TOOLTIP;
+	
+	// Guns ----------------------
+	if (weapon1.GUNS) {
+		for (let i = 0; i < weapon1.GUNS.length; i += 5) {
+			gunsOnOneSide.push(dereference(weapon1.GUNS[i]));
+		}
+	}
+	if (weapon2.GUNS) {
+		for (let i = 0; i < weapon2.GUNS.length; i += 5) {
+			weapon2GunsOnOneSide.push(dereference(weapon2.GUNS[i]));
+		}
+	}
+
+	for (let g in weapon2GunsOnOneSide) weapon2GunsOnOneSide[g].POSITION[5] += 60;
+	gunsOnOneSide.push(...weapon2GunsOnOneSide)
+
+	// Turrets -------------------
+	if (weapon1.TURRETS) {
+		for (let i = 0; i < weapon1.TURRETS.length; i += 5) {
+			turretsOnOneSide.push(dereference(weapon1.TURRETS[i]));
+		}
+	}
+	if (weapon2.TURRETS) {
+		for (let i = 0; i < weapon2.TURRETS.length; i += 5) {
+			weapon2TurretsOnOneSide.push(dereference(weapon2.TURRETS[i]));
+		}
+	}
+
+	for (let t in weapon2TurretsOnOneSide) weapon2TurretsOnOneSide[t].POSITION[3] += 60;
+	turretsOnOneSide.push(...weapon2TurretsOnOneSide)
+
+	// Scale to fit size constraints
+	for (let g in gunsOnOneSide) {
+		// Scales X and length instead of Y and width if the gun is sideways, only needed for trebuchet
+		let isTrebuchetSpecial = Math.abs(gunsOnOneSide[g].POSITION[5]) == 90 || gunsOnOneSide[g].POSITION[5] == 150 || gunsOnOneSide[g].POSITION[5] == -30;
+		let offset = 0;
+		if (isTrebuchetSpecial) {
+			offset = -1
+		}
+		gunsOnOneSide[g].POSITION[1 + offset] *= hexnoughtScaleFactor ** 2;
+		gunsOnOneSide[g].POSITION[4 + offset] *= hexnoughtScaleFactor ** 2;
+	}
+
+	for (let t in turretsOnOneSide) {
+		turretsOnOneSide[t].POSITION[0] *= hexnoughtScaleFactor ** 2;
+	}
+
+	for (let i = 0; i < 3; i++) {
+		for (let g in gunsOnOneSide) {
+			let gun = JSON.parse(JSON.stringify(gunsOnOneSide[g]));
+			gun.POSITION[5] += 120 * i;
+			GUNS.push(gun);
+		}
+		for (let t in turretsOnOneSide) {
+			let turret = JSON.parse(JSON.stringify(turretsOnOneSide[t]));
+			turret.POSITION[3] += 120 * i;
+			TURRETS.push(turret);
+		}
+	};
+
+	// Gladiator
+	if (weapon1.LABEL == "Gladiator" || weapon2.LABEL == "Gladiator") {
+		let droneSpawnerIndex = 0
+		for (let g in GUNS) {
+			let gun = GUNS[g];
+			if (gun.PROPERTIES && gun.PROPERTIES.TYPE == "gladiatorTritankMinionSnowdread") {
+				switch (droneSpawnerIndex) {
+					case 1:
+						gun.PROPERTIES.TYPE = "gladiatorTritrapMinionSnowdread";
+						break;
+					case 2:
+						gun.PROPERTIES.TYPE = "gladiatorTriswarmMinionSnowdread";
+						break;
+					case 3:
+						gun.PROPERTIES.TYPE = "gladiatorAutoMinionSnowdread";
+						break;
+					case 4:
+						gun.PROPERTIES.TYPE = "gladiatorAuraMinionSnowdread";
+						break;
+					case 5:
+						gun.PROPERTIES.TYPE = "gladiatorHealAuraMinionSnowdread";
+						break;
+				}
+				droneSpawnerIndex++;
+			}
+		}
+	}
+	
+	// Body stat modification
+	if (weapon1.BODY) for (let m in weapon1.BODY) BODY[m] *= weapon1.BODY[m];
+	if (weapon2.BODY) for (let m in weapon2.BODY) BODY[m] *= weapon2.BODY[m];
+
+	// Smash it together
+	Class[className] = {
+		PARENT, BODY, LABEL, TOOLTIP, UPGRADE_TOOLTIP, GUNS, TURRETS, CONTROLLERS
+	};
+	return className;
+}
+
+exports.makeHexnoughtBodyV2 = (body) => {
+	if (!buildHexnoughts) return [];
+	
+	body = ensureIsClass(body);
+
+	let PARENT = "genericHexnoughtSnowdread",
+		BODY = {},
+		GUNS = body.GUNS ?? [],
+		TURRETS = [],
+		LABEL = body.LABEL,
+		UPGRADE_TOOLTIP = body.UPGRADE_TOOLTIP;
+
+	// Label
+	let className = LABEL.toLowerCase() + "HexSnowdread";
+	
+	// Turrets --------------------
+	let turretRingLoopLength = Math.floor(body.TURRETS.length / 5);
+
+	// Turret adding
+	for (let t = 0; t < body.TURRETS.length; t++) {
+		let turret = body.TURRETS[t];
+		if (turret.TYPE[0].indexOf('pentagon') >= 0) { // Replace pentagons with hexagons
+			TURRETS.push(
+				{
+					POSITION: [turret.POSITION[0], 0, 0, turret.POSITION[3], turret.POSITION[4], turret.POSITION[5]],
+					TYPE: ['hexagon' + turret.TYPE[0].substring(8), turret.TYPE[1] ?? {}],
+				}
+			);
+		} else if (turret.POSITION[1]) { // Do whole turret loop at once
+			for (let i = 0; i < turretRingLoopLength; i++) {
+				for (let j = 0; j < 6; j++) {
+					turret = body.TURRETS[t + i * 5 + 1];
+					let displacement = (turret.POSITION[1] ** 2 + turret.POSITION[2] ** 2) ** 0.5 * hexnoughtScaleFactor ** 0.5;
+					
+					// Angle turrets but not auras
+					let x, y, angle;
+					if (turret.POSITION[3]) { 
+						x = displacement;
+						y = 0;
+						angle = turret.POSITION[3] / 6 * 5 + 60 * j;
+					} else {
+						let theta = (turret.POSITION[3] / 6 * 5 - 30 + 60 * j) * Math.PI / 180;
+						x = displacement * Math.cos(theta);
+						y = displacement * Math.sin(theta);
+						angle = 0;
+					}
+					TURRETS.push(
+						{
+							POSITION: [turret.POSITION[0] * hexnoughtScaleFactor, x, y, angle, turret.POSITION[4], turret.POSITION[5]],
+							TYPE: turret.TYPE,
+						}
+					)
+				}
+			}
+			t += 5 * turretRingLoopLength - 1;
+		} else { // Centered turrets
+			TURRETS.push(
+				{
+					POSITION: [turret.POSITION[0] * hexnoughtScaleFactor ** 0.5, 0, 0, turret.POSITION[3], turret.POSITION[4], turret.POSITION[5]],
+					TYPE: turret.TYPE,
+				}
+			) 
+		}
+	}
+	
+	// Body stat modification
+	if (body.BODY) for (let m in body.BODY) BODY[m] = body.BODY[m];
+
+	// Smash it together
+	Class[className] = {
+		PARENT, BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS,
+	};
+	return [className];
 }

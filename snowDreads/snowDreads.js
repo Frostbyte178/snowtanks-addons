@@ -7,12 +7,13 @@ const {
 	addDrone, addMinion, addAutoDrone, addHoncho, addSwarm, 
 	addTrap, addAutoTrap, addAuraTrap, 
 	addTrinoughtAuraRing, addTrinoughtTurretRing, addPentanoughtAuraRing, addPentanoughtTurretRing,
+	mergeHexnoughtWeaponV2, makeHexnoughtBodyV2
 } = require('./snowDreadsFacilitators.js');
 const {
 	enableSnowDreads,
-	buildHexnoughts, useOldPhotosphere, hexnoughtScaleFactor,
+	buildHexnoughts, useOldPhotosphere,
 	hpBuffBodyStats, speedBuffBodyStats, shieldBuffBodyStats,
-	hexnoughtBody
+	pentanoughtWeapons,
 } = require('./snowDreadsConstants.js');
 require('./snowDreadsMisc.js');
 
@@ -1478,23 +1479,17 @@ Class.rapierSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Rapier",
 	UPGRADE_TOOLTIP: "Muskets",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.rapierSnowdread.GUNS.push(
-		...addRifle({length: 18, width: 4.5, angle: 72*i}, 0, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
-	)
+	GUNS: weaponArray(
+		addRifle({length: 18, width: 4.5}, 0, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
+	, 5)
 }
 Class.javelinSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Javelin",
 	UPGRADE_TOOLTIP: "Assassins",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.javelinSnowdread.GUNS.push(
-		...addAssassin({length: 28, width: 7, x: 7, angle: 72*i}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
-	)
+	GUNS: weaponArray(
+		addAssassin({length: 28, width: 7, x: 7}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
+	, 5)
 }
 Class.woomeraSnowdread = { // hunter
 	PARENT: "genericPentanoughtSnowdread",
@@ -1502,152 +1497,116 @@ Class.woomeraSnowdread = { // hunter
 	UPGRADE_TOOLTIP: "X-Predators",
 	CONTROLLERS: [["zoom", { distance: 450 }]],
 	TOOLTIP: "Hold right click to zoom.",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.woomeraSnowdread.GUNS.push(
-		...addHunter({length: 20, width: 9.5, dimensionDifference: 2.5, angle: 72*i, barrelCount: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, g.predator, {health: 1.1}]),
+	GUNS: weaponArray([
+		...addHunter({length: 20, width: 9.5, dimensionDifference: 2.5, barrelCount: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, g.predator, {health: 1.1}]),
 		{
-			POSITION: [5, 9.5, -1.6, 7.5, 0, 72*i, 0],
+			POSITION: [5, 9.5, -1.6, 7.5, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 }, },
 		}, {
-			POSITION: [5, 8, -1.6, 6, 0, 72*i, 0],
+			POSITION: [5, 8, -1.6, 6, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 } },
 		},
-	)
+	], 5)
 }
 Class.trebuchetSnowdread = { // mega-sniper
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Trebuchet",
 	UPGRADE_TOOLTIP: "Mega-Snipers",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.trebuchetSnowdread.GUNS.push(
-		...addHeavySniper({length: 24, width: 9, x: 8.5, angle: 72*i}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.4, size: 2}])
-	)
+	GUNS: weaponArray(
+		addHeavySniper({length: 24, width: 9, x: 8.5}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.4, size: 2}])
+	, 5)
 }
 Class.boltSnowdread = { // railgun
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Bolt",
 	UPGRADE_TOOLTIP: "Railguns",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.boltSnowdread.GUNS.push(
-		...addRailgun({length: 28.5, width: 4, x: 8, angle: 72*i}, -2.5, [g.basic, g.sniper, g.sniper, g.sniper, g.pounder, {reload: 1.5, damage: 1.2, speed: 1.2, maxSpeed: 1.2}])
-	)
+	GUNS: weaponArray(
+		addRailgun({length: 28.5, width: 4, x: 8}, -2.5, [g.basic, g.sniper, g.sniper, g.sniper, g.pounder, {reload: 1.5, damage: 1.2, speed: 1.2, maxSpeed: 1.2}])
+	, 5)
 }
 Class.diplomatSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Diplomat",
 	UPGRADE_TOOLTIP: "Triplets",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.diplomatSnowdread.GUNS.push(
-		...addNormal({length: 14, width: 7, y: 3.15, angle: 72*i, delay: 0.5 }, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
-		...addNormal({length: 14, width: 7, y: -3.15, angle: 72*i, delay: 0.5}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
-		...addNormal({length: 16, width: 7, y: 0, angle: 72*i, delay: 0      }, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
-	)
+	GUNS: weaponArray([
+		...addNormal({length: 14, width: 7, y: 3.15,  delay: 0.5}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
+		...addNormal({length: 14, width: 7, y: -3.15, delay: 0.5}, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
+		...addNormal({length: 16, width: 7, y: 0,     delay: 0  }, 10, [g.basic, g.spam, g.spam, {size: 0.85}]),
+	], 5)
 }
 Class.arbitratorSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Arbitrator",
 	UPGRADE_TOOLTIP: "Machine Guns",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.arbitratorSnowdread.GUNS.push(
-		...addNormal({length: 8, width: 10.75, aspect: 1.33, x: 5.5, angle: 72*i}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.7, reload: 1.2}], false),
-		...addNormal({length: 8, width: 9.5, aspect: 1.33, x: 7.5, angle: 72*i  }, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.65, reload: 1.1}]),
-		...addNormal({length: 8, width: 7.25, aspect: 1.25, x: 9.5, angle: 72*i }, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.6, reload: 1}]),
-	)
+	GUNS: weaponArray([
+		...addNormal({length: 8, width: 10.75, aspect: 1.33, x: 5.5}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.7,  reload: 1.2}], false),
+		...addNormal({length: 8, width: 9.5,   aspect: 1.33, x: 7.5}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.65, reload: 1.1}]),
+		...addNormal({length: 8, width: 7.25,  aspect: 1.25, x: 9.5}, 10, [g.basic, g.machineGun, g.spam, g.spam, {size: 0.6,  reload: 1  }]),
+	], 5)
 }
 Class.dissolverSnowdread = { // all auto
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Dissolver",
 	UPGRADE_TOOLTIP: "All Autos",
-	TURRETS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.dissolverSnowdread.TURRETS.push(
-		{
-			POSITION: [9, 10, 0, 72*i, 200, 0],
-			TYPE: 'dissolverAutoSnowdread',
-		},
-	)
+	TURRETS: weaponArray([{
+		POSITION: [9, 10, 0, 0, 200, 0],
+		TYPE: 'dissolverAutoSnowdread',
+	}], 5)
 }
 Class.eroderSnowdread = { // ultra bullet spam
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Eroder",
 	UPGRADE_TOOLTIP: "Rimflaks",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.eroderSnowdread.GUNS.push(
-		...addSpam({length: 14.5, width: 4, y: 4.5, angle: 72*i, delay: 0    }, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addSpam({length: 12.5, width: 4, y: 4.5, angle: 72*i, delay: 0.5  }, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addSpam({length: 14.5, width: 4, y: -4.5, angle: 72*i, delay: 0.25}, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addSpam({length: 12.5, width: 4, y: -4.5, angle: 72*i, delay: 0.75}, 0, [g.basic, g.minigun, {health: 1.1}]),
-		...addGunner({length: 19, width: 1.6, y: -2, angle: 72*i, delay: 0 }, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
-		...addGunner({length: 19, width: 1.6, y: 2, angle: 72*i, delay: 0.5}, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
+	GUNS: weaponArray([
+		...addSpam({length: 14.5, width: 4, y: 4.5,  delay: 0   }, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addSpam({length: 12.5, width: 4, y: 4.5,  delay: 0.5 }, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addSpam({length: 14.5, width: 4, y: -4.5, delay: 0.25}, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addSpam({length: 12.5, width: 4, y: -4.5, delay: 0.75}, 0, [g.basic, g.minigun, {health: 1.1}]),
+		...addGunner({length: 19, width: 1.6, y: -2, delay: 0  }, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
+		...addGunner({length: 19, width: 1.6, y: 2,  delay: 0.5}, 0, [g.basic, g.pelleter, g.twin, g.power, {speed: 0.7, maxSpeed: 0.7}]),
 		{
-			POSITION: [14, 7.5, 1, 0, 0, 72*i, 0],
+			POSITION: [14, 7.5, 1, 0, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 }, },
 		}, {
-			POSITION: [13, 6, 1, 0, 0, 72*i, 0],
+			POSITION: [13, 6, 1, 0, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 } },
 		},
-	)
+	], 5)
 }
 Class.gripperSnowdread = { // spread
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Gripper",
 	UPGRADE_TOOLTIP: "Crowbars",
-	GUNS: [],
-	TURRETS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.gripperSnowdread.GUNS.push(
-		...addNormal({length: 15.5, width: 5.5, y: 1, angle: 72 * i - 22, delay: 2/3 }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 15.5, width: 5.5, y: -1, angle: 72 * i + 22, delay: 2/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17, width: 5.5, y: 0, angle: 72 * i - 11, delay: 1/3   }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17, width: 5.5, y: 0, angle: 72 * i + 11, delay: 1/3   }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 18.5, width: 5.5, y: 0, angle: 72 * i, delay: 0        }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-	)
+	GUNS: weaponArray([
+		...addNormal({length: 15.5, width: 5.5, y: 1,  angle: -22, delay: 2/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 15.5, width: 5.5, y: -1, angle: 22,  delay: 2/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 17,   width: 5.5, y: 0,  angle: -11, delay: 1/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 17,   width: 5.5, y: 0,  angle: 11,  delay: 1/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 18.5, width: 5.5, y: 0,  angle: 0,   delay: 0  }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+	], 5)
 }
 Class.retardantSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Retardant",
 	UPGRADE_TOOLTIP: "Destroyers",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.retardantSnowdread.GUNS.push(
-		...addHeavy({length: 17, width: 10, angle: 72*i}, 2.5, [g.basic, g.pounder, g.destroyer, g.annihilator, {reload: 0.9, health: 1.5}])
-	)
+	GUNS: weaponArray(
+		addHeavy({length: 17, width: 10}, 2.5, [g.basic, g.pounder, g.destroyer, g.annihilator, {reload: 0.9, health: 1.5}])
+	, 5)
 }
 Class.tyrantSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Tyrant",
 	UPGRADE_TOOLTIP: "Skimmers",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.tyrantSnowdread.GUNS.push(
-		...addLauncher({length: 15, width: 11, angle: 72*i}, 0, [g.basic, g.pounder, g.artillery, g.skimmer, {size: 0.9, damage: 1.2, reload: 1.5}], true, "superMissileSnowdread")
-	)
+	GUNS: weaponArray(
+		addLauncher({length: 15, width: 11}, 0, [g.basic, g.pounder, g.artillery, g.skimmer, {size: 0.9, damage: 1.2, reload: 1.5}], true, "superMissileSnowdread")
+	, 5)
 }
 Class.anesthesiologistSnowdread = { // shotgun
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Anesthesiologist",
 	UPGRADE_TOOLTIP: "Shotguns",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.anesthesiologistSnowdread.GUNS.push(
-		...addShotgun({length: 20.5, width: 11, x: 7.5, angle: 72*i}, 5, [
+	GUNS: weaponArray(
+		addShotgun({length: 20.5, width: 11, x: 7.5}, 5, [
 			{l: 15, w: 4, y: -3},
 			{l: 15, w: 4, y: 3},
 			{l: 17, w: 5, y: 0},
@@ -1656,46 +1615,37 @@ for(let i = 0; i < 5; i++) {
 			{l: 12, w: 2, y: 1, small: true},
 			{l: 12, w: 2, y: 2, small: true},
 		], [g.basic, g.machineGun, g.shotgun, {reload: 1.2, health: 1.8, damage: 1.1, speed: 0.85, maxSpeed: 0.85}], [g.basic, g.machineGun, g.shotgun, {speed: 1.55, maxSpeed: 1.3, reload: 1.2, damage: 0.9}])
-	)
+	, 5)
 }
 Class.helixSnowdread = { // twister
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Helix",
 	UPGRADE_TOOLTIP: "Twisters",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.helixSnowdread.GUNS.push(
-		...addTwister({length: 17, width: 8.5, angle: 72*i}, 0, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.9, maxSpeed: 1.3, reload: 1.333}], "spiralMissileSnowdread")
-	)
+	GUNS: weaponArray(
+		addTwister({length: 17, width: 8.5}, 0, [g.basic, g.pounder, g.artillery, g.artillery, g.skimmer, {speed: 1.9, maxSpeed: 1.3, reload: 1.333}], "spiralMissileSnowdread")
+	, 5)
 }
 Class.bombardmentSnowdread = { // artillery
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Bombardment",
 	UPGRADE_TOOLTIP: "Mortars",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.bombardmentSnowdread.GUNS.push(
-		...addGunner({length: 14, width: 2, y: -4.25, angle: 72*i-7, delay: 0.6 }, 0, [g.basic, g.pelleter, g.artillery]),
-		...addGunner({length: 14, width: 2, y: 4.25, angle: 72*i+7, delay: 0.8  }, 0, [g.basic, g.pelleter, g.artillery]),
-		...addGunner({length: 15.5, width: 2, y: -2.5, angle: 72*i-7, delay: 0.2}, 0, [g.basic, g.pelleter, g.artillery]),
-		...addGunner({length: 15.5, width: 2, y: 2.5, angle: 72*i+7, delay: 0.4 }, 0, [g.basic, g.pelleter, g.artillery]),
-		...addHeavy({length: 17.5, width: 8, angle: 72*i}, 2.5, [g.basic, g.destroyer, g.artillery, {speed: 1.1, maxSpeed: 1.1}])
-	)
+	GUNS: weaponArray([
+		...addGunner({length: 14,   width: 2, y: -4.25, angle: -7, delay: 0.6}, 0, [g.basic, g.pelleter, g.artillery]),
+		...addGunner({length: 14,   width: 2, y: 4.25,  angle: 7,  delay: 0.8}, 0, [g.basic, g.pelleter, g.artillery]),
+		...addGunner({length: 15.5, width: 2, y: -2.5,  angle: -7, delay: 0.2}, 0, [g.basic, g.pelleter, g.artillery]),
+		...addGunner({length: 15.5, width: 2, y: 2.5,   angle: 7,  delay: 0.4}, 0, [g.basic, g.pelleter, g.artillery]),
+		...addHeavy({length: 17.5, width: 8}, 2.5, [g.basic, g.destroyer, g.artillery, {speed: 1.1, maxSpeed: 1.1}])
+	], 5)
 }
 Class.raiderSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Raider",
 	UPGRADE_TOOLTIP: "Drones",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.raiderSnowdread.GUNS.push(
-		...addDrone({length: 4, width: 5, aspect: 2.1, x: 9, y: 3.25, angle: 72*i }, 0, [g.drone, g.overseer, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2, "drone"),
-		...addDrone({length: 4, width: 5, aspect: 2.1, x: 9, y: -3.25, angle: 72*i}, 0, [g.drone, g.overseer, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2, "drone"),
-		...addDrone({length: 6, width: 6.5, aspect: 1.4, x: 9, y: 0, angle: 72*i  }, 0, [g.drone, g.overseer, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
-	)
+	GUNS: weaponArray([
+		...addDrone({length: 4, width: 5,   aspect: 2.1, x: 9, y: 3.25 }, 0, [g.drone, g.overseer, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2, "drone"),
+		...addDrone({length: 4, width: 5,   aspect: 2.1, x: 9, y: -3.25}, 0, [g.drone, g.overseer, g.overseer, g.overseer, {size: 1.5, reload: 0.6}], 2, "drone"),
+		...addDrone({length: 6, width: 6.5, aspect: 1.4, x: 9, y: 0    }, 0, [g.drone, g.overseer, g.overseer, g.overseer, g.pounder, {size: 2, reload: 0.4}], 2, "betadrone"),
+	], 5)
 }
 Class.gladiatorSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
@@ -1713,97 +1663,73 @@ Class.starlightSnowdread = { // auto-drones
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Starlight",
 	UPGRADE_TOOLTIP: "Auto-Drones",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.starlightSnowdread.GUNS.push(
-		...addAutoDrone({length: 5, width: 9.5, aspect: 1.2, x: 9, angle: 72*i}, 0, [g.drone, g.overseer, {reload: 1.5, speed: 1.15, maxSpeed: 1.15}], 3)
-	)
+	GUNS: weaponArray(
+		addAutoDrone({length: 5, width: 9.5, aspect: 1.2, x: 9}, 0, [g.drone, g.overseer, {reload: 1.5, speed: 1.15, maxSpeed: 1.15}], 5)
+	, 5)
 }
 Class.bruiserSnowdread = { // honcho
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Bruiser",
 	UPGRADE_TOOLTIP: "Heavy Drones",
-	GUNS: [],
+	GUNS: weaponArray(
+		addHoncho({length: 5, width: 8, aspect: 1.5, x: 9}, -2.5, [g.drone, g.overseer, g.overseer, g.honcho, {maxSpeed: 0.85}], 2)
+	, 5)
 }
-for(let i = 0; i < 5; i++) {
-	Class.bruiserSnowdread.GUNS.push(
-		...addHoncho({length: 5, width: 8, aspect: 1.5, x: 9, angle: 72*i}, -2.5, [g.drone, g.overseer, g.overseer, g.honcho, {maxSpeed: 0.85}], 2)
-	)
-};
 Class.incapacitatorSnowdread = { // swarms
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Incapacitator",
 	UPGRADE_TOOLTIP: "Swarms",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.incapacitatorSnowdread.GUNS.push(
-		...addSwarm({length: 6, width: 6, x: 8, y: 3.25, angle: 72*i, delay: 0}, 0, [g.swarm, g.flankGuard, g.flankGuard, {maxSpeed: 1.2}]),
-		...addSwarm({length: 6, width: 6, x: 8, y: -3.25, angle: 72*i, delay: 0.5}, 0, [g.swarm, g.flankGuard, g.flankGuard, {maxSpeed: 1.2}]),
+	GUNS: weaponArray([
+		...addSwarm({length: 6, width: 6, x: 8, y: 3.25,  delay: 0  }, 0, [g.swarm, g.flankGuard, g.flankGuard, {maxSpeed: 1.2}]),
+		...addSwarm({length: 6, width: 6, x: 8, y: -3.25, delay: 0.5}, 0, [g.swarm, g.flankGuard, g.flankGuard, {maxSpeed: 1.2}]),
 		{
-			POSITION: [3, 9, 0.85, 9, 0, 72*i, 0],
+			POSITION: [3, 9, 0.85, 9, 0, 0, 0],
 			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}},
 		},
-	)
-};
+	], 5)
+}
 Class.cerberusSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Cerberus",
 	UPGRADE_TOOLTIP: "Trap Spam",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.cerberusSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 1.5, width: 4, y: 2, angle: 72*i+10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
-		...addTrap({length: 13, length2: 1.5, width: 4, y: -2, angle: 72*i-10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
-		...addTrap({length: 15, length2: 2, width: 5.5, aspect: 1.7, angle: 72*i}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.2, reload: 1.09}], true),
-	)
+	GUNS: weaponArray([
+		...addTrap({length: 13, length2: 1.5, width: 4, aspect: 1.6, y: 2,  angle: 10,  delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
+		...addTrap({length: 13, length2: 1.5, width: 4, aspect: 1.6, y: -2, angle: -10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
+		...addTrap({length: 15, length2: 2, width: 5.5, aspect: 1.7, y: 0,  angle: 0,   delay: 0  }, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.2, reload: 1.09}], true),
+	], 5)
 }
 Class.luciferSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Lucifer",
 	UPGRADE_TOOLTIP: "Blocks",
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.luciferSnowdread.GUNS.push(
-		...addTrap({length: 13.5, length2: 3.5, width: 8, angle: 72*i}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.3, maxSpeed: 1.3, size: 1.3, health: 2}], true),
-	)
+	GUNS: weaponArray(
+		addTrap({length: 13.5, length2: 3.5, width: 8}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.3, maxSpeed: 1.3, size: 1.3, health: 2}], true)
+	, 5)
 }
 Class.sterilizerSnowdread = { // auto-traps
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Sterilizer",
 	UPGRADE_TOOLTIP: "Auto-Blocks",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.sterilizerSnowdread.GUNS.push(
-		...addAutoTrap({length: 16.5, length2: 2, width: 9, aspect: 1.3, angle: 72*i}, 0, [g.trap, g.setTrap, {reload: 2.667}], 4, true)
-	)
+	GUNS: weaponArray(
+		addAutoTrap({length: 16.5, length2: 2, width: 9, aspect: 1.3}, 0, [g.trap, g.setTrap, {reload: 2.667}], 4, true)
+	, 5)
 }
 Class.hielamanSnowdread = { // aura-traps
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Hielaman",
 	UPGRADE_TOOLTIP: "Aura-Traps",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.hielamanSnowdread.GUNS.push(
-		...addAuraTrap({length: 15, length2: 3, width: 9, aspect: 1.5, x: 8, angle: 72*i}, 0, [g.trap, g.setTrap, g.hexaTrapper, {reload: 2.4, range: 1.6, health: 2.4}], 5, true)
-	)
+	GUNS: weaponArray(
+		addAuraTrap({length: 15, length2: 3, width: 9, aspect: 1.5, x: 8}, 0, [g.trap, g.setTrap, g.hexaTrapper, {reload: 2.4, range: 1.6, health: 2.4}], 5, true)
+	, 5)
 }
 Class.jackhammerSnowdread = { // trap + gun
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Jackhammer",
 	UPGRADE_TOOLTIP: "Blocks + Bullets",
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.jackhammerSnowdread.GUNS.push(
-		...addNormal({length: 19, width: 6.75, angle: 72*i}, 10),
-		...addTrap({length: 13, length2: 3, width: 8.25, aspect: 1.4, angle: 72*i}, 2.5, [g.trap, g.setTrap, g.hexaTrapper], true)
-	)
+	GUNS: weaponArray([
+		...addNormal({length: 19, width: 6.75}, 10),
+		...addTrap({length: 13, length2: 3, width: 8.25, aspect: 1.4}, 2.5, [g.trap, g.setTrap, g.hexaTrapper], true)
+	], 5)
 }
 
 // T4 Bodies
@@ -2572,586 +2498,7 @@ Class.addons.UPGRADES_TIER_0.push("dreadSnowdread");
 				Class.monitorSnowdread.UPGRADES_TIER_0 = ["trackerSnowdread"];
 					Class.trackerSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("trackerSnowdread");
 
-const hexDreadNames = {
-	Javelin: {
-		Javelin: 'Javelin',
-		Rapier: 'Lance',
-		Woomera: 'Shikari',
-		Trebuchet: 'Ballista',
-		Bolt: 'Tomahawk',
-		Diplomat: 'Envoy',
-		Arbitrator: 'Cutlass',
-		Dissolver: 'Hellfire',
-		Eroder: 'Partisan',
-		Gripper: 'Encircler',
-		Retardant: 'Rebel',
-		Tyrant: 'Autocrat',
-		Anesthesiologist: 'Patriot',
-		Helix: 'Stinger',
-		Bombardment: 'Downpour',
-		Raider: 'Pirate',
-		Gladiator: 'Pillager',
-		Starlight: 'Hornet',
-		Bruiser: 'Felon',
-		Incapacitator: 'Stretcher',
-		Cerberus: 'Argonaut',
-		Lucifer: 'Kitsune',
-		Sterilizer: 'Mastermind',
-		Hielaman: 'Swordsman', 
-		Jackhammer: 'Fissure',
-	},
-	Rapier: {
-		Rapier: 'Rapier',
-		Woomera: 'Cavalier',
-		Trebuchet: 'Katana',
-		Bolt: 'Claymore',
-		Diplomat: 'Emissary',
-		Arbitrator: 'Umpire',
-		Dissolver: 'Relocator',
-		Eroder: 'Debris',
-		Gripper: 'Interrogator',
-		Retardant: 'Impeder',
-		Tyrant: 'Oppressor',
-		Anesthesiologist: 'Slumberer',
-		Helix: 'Vortex',
-		Bombardment: 'Butcher',
-		Raider: 'Bandit',
-		Gladiator: 'Injurer',
-		Starlight: 'Radiance',
-		Bruiser: 'Ringster',
-		Incapacitator: 'Swamper',
-		Cerberus: 'Cyclops',
-		Lucifer: 'Damocles',
-		Sterilizer: 'Sanitizer',
-		Hielaman: 'Escutcheon', 
-		Jackhammer: 'Borer',
-	},
-	Woomera: {
-		Woomera: 'Woomera',
-		Trebuchet: 'Cannonball',
-		Bolt: 'Piercer', // Soap
-		Diplomat: 'Contractor',
-		Arbitrator: 'Spirit',
-		Dissolver: 'Venom',
-		Eroder: 'Decomposer',
-		Gripper: 'Crucifier',
-		Retardant: 'Overrunner',
-		Tyrant: 'Revolutionary',
-		Anesthesiologist: 'Guerilla',
-		Helix: 'Cultivator',
-		Bombardment: 'Incendiary',
-		Raider: 'Dispatcher', // Soap
-		Gladiator: 'Pugilist',
-		Starlight: 'Starborne',
-		Bruiser: 'Soldier',
-		Incapacitator: 'Scavenger', // Soap
-		Cerberus: 'Poltergeist',
-		Lucifer: 'Hunkerer',
-		Sterilizer: 'Janitor',
-		Hielaman: 'Reinforcer', 
-		Jackhammer: 'Pyroclastic',
-	},
-	Trebuchet: {
-		Trebuchet: 'Trebuchet',
-		Bolt: 'Archer',
-		Diplomat: 'Sherman',
-		Arbitrator: 'Ultimatum',
-		Dissolver: 'Grapeshot',
-		Eroder: 'Shrapnel',
-		Gripper: 'Razer',
-		Retardant: 'Mangonel',
-		Tyrant: 'Incarcerator', // Zenphia
-		Anesthesiologist: 'Evacuator',
-		Helix: 'Hurricane',
-		Bombardment: 'Surrenderer',
-		Raider: 'Capitulator',
-		Gladiator: 'Uprising',
-		Starlight: 'Magnetar',
-		Bruiser: 'Crumpler',
-		Incapacitator: 'Pinner',
-		Cerberus: 'Phantom', // Umbra
-		Lucifer: 'Sisyphus',
-		Sterilizer: 'Operation',
-		Hielaman: 'Entrencher', 
-		Jackhammer: 'Demolitionist',
-	},
-	Bolt: {
-		Bolt: 'Bolt',
-		Diplomat: 'Informant',
-		Arbitrator: 'Assaulter',
-		Dissolver: 'Sprinter',
-		Eroder: 'Discharger', // Soap
-		Gripper: 'Lightning',
-		Retardant: 'Evicter',
-		Tyrant: 'Minister',
-		Anesthesiologist: 'Ambusher',
-		Helix: 'Ultraviolet',
-		Bombardment: 'Dynamo',
-		Raider: 'Infector',
-		Gladiator: 'Blinder',
-		Starlight: 'Neutrino',
-		Bruiser: 'Impactor',
-		Incapacitator: 'Volt',
-		Cerberus: 'Collapse',
-		Lucifer: 'Barycenter',
-		Sterilizer: 'Greenhouse',
-		Hielaman: 'Nebula', 
-		Jackhammer: 'Archaeologist',
-	},
-	Diplomat: {
-		Diplomat: 'Diplomat',
-		Arbitrator: 'Moderator',
-		Dissolver: 'Impaler', // Soap
-		Eroder: 'Vulcan',
-		Gripper: 'Politician',
-		Retardant: 'Insurgent',
-		Tyrant: 'Dictator',
-		Anesthesiologist: 'Transporter',
-		Helix: 'Signature',
-		Bombardment: 'Berserker', // Soap
-		Raider: 'Marauder',
-		Gladiator: 'Champion',
-		Starlight: 'Comet',
-		Bruiser: 'Ambassador',
-		Incapacitator: 'Erebus', // Yharon
-		Cerberus: 'Orion',
-		Lucifer: 'Manticore',
-		Sterilizer: 'Officer',
-		Hielaman: 'Investigator', 
-		Jackhammer: 'Devourer', // Soap
-	},
-	Arbitrator: {
-		Arbitrator: 'Arbitrator',
-		Dissolver: 'Bargainer',
-		Eroder: 'Stipulator',
-		Gripper: 'Adjudicator',
-		Retardant: 'Extinguisher',
-		Tyrant: 'Shogun',
-		Anesthesiologist: 'Brute',
-		Helix: 'Referee',
-		Bombardment: 'Jury',
-		Raider: 'Buccaneer',
-		Gladiator: 'Warrior',
-		Starlight: 'Genesis', // Siece
-		Bruiser: 'Terminator', // Soap
-		Incapacitator: 'Debater',
-		Cerberus: 'Gorgon',
-		Lucifer: 'Keres',
-		Sterilizer: 'Warden',
-		Hielaman: 'Crusader', 
-		Jackhammer: 'Excavator',
-	},
-	Dissolver: {
-		Dissolver: 'Dissolver',
-		Eroder: 'Current',
-		Gripper: 'Patronizer',
-		Retardant: 'Corroder',
-		Tyrant: 'Throne',
-		Anesthesiologist: 'Neurotoxin',
-		Helix: 'Solution',
-		Bombardment: 'Chlorine',
-		Raider: 'Traitor',
-		Gladiator: 'Abolitionist',
-		Starlight: 'Accretion',
-		Bruiser: 'Piranha',
-		Incapacitator: 'Sandstorm',
-		Cerberus: 'Appalachian',
-		Lucifer: 'Styx',
-		Sterilizer: 'Peroxide',
-		Hielaman: 'Frontier', 
-		Jackhammer: 'Fracker',
-	},
-	Eroder: {
-		Eroder: 'Eroder',
-		Gripper: 'Psychologist',
-		Retardant: 'Shatterer',
-		Tyrant: 'Crackdown',
-		Anesthesiologist: 'Torrent',
-		Helix: 'Tornado',
-		Bombardment: 'Backstabber',
-		Raider: 'Militant', // Umbra
-		Gladiator: 'Vitrifier',
-		Starlight: 'Stardust',
-		Bruiser: 'Gasher', // Soap
-		Incapacitator: 'Lacerator', // Soap
-		Cerberus: 'Inevitability',
-		Lucifer: 'Fragment',
-		Sterilizer: 'Cynic',
-		Hielaman: 'Polisher', 
-		Jackhammer: 'Hoser',
-	},
-	Gripper: {
-		Gripper: 'Gripper',
-		Retardant: 'Arrestor',
-		Tyrant: 'Tormentor', // Soap
-		Anesthesiologist: 'Experimenter',
-		Helix: 'Blockader',
-		Bombardment: 'Striker',
-		Raider: 'Warmongerer', // Umbra
-		Gladiator: 'Throwdown',
-		Starlight: 'Cryogen',
-		Bruiser: 'Knockout',
-		Incapacitator: 'Restrainer',
-		Cerberus: 'Prometheus',
-		Lucifer: 'Mortician',
-		Sterilizer: 'Cleanser',
-		Hielaman: 'Periscope', 
-		Jackhammer: 'Vice',
-	},
-	Retardant: {
-		Retardant: 'Retardant',
-		Tyrant: 'Anarchist',
-		Anesthesiologist: 'Buckshot', // Soap
-		Helix: 'Magnetron',
-		Bombardment: 'Sergeant',
-		Raider: 'Freebooter',
-		Gladiator: 'Combatant',
-		Starlight: 'Apparition',
-		Bruiser: 'Executioner', // Soap
-		Incapacitator: 'Smotherer',
-		Cerberus: 'Gigantes',
-		Lucifer: 'Demogorgon',
-		Sterilizer: 'Fumigator',
-		Hielaman: 'Avalanche', 
-		Jackhammer: 'Propagator',
-	},
-	Tyrant: {
-		Tyrant: 'Tyrant',
-		Anesthesiologist: 'Barbarian',
-		Helix: 'Nautilus',
-		Bombardment: 'Admiral',
-		Raider: 'Corsair',
-		Gladiator: 'Amazon',
-		Starlight: 'Theocrat',
-		Bruiser: 'Authoritarian',
-		Incapacitator: 'Jailkeeper',
-		Cerberus: 'Ouroboros',
-		Lucifer: 'Raiju',
-		Sterilizer: 'Purifier',
-		Hielaman: 'Protectorate', 
-		Jackhammer: 'Detailer',
-	},
-	Anesthesiologist: {
-		Anesthesiologist: 'Anesthesiologist',
-		Helix: 'Blizzard',
-		Bombardment: 'Nightmare',
-		Raider: 'Vaccinator',
-		Gladiator: 'Harbinger', // Siece
-		Starlight: 'Hypnotizer',
-		Bruiser: 'Tactician',
-		Incapacitator: 'Psychic', // Soap
-		Cerberus: 'Revenant',
-		Lucifer: 'Rehabilitator',
-		Sterilizer: 'Pestilence',
-		Hielaman: 'Heater', 
-		Jackhammer: 'Sledgehammer',
-	},
-	Helix: {
-		Helix: 'Helix',
-		Bombardment: 'Derecho',
-		Raider: 'Deliverer',
-		Gladiator: 'Constrictor',
-		Starlight: 'Orbit',
-		Bruiser: 'Cobra',
-		Incapacitator: 'Windfall',
-		Cerberus: 'Viper',
-		Lucifer: 'Taipan',
-		Sterilizer: 'Networker',
-		Hielaman: 'Turbine', 
-		Jackhammer: 'Spindler',
-	},
-	Bombardment: {
-		Bombardment: 'Bombardment',
-		Raider: 'Specialist',
-		Gladiator: 'Leonidas',
-		Starlight: 'Meteor',
-		Bruiser: 'Grenadier',
-		Incapacitator: 'Shellshocker',
-		Cerberus: 'Deluge',
-		Lucifer: 'Containment',
-		Sterilizer: 'Haven',
-		Hielaman: 'Ballistic', 
-		Jackhammer: 'Mallet', // Soap
-	},
-	Raider: {
-		Raider: 'Raider',
-		Gladiator: 'Filibuster',
-		Starlight: 'Colonizer',
-		Bruiser: 'Plunderer', // Umbra
-		Incapacitator: 'Blitzkrieg',
-		Cerberus: 'Wyvern',
-		Lucifer: 'Kraken',
-		Sterilizer: 'Splatterer',
-		Hielaman: 'Strategist', 
-		Jackhammer: 'Extractor',
-	},
-	Gladiator: {
-		Gladiator: 'Gladiator',
-		Starlight: 'Enveloper',
-		Bruiser: 'Fistfighter',
-		Incapacitator: 'Overloader', // Umbra
-		Cerberus: 'Ogre',
-		Lucifer: 'Wendigo',
-		Sterilizer: 'Garrison', // Umbra
-		Hielaman: 'Uziel', // Zenphia
-		Jackhammer: 'Warlord',
-	},
-	Starlight: {
-		Starlight: 'Starlight',
-		Bruiser: 'Wanderer',
-		Incapacitator: 'Starstruck',
-		Cerberus: 'Constellation',
-		Lucifer: 'Galaxy',
-		Sterilizer: 'Evaporator',
-		Hielaman: 'Protostar', 
-		Jackhammer: 'Illuminator',
-	},
-	Bruiser: {
-		Bruiser: 'Bruiser',
-		Incapacitator: 'Mauler',
-		Cerberus: 'Serpent',
-		Lucifer: 'Trident',
-		Sterilizer: 'Suture',
-		Hielaman: 'Heavyweight', 
-		Jackhammer: 'Stapler',
-	},
-	Incapacitator: {
-		Incapacitator: 'Incapacitator',
-		Cerberus: 'Opportunist',
-		Lucifer: 'Condemner',
-		Sterilizer: 'Poisoner',
-		Hielaman: 'Eyrie', 
-		Jackhammer: 'Thrasher', // Soap
-	},
-	Cerberus: {
-		Cerberus: 'Cerberus',
-		Lucifer: 'Oni',
-		Sterilizer: 'Antibody',
-		Hielaman: 'Typhon', 
-		Jackhammer: 'Paver',
-	},
-	Lucifer: {
-		Lucifer: 'Lucifer',
-		Sterilizer: 'Lipid',
-		Hielaman: 'Insulator', 
-		Jackhammer: 'Earthquaker',
-	},
-	Sterilizer: {
-		Sterilizer: 'Sterilizer',
-		Hielaman: 'Homeland', 
-		Jackhammer: 'Bulldozer',
-	},
-	Hielaman: {
-		Hielaman: 'Hielaman', 
-		Jackhammer: 'Compactor',
-	},
-	Jackhammer: {
-		Jackhammer: 'Jackhammer',
-	},
-};
-
-function mergeHexnoughtWeaponV2(weapon1, weapon2) {
-	weapon1 = ensureIsClass(weapon1);
-	weapon2 = ensureIsClass(weapon2);
-
-	let PARENT = "genericHexnoughtSnowdread",
-		BODY = hexnoughtBody,
-		GUNS = [],
-		gunsOnOneSide = [],
-		weapon2GunsOnOneSide = [],
-		TURRETS = [],
-		turretsOnOneSide = [],
-		weapon2TurretsOnOneSide = [],
-		CONTROLLERS = weapon2.CONTROLLERS,
-		TOOLTIP,
-		UPGRADE_TOOLTIP = weapon1.UPGRADE_TOOLTIP + " + " + weapon2.UPGRADE_TOOLTIP;
-
-	// Label
-	let name1 = hexDreadNames[weapon1.LABEL][weapon2.LABEL],
-		name2 = hexDreadNames[weapon2.LABEL][weapon1.LABEL],
-		weaponName = weapon1.LABEL + weapon2.LABEL,
-		orientationId = 0;
-	if (name1) {
-		weaponName = name1;
-	} else if (name2) {
-		weaponName = name2,
-		orientationId = 1;
-	}
-	let LABEL = weaponName,
-		className = weapon1.LABEL.toLowerCase() + weapon2.LABEL + orientationId + "Snowdread";
-	
-	// Tooltip
-	if (weapon1.TOOLTIP) TOOLTIP = weapon1.TOOLTIP + " ";
-	if (weapon2.TOOLTIP && weapon1.LABEL != weapon2.LABEL) TOOLTIP += weapon2.TOOLTIP;
-
-	// Upgrade Tooltip
-	if (weapon1.LABEL == weapon2.LABEL) UPGRADE_TOOLTIP = weapon1.UPGRADE_TOOLTIP;
-	
-	// Guns ----------------------
-	if (weapon1.GUNS) gunsOnOneSide.push(...JSON.parse(JSON.stringify(weapon1.GUNS.slice(0, weapon1.GUNS.length / 5))));
-	if (weapon2.GUNS) weapon2GunsOnOneSide = JSON.parse(JSON.stringify(weapon2.GUNS.slice(0, weapon2.GUNS.length / 5)));
-
-	for (let g in weapon2GunsOnOneSide) weapon2GunsOnOneSide[g].POSITION[5] += 60;
-	gunsOnOneSide.push(...weapon2GunsOnOneSide)
-
-	// Turrets -------------------
-	if (weapon1.TURRETS) turretsOnOneSide.push(...JSON.parse(JSON.stringify(weapon1.TURRETS.slice(0, weapon1.TURRETS.length / 5))));
-	if (weapon2.TURRETS) weapon2TurretsOnOneSide = JSON.parse(JSON.stringify(weapon2.TURRETS.slice(0, weapon2.TURRETS.length / 5)));
-
-	for (let t in weapon2TurretsOnOneSide) weapon2TurretsOnOneSide[t].POSITION[3] += 60;
-	turretsOnOneSide.push(...weapon2TurretsOnOneSide)
-
-	// Scale to fit size constraints
-	for (let g in gunsOnOneSide) {
-		// Scales X and length instead of Y and width if the gun is sideways, only needed for trebuchet
-		let isTrebuchetSpecial = Math.abs(gunsOnOneSide[g].POSITION[5]) == 90 || gunsOnOneSide[g].POSITION[5] == 150 || gunsOnOneSide[g].POSITION[5] == -30;
-		let offset = 0;
-		if (isTrebuchetSpecial) {
-			offset = -1
-		}
-		gunsOnOneSide[g].POSITION[1 + offset] *= hexnoughtScaleFactor ** 2;
-		gunsOnOneSide[g].POSITION[4 + offset] *= hexnoughtScaleFactor ** 2;
-	}
-
-	for (let t in turretsOnOneSide) {
-		turretsOnOneSide[t].POSITION[0] *= hexnoughtScaleFactor ** 2;
-	}
-
-	for (let i = 0; i < 3; i++) {
-		for (let g in gunsOnOneSide) {
-			let gun = JSON.parse(JSON.stringify(gunsOnOneSide[g]));
-			gun.POSITION[5] += 120 * i;
-			GUNS.push(gun);
-		}
-		for (let t in turretsOnOneSide) {
-			let turret = JSON.parse(JSON.stringify(turretsOnOneSide[t]));
-			turret.POSITION[3] += 120 * i;
-			TURRETS.push(turret);
-		}
-	};
-
-	// Gladiator
-	if (weapon1.LABEL == "Gladiator" || weapon2.LABEL == "Gladiator") {
-		let droneSpawnerIndex = 0
-		for (let g in GUNS) {
-			let gun = GUNS[g];
-			if (gun.PROPERTIES && gun.PROPERTIES.TYPE == "gladiatorTritankMinionSnowdread") {
-				switch (droneSpawnerIndex) {
-					case 1:
-						gun.PROPERTIES.TYPE = "gladiatorTritrapMinionSnowdread";
-						break;
-					case 2:
-						gun.PROPERTIES.TYPE = "gladiatorTriswarmMinionSnowdread";
-						break;
-					case 3:
-						gun.PROPERTIES.TYPE = "gladiatorAutoMinionSnowdread";
-						break;
-					case 4:
-						gun.PROPERTIES.TYPE = "gladiatorAuraMinionSnowdread";
-						break;
-					case 5:
-						gun.PROPERTIES.TYPE = "gladiatorHealAuraMinionSnowdread";
-						break;
-				}
-				droneSpawnerIndex++;
-			}
-		}
-	}
-	
-	// Body stat modification
-	if (weapon1.BODY) for (let m in weapon1.BODY) BODY[m] *= weapon1.BODY[m];
-	if (weapon2.BODY) for (let m in weapon2.BODY) BODY[m] *= weapon2.BODY[m];
-
-	// Smash it together
-	Class[className] = {
-		PARENT, BODY, LABEL, TOOLTIP, UPGRADE_TOOLTIP, GUNS, TURRETS, CONTROLLERS
-	};
-	return className;
-}
-
-function makeHexnoughtBodyV2(body) {
-	if (!buildHexnoughts) return [];
-	
-	body = ensureIsClass(body);
-
-	let PARENT = "genericHexnoughtSnowdread",
-		BODY = {},
-		GUNS = body.GUNS ?? [],
-		TURRETS = [],
-		LABEL = body.LABEL,
-		UPGRADE_TOOLTIP = body.UPGRADE_TOOLTIP;
-
-	// Label
-	let className = LABEL.toLowerCase() + "HexSnowdread";
-	
-	// Turrets --------------------
-	let turretRingLoopLength = Math.floor(body.TURRETS.length / 5);
-
-	// Turret adding
-	for (let t = 0; t < body.TURRETS.length; t++) {
-		let turret = body.TURRETS[t];
-		if (turret.TYPE[0].indexOf('pentagon') >= 0) { // Replace pentagons with hexagons
-			TURRETS.push(
-				{
-					POSITION: [turret.POSITION[0], 0, 0, turret.POSITION[3], turret.POSITION[4], turret.POSITION[5]],
-					TYPE: ['hexagon' + turret.TYPE[0].substring(8), turret.TYPE[1] ?? {}],
-				}
-			);
-		} else if (turret.POSITION[1]) { // Do whole turret loop at once
-			for (let i = 0; i < turretRingLoopLength; i++) {
-				for (let j = 0; j < 6; j++) {
-					turret = body.TURRETS[t + i * 5 + 1];
-					let displacement = (turret.POSITION[1] ** 2 + turret.POSITION[2] ** 2) ** 0.5 * hexnoughtScaleFactor ** 0.5;
-					
-					// Angle turrets but not auras
-					let x, y, angle;
-					if (turret.POSITION[3]) { 
-						x = displacement;
-						y = 0;
-						angle = turret.POSITION[3] / 6 * 5 + 60 * j;
-					} else {
-						let theta = (turret.POSITION[3] / 6 * 5 - 30 + 60 * j) * Math.PI / 180;
-						x = displacement * Math.cos(theta);
-						y = displacement * Math.sin(theta);
-						angle = 0;
-					}
-					TURRETS.push(
-						{
-							POSITION: [turret.POSITION[0] * hexnoughtScaleFactor, x, y, angle, turret.POSITION[4], turret.POSITION[5]],
-							TYPE: turret.TYPE,
-						}
-					)
-				}
-			}
-			t += 5 * turretRingLoopLength - 1;
-		} else { // Centered turrets
-			TURRETS.push(
-				{
-					POSITION: [turret.POSITION[0] * hexnoughtScaleFactor ** 0.5, 0, 0, turret.POSITION[3], turret.POSITION[4], turret.POSITION[5]],
-					TYPE: turret.TYPE,
-				}
-			) 
-		}
-	}
-	
-	// Body stat modification
-	if (body.BODY) for (let m in body.BODY) BODY[m] = body.BODY[m];
-
-	// Smash it together
-	Class[className] = {
-		PARENT, BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS,
-	};
-	return [className];
-}
-
 // Merge hexdreads
-const pentanoughtWeapons = [
-							"rapierSnowdread",     "javelinSnowdread",     "woomeraSnowdread",           "trebuchetSnowdread",  "boltSnowdread",
-							"diplomatSnowdread",   "arbitratorSnowdread",  "dissolverSnowdread",         "eroderSnowdread",     "gripperSnowdread",
-							"retardantSnowdread",  "tyrantSnowdread",      "anesthesiologistSnowdread",  "helixSnowdread",      "bombardmentSnowdread",
-							"raiderSnowdread",     "gladiatorSnowdread",   "starlightSnowdread",         "bruiserSnowdread",    "incapacitatorSnowdread",
-							"cerberusSnowdread",   "luciferSnowdread",     "sterilizerSnowdread",        "hielamanSnowdread",   "jackhammerSnowdread",
-							];
 if(buildHexnoughts) {
 	for (let i of pentanoughtWeapons) {
 		for (let j of pentanoughtWeapons) {
