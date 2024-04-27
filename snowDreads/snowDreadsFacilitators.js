@@ -1144,6 +1144,7 @@ exports.makeHexnoughtBodyV2 = (body) => {
 		BODY = {},
 		GUNS = body.GUNS ?? [],
 		TURRETS = [],
+		PROPS = [],
 		LABEL = body.LABEL,
 		UPGRADE_TOOLTIP = body.UPGRADE_TOOLTIP;
 
@@ -1151,52 +1152,63 @@ exports.makeHexnoughtBodyV2 = (body) => {
 	let className = LABEL.toLowerCase() + "HexSnowdread";
 	
 	// Turrets --------------------
-	let turretRingLoopLength = Math.floor(body.TURRETS.length / 5);
+	if (body.TURRETS) {
+		let turretRingLoopLength = Math.floor(body.TURRETS.length / 5);
 
-	// Turret adding
-	for (let t = 0; t < body.TURRETS.length; t++) {
-		let turret = body.TURRETS[t];
-		if (turret.TYPE[0].indexOf('pentagon') >= 0) { // Replace pentagons with hexagons
-			TURRETS.push(
+		// Turret adding
+		for (let t = 0; t < body.TURRETS.length; t++) {
+			let turret = body.TURRETS[t];
+			if (turret.POSITION[1]) { // Do whole turret loop at once
+				for (let i = 0; i < turretRingLoopLength; i++) {
+					for (let j = 0; j < 6; j++) {
+						turret = body.TURRETS[t + i * 5 + 1];
+						let displacement = (turret.POSITION[1] ** 2 + turret.POSITION[2] ** 2) ** 0.5 * hexnoughtScaleFactor ** 0.5;
+						
+						// Angle turrets but not auras
+						let x, y, angle;
+						if (turret.POSITION[3]) { 
+							x = displacement;
+							y = 0;
+							angle = turret.POSITION[3] / 6 * 5 + 60 * j;
+						} else {
+							let theta = (turret.POSITION[3] / 6 * 5 - 30 + 60 * j) * Math.PI / 180;
+							x = displacement * Math.cos(theta);
+							y = displacement * Math.sin(theta);
+							angle = 0;
+						}
+						TURRETS.push(
+							{
+								POSITION: [turret.POSITION[0] * hexnoughtScaleFactor, x, y, angle, turret.POSITION[4], turret.POSITION[5]],
+								TYPE: turret.TYPE,
+							}
+						)
+					}
+				}
+				t += 5 * turretRingLoopLength - 1;
+			} else { // Centered turrets
+				TURRETS.push(
+					{
+						POSITION: [turret.POSITION[0] * hexnoughtScaleFactor ** 0.5, 0, 0, turret.POSITION[3], turret.POSITION[4], turret.POSITION[5]],
+						TYPE: turret.TYPE,
+					}
+				) 
+			}
+		}
+	}
+	if (body.PROPS) {
+		for (let prop of body.PROPS) {
+			prop = dereference(prop);
+			let type = prop.TYPE;
+			if (typeof type == "string") {
+				type = [type];
+			}
+			type[0] = type[0].replace("pentagon", "hexagon");
+			PROPS.push(
 				{
-					POSITION: [turret.POSITION[0], 0, 0, turret.POSITION[3], turret.POSITION[4], turret.POSITION[5]],
-					TYPE: ['hexagon' + turret.TYPE[0].substring(8), turret.TYPE[1] ?? {}],
+					POSITION: [prop.POSITION[0], 0, 0, prop.POSITION[3], prop.POSITION[4]],
+					TYPE: type
 				}
 			);
-		} else if (turret.POSITION[1]) { // Do whole turret loop at once
-			for (let i = 0; i < turretRingLoopLength; i++) {
-				for (let j = 0; j < 6; j++) {
-					turret = body.TURRETS[t + i * 5 + 1];
-					let displacement = (turret.POSITION[1] ** 2 + turret.POSITION[2] ** 2) ** 0.5 * hexnoughtScaleFactor ** 0.5;
-					
-					// Angle turrets but not auras
-					let x, y, angle;
-					if (turret.POSITION[3]) { 
-						x = displacement;
-						y = 0;
-						angle = turret.POSITION[3] / 6 * 5 + 60 * j;
-					} else {
-						let theta = (turret.POSITION[3] / 6 * 5 - 30 + 60 * j) * Math.PI / 180;
-						x = displacement * Math.cos(theta);
-						y = displacement * Math.sin(theta);
-						angle = 0;
-					}
-					TURRETS.push(
-						{
-							POSITION: [turret.POSITION[0] * hexnoughtScaleFactor, x, y, angle, turret.POSITION[4], turret.POSITION[5]],
-							TYPE: turret.TYPE,
-						}
-					)
-				}
-			}
-			t += 5 * turretRingLoopLength - 1;
-		} else { // Centered turrets
-			TURRETS.push(
-				{
-					POSITION: [turret.POSITION[0] * hexnoughtScaleFactor ** 0.5, 0, 0, turret.POSITION[3], turret.POSITION[4], turret.POSITION[5]],
-					TYPE: turret.TYPE,
-				}
-			) 
 		}
 	}
 	
@@ -1205,7 +1217,7 @@ exports.makeHexnoughtBodyV2 = (body) => {
 
 	// Smash it together
 	Class[className] = {
-		PARENT, BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS,
+		PARENT, BODY, LABEL, UPGRADE_TOOLTIP, GUNS, TURRETS, PROPS,
 	};
 	return [className];
 }

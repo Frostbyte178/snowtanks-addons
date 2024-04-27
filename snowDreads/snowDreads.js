@@ -1737,69 +1737,66 @@ Class.skynetSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Skynet",
 	UPGRADE_TOOLTIP: "Small Auto Spam",
-	TURRETS: [
+	TURRETS: weaponArray([
 		{
-			POSITION: [11, 0, 0, 180, 0, 1],
+			POSITION: [3.25, 4.5, 0, 0, 200, 2],
+			TYPE: "spamAutoTurretSnowdread",
+		}, {
+			POSITION: [3.25, 8, 0, 36, 200, 2],
+			TYPE: "spamAutoTurretSnowdread",
+		}
+	], 5),
+	PROPS: [
+		{
+			POSITION: [11, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
 	],
-}
-for (let i = 0; i < 5; i++) {
-	Class.skynetSnowdread.TURRETS.push(
-		{
-			POSITION: [3.25, 4.5, 0, 72*i, 200, 1],
-			TYPE: "spamAutoTurretSnowdread",
-		},
-	)
-}
-for (let i = 0; i < 5; i++) {
-	Class.skynetSnowdread.TURRETS.push(
-		{
-			POSITION: [3.25, 8, 0, 72*i+36, 200, 1],
-			TYPE: "spamAutoTurretSnowdread",
-		},
-	)
 }
 Class.supernovaSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Supernova",
 	UPGRADE_TOOLTIP: "Damage Aura + Small Autos",
 	TURRETS: [
-		{
-			POSITION: [12, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		},
 		...addPentanoughtTurretRing(),
 		{
-			POSITION: [9, 0, 0, 0, 360, 1],
+			POSITION: [9, 0, 0, 0, 360, 2],
 			TYPE: "pentanoughtBigAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [12, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.cipherSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Cipher",
 	UPGRADE_TOOLTIP: "Heavy Auto + Small Autos",
 	TURRETS: [
-		{
-			POSITION: [13, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		},
 		...addPentanoughtTurretRing(),
 		{
-			POSITION: [11.5, 0, 0, 0, 360, 1],
+			POSITION: [11.5, 0, 0, 0, 360, 2],
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [13, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.interstellarSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
@@ -1807,17 +1804,20 @@ Class.interstellarSnowdread = {
 	UPGRADE_TOOLTIP: "Healing Aura + Small Autos",
 	TURRETS: [
 		{
-			POSITION: [12, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [9.5, 0, 0, 0, 360, 1],
+			POSITION: [9.5, 0, 0, 0, 360, 2],
 			TYPE: "pentanoughtBigHealAuraSnowdread",
 		},
 		...addPentanoughtTurretRing(),
 	],
+	PROPS: [
+		{
+			POSITION: [12, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.gigabyteSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
@@ -1825,54 +1825,61 @@ Class.gigabyteSnowdread = {
 	UPGRADE_TOOLTIP: "Heavy Auto Turret",
 	TURRETS: [
 		{
-			POSITION: [14.5, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [12.5, 0, 0, 0, 360, 1],
+			POSITION: [12.5, 0, 0, 0, 360, 2],
 			TYPE: "gigabyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14.5, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.malwareSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Malware",
 	UPGRADE_TOOLTIP: "Heavy Auto + Damage Auras",
 	TURRETS: [
-		{
-			POSITION: [13, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		},
 		...addPentanoughtAuraRing(),
 		{
-			POSITION: [11.5, 0, 0, 0, 360, 1],
+			POSITION: [11.5, 0, 0, 0, 360, 2],
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [13, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.softwareSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Software",
 	UPGRADE_TOOLTIP: "Heavy Auto + Healing Auras",
 	TURRETS: [
-		{
-			POSITION: [13, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		},
 		...addPentanoughtAuraRing(true),
 		{
-			POSITION: [11.5, 0, 0, 0, 360, 1],
+			POSITION: [11.5, 0, 0, 0, 360, 2],
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [13, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.roasterSnowdread = { // Flamethrower
 	PARENT: "genericPentanoughtSnowdread",
@@ -1880,16 +1887,19 @@ Class.roasterSnowdread = { // Flamethrower
 	UPGRADE_TOOLTIP: "Flamethrower",
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ['pentagon', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [10.5, 0, 0, 0, 360, 1],
+			POSITION: [10.5, 0, 0, 0, 360, 2],
 			TYPE: 'roasterTurretSnowdread'
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.monsoonSnowdread = { // Drones
 	PARENT: "genericPentanoughtSnowdread",
@@ -1901,37 +1911,41 @@ Class.monsoonSnowdread = { // Drones
 	},
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ['pentagon', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [10.5, 0, 0, 0, 360, 1],
+			POSITION: [10.5, 0, 0, 0, 360, 2],
 			TYPE: 'monsoonTurretSnowdread'
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.photosphereSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Photosphere",
 	UPGRADE_TOOLTIP: "Damage Auras",
-	TURRETS: [
+	TURRETS: [],
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 180, 0, 1],
+			POSITION: [12, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-	],
+	]
 }
 if (useOldPhotosphere) {
 	for (let i = 0; i < 5; i++) {
 		let theta = (72 * i + 36) * Math.PI / 180;
 		Class.photosphereSnowdread.TURRETS.push(
 			{
-				POSITION: [3.5, 8.75 * Math.cos(theta), 8.75 * Math.sin(theta), 0, 360, 1],
+				POSITION: [3.5, 8.75 * Math.cos(theta), 8.75 * Math.sin(theta), 0, 360, 2],
 				TYPE: "photosphereSmallAuraSnowdread",
 			},
 		)
@@ -1940,7 +1954,7 @@ if (useOldPhotosphere) {
 		let theta = (72 * i) * Math.PI / 180;
 		Class.photosphereSnowdread.TURRETS.push(
 			{
-				POSITION: [3, 4 * Math.cos(theta), 4 * Math.sin(theta), 0, 360, 1],
+				POSITION: [3, 4 * Math.cos(theta), 4 * Math.sin(theta), 0, 360, 2],
 				TYPE: "photosphereBigAuraSnowdread",
 			},
 		)
@@ -1949,7 +1963,7 @@ if (useOldPhotosphere) {
 	Class.photosphereSnowdread.TURRETS.push(
 		...addPentanoughtAuraRing(),
 		{
-			POSITION: [9, 0, 0, 0, 360, 1],
+			POSITION: [9, 0, 0, 0, 360, 2],
 			TYPE: "pentanoughtBigAuraSnowdread",
 		},
 	)
@@ -1959,37 +1973,39 @@ Class.stratosphereSnowdread = {
 	LABEL: "Stratosphere",
 	UPGRADE_TOOLTIP: "Healing Auras",
 	TURRETS: [
-		{
-			POSITION: [12, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		},
 		...addPentanoughtAuraRing(true),
 		{
-			POSITION: [9.5, 0, 0, 0, 360, 1],
+			POSITION: [9.5, 0, 0, 0, 360, 2],
 			TYPE: "pentanoughtBigHealAuraSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [12, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.behemothSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Behemoth",
 	UPGRADE_TOOLTIP: "Health Buff",
 	BODY: hpBuffBodyStats[3],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
+			POSITION: [14, 0, 0, 180, 1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
 		}, {
-			POSITION: [7.5, 0, 0, 180, 0, 1],
+			POSITION: [7.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
 		},
 	],
@@ -1999,66 +2015,66 @@ Class.astronomicSnowdread = {
 	LABEL: "Astronomic",
 	UPGRADE_TOOLTIP: "Health Buff + Damage Auras",
 	BODY: hpBuffBodyStats[2],
-	TURRETS: [
+	TURRETS: addPentanoughtAuraRing(),
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 180, 0, 1],
+			POSITION: [12, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
-			POSITION: [7.5, 0, 0, 180, 0, 1],
+			POSITION: [7.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-		...addPentanoughtAuraRing(),
-	],
+	]
 }
 Class.grandioseSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Grandiose",
 	UPGRADE_TOOLTIP: "Health Buff + Healing Auras",
 	BODY: hpBuffBodyStats[2],
-	TURRETS: [
+	TURRETS: addPentanoughtAuraRing(true),
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 180, 0, 1],
+			POSITION: [12, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
-			POSITION: [7.5, 0, 0, 180, 0, 1],
+			POSITION: [7.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-		...addPentanoughtAuraRing(true),
-	],
+	]
 }
 Class.bunkerSnowdread = { // HP + auto spam
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Bunker",
 	UPGRADE_TOOLTIP: "Health Buff + Small Autos",
 	BODY: hpBuffBodyStats[2],
-	TURRETS: [
+	TURRETS: addPentanoughtTurretRing(),
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 180, 0, 1],
+			POSITION: [12, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
-			POSITION: [7.5, 0, 0, 180, 0, 1],
+			POSITION: [7.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [24, 0, 0, 180, 0, -1],
+			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-		...addPentanoughtTurretRing(),
-	],
+	]
 }
 Class.arsenalSnowdread = { // HP + big auto
 	PARENT: "genericPentanoughtSnowdread",
@@ -2067,37 +2083,40 @@ Class.arsenalSnowdread = { // HP + big auto
 	BODY: hpBuffBodyStats[2],
 	TURRETS: [
 		{
-			POSITION: [15.5, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
-		}, {
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [24, 0, 0, 180, 0, -1],
-			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
-		}, {
-			POSITION: [11.5, 0, 0, 0, 360, 1],
+			POSITION: [11.5, 0, 0, 0, 360, 2],
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [15.5, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
+		}, {
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [24, 0, 0, 180, -1],
+			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+		}, 
+	]
 }
 Class.leviathanSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Leviathan",
 	UPGRADE_TOOLTIP: "Speed Buff",
 	BODY: speedBuffBodyStats[2],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 0, 0, 1],
+			POSITION: [12, 0, 0, 0, 1],
 			TYPE: ["pentagonLeviathanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
 	],
@@ -2107,18 +2126,18 @@ Class.valrayvnSnowdread = {
 	LABEL: "Valrayvn",
 	UPGRADE_TOOLTIP: "Speed Buff + Damage Auras",
 	BODY: speedBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addPentanoughtAuraRing(),
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 0, 0, 1],
+			POSITION: [12, 0, 0, 0, 1],
 			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
-		...addPentanoughtAuraRing(),
 	],
 }
 Class.pegasusSnowdread = {
@@ -2126,18 +2145,18 @@ Class.pegasusSnowdread = {
 	LABEL: "Pegasus",
 	UPGRADE_TOOLTIP: "Speed Buff + Healing Auras",
 	BODY: speedBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addPentanoughtAuraRing(true),
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 0, 0, 1],
+			POSITION: [12, 0, 0, 0, 1],
 			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
-		...addPentanoughtAuraRing(true),
 	],
 }
 Class.maceSnowdread = { // Speed + auto spam
@@ -2145,18 +2164,18 @@ Class.maceSnowdread = { // Speed + auto spam
 	LABEL: "Mace",
 	UPGRADE_TOOLTIP: "Speed Buff + Small Autos",
 	BODY: speedBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addPentanoughtTurretRing(),
+	PROPS: [
 		{
-			POSITION: [12, 0, 0, 0, 0, 1],
+			POSITION: [12, 0, 0, 0, 1],
 			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
-		...addPentanoughtTurretRing(),
 	],
 }
 Class.missileSnowdread = { // Speed + big auto
@@ -2166,17 +2185,20 @@ Class.missileSnowdread = { // Speed + big auto
 	BODY: speedBuffBodyStats[1],
 	TURRETS: [
 		{
-			POSITION: [12, 0, 0, 0, 0, 1],
+			POSITION: [11.5, 0, 0, 0, 360, 2],
+			TYPE: "megabyteTurretSnowdread",
+		},
+	],
+	PROPS: [
+		{
+			POSITION: [12, 0, 0, 0, 1],
 			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
-		}, {
-			POSITION: [11.5, 0, 0, 0, 360, 1],
-			TYPE: "megabyteTurretSnowdread",
 		},
 	],
 }
@@ -2190,18 +2212,18 @@ Class.battalionSnowdread = { // Speed + HP
 		SHIELD: 1.6, 
 		REGEN: 1.5, 
 	},
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [14, 0, 0, 0, 0, 1],
+			POSITION: [14, 0, 0, 0, 1],
 			TYPE: ["pentagonLeviathanTop3Snowdread", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
 		}, {
-			POSITION: [7.5, 0, 0, 180, 0, 1],
+			POSITION: [7.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [20, 0, 0, 0, 0, -1],
+			POSITION: [20, 0, 0, 0, -1],
 			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
 		},
 	],
@@ -2211,10 +2233,10 @@ Class.titaniumSnowdread = { // Shield buff
 	LABEL: "Titanium",
 	UPGRADE_TOOLTIP: "Shield Buff",
 	BODY: shieldBuffBodyStats[2],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
 	],
 }
@@ -2223,39 +2245,39 @@ Class.obsidianSnowdread = { // Shield buff + auras
 	LABEL: "Obsidian",
 	UPGRADE_TOOLTIP: "Shield buff + Damage Auras",
 	BODY: shieldBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addPentanoughtAuraRing(),
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-		...addPentanoughtAuraRing(),
-	],
+	]
 }
 Class.austeniteSnowdread = { // Shield buff + heal auras
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Austenite",
 	UPGRADE_TOOLTIP: "Shield buff + Healing Auras",
 	BODY: shieldBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addPentanoughtAuraRing(true),
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-		...addPentanoughtAuraRing(true),
-	],
+	]
 }
 Class.carbideSnowdread = { // Shield buff + auto spam
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Carbide",
 	UPGRADE_TOOLTIP: "Shield buff + Small Autos",
 	BODY: shieldBuffBodyStats[1],
-	TURRETS: [
+	TURRETS: addPentanoughtTurretRing(),
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-		...addPentanoughtTurretRing(),
-	],
+	]
 }
 Class.osmiumSnowdread = { // Shield buff + big auto
 	PARENT: "genericPentanoughtSnowdread",
@@ -2264,13 +2286,16 @@ Class.osmiumSnowdread = { // Shield buff + big auto
 	BODY: shieldBuffBodyStats[1],
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [11.5, 0, 0, 0, 360, 1],
+			POSITION: [11.5, 0, 0, 0, 360, 2],
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		},
+	]
 }
 Class.grapheneSnowdread = { // Shield + HP
 	PARENT: "genericPentanoughtSnowdread",
@@ -2282,12 +2307,12 @@ Class.grapheneSnowdread = { // Shield + HP
 		SHIELD: 2.25,
 		REGEN: 1.75,
 	},
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
 		},
-	],
+	]
 }
 Class.trackerSnowdread = { // FOV
 	PARENT: "genericPentanoughtSnowdread",
@@ -2299,22 +2324,25 @@ Class.trackerSnowdread = { // FOV
 	},
 	TURRETS: [
 		{
-			POSITION: [14, 0, 0, 180, 0, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["pentagonBaseDeco"],
-		}, {
-			POSITION: [11, 0, 0, 180, 0, 1],
-			TYPE: ["egg", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, MIRROR_MASTER_ANGLE: true}],
-		}, {
-			POSITION: [7.5, 0, 0, 180, 0, 1],
-			TYPE: ["egg", {COLOR: -1, MIRROR_MASTER_ANGLE: true}],
-		}, {
-			POSITION: [15.5, 0, 0, 0, 360, 1],
+			POSITION: [15.5, 0, 0, 0, 360, 2],
 			TYPE: 'trackerRadarSnowdread'
 		},
 	],
+	PROPS: [
+		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [11, 0, 0, 180, 1],
+			TYPE: ["egg", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, MIRROR_MASTER_ANGLE: true}],
+		}, {
+			POSITION: [7.5, 0, 0, 180, 1],
+			TYPE: ["egg", {COLOR: -1, MIRROR_MASTER_ANGLE: true}],
+		}, 
+	]
 }
 
 Class.addons.UPGRADES_TIER_0.push("dreadSnowdread");
