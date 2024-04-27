@@ -21,9 +21,7 @@ Class.superFastSpectator = {
     },
 }
 
-Class.snowtanksTesting = menu("SnowTesting");
-Class.snowtanksTesting.SHAPE = -6;
-Class.snowtanksTesting.COLOR = {BASE: 0, SATURATION_SHIFT: 0.7, BRIGHTNESS_SHIFT: 15};
+Class.snowtanksTesting = menu("Snow Testing", {BASE: 0, SATURATION_SHIFT: 0.7, BRIGHTNESS_SHIFT: 15}, -6);
 
 Class.particleEmitterTest = {
     PARENT: 'genericTank',
@@ -93,5 +91,5 @@ Class.spectator.UPGRADES_TIER_0 = ["spectator", "fastSpectator", "superFastSpect
 Class.fastSpectator.UPGRADES_TIER_0 = ["spectator", "fastSpectator", "superFastSpectator"];
 Class.superFastSpectator.UPGRADES_TIER_0 = ["spectator", "fastSpectator", "superFastSpectator"];
 
-Class.testing.UPGRADES_TIER_0.push('snowtanksTesting');
+Class.addons.UPGRADES_TIER_0.push('snowtanksTesting');
     Class.snowtanksTesting.UPGRADES_TIER_0 = ["particleEmitterTest", "blinkerTest"];

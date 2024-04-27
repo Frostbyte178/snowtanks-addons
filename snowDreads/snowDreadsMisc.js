@@ -865,7 +865,7 @@ Class.roasterTurretSnowdread = {
 }
 
 // Debug
-Class.snowdreadsDebug = menu("Snowdreads Debug", "teal", -6);
+Class.snowdreadsDebug = menu("Snowdreads Debug", "egg", -6);
 
 // FPS testing
 Class.auraBenchmark1 = {
