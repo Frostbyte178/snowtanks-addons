@@ -452,13 +452,13 @@ Class.automationSnowdread = {
 	PROPS: [
 		{
 			POSITION: [11, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["square", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
 		}, {
 			POSITION: [8, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, BORDERLESS: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 15}}],
+			TYPE: ["square", {BORDERLESS: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 15}}],
 		},
 	],
 }
@@ -475,7 +475,7 @@ Class.kilobyteSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["square", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
@@ -495,7 +495,7 @@ Class.lighterSnowdread = { // Flamethrower
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["square", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
@@ -519,7 +519,7 @@ Class.stormSnowdread = { // Drones
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["square", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
@@ -539,7 +539,7 @@ Class.coronaSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["square", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
@@ -559,7 +559,7 @@ Class.thermosphereSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 0, 1],
-			TYPE: ["square", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["square", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
@@ -574,10 +574,10 @@ Class.jumboSnowdread = {
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 0, 1],
-			TYPE: ['square', {MIRROR_MASTER_ANGLE: true, COLOR: 9}]
+			TYPE: ['square', {COLOR: 9}]
 		}, {
 			POSITION: [7, 0, 0, 0, 1],
-			TYPE: ['octogon', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}]
+			TYPE: ['octogon', {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}]
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
@@ -640,7 +640,7 @@ Class.spySnowdread = { // FOV
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 0, 1],
-			TYPE: ['square', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}]
+			TYPE: ['square', {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}]
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
@@ -668,7 +668,7 @@ Class.bayonetSnowdread = {
 	LABEL: "Bayonet",
 	UPGRADE_TOOLTIP: "Assassins",
 	GUNS: weaponArray(
-		addAssassin({length: 28, width: 7, x: 7}, 0, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
+		addAssassin({length: 28, width: 7, x: 7}, 5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
 	, 3)
 }
 Class.atlatlSnowdread = { // hunter
@@ -923,7 +923,7 @@ Class.mechanismSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -944,7 +944,7 @@ Class.fusionSnowdread = {
 	PROPS: [
 		{
 			POSITION: [15, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -965,7 +965,7 @@ Class.binarySnowdread = {
 	PROPS: [
 		{
 			POSITION: [15, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -986,7 +986,7 @@ Class.exosphereSnowdread = {
 	PROPS: [
 		{
 			POSITION: [15, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1006,7 +1006,7 @@ Class.megabyteSnowdread = {
 	PROPS: [
 		{
 			POSITION: [15.5, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1027,7 +1027,7 @@ Class.trojanSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1048,7 +1048,7 @@ Class.hardwareSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1068,7 +1068,7 @@ Class.burnerSnowdread = { // Flamethrower
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1092,7 +1092,7 @@ Class.tempestSnowdread = { // Drones
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1113,7 +1113,7 @@ Class.chromosphereSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1134,7 +1134,7 @@ Class.mesosphereSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1171,7 +1171,7 @@ Class.planetSnowdread = {
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1190,7 +1190,7 @@ Class.moonSnowdread = {
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1209,7 +1209,7 @@ Class.burgSnowdread = { // HP + auto spam
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1233,7 +1233,7 @@ Class.siloSnowdread = { // HP + big auto
 			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
 		}, {
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1267,7 +1267,7 @@ Class.sirenSnowdread = {
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1286,7 +1286,7 @@ Class.harpySnowdread = {
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1305,7 +1305,7 @@ Class.batonSnowdread = { // Speed + auto spam
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1329,7 +1329,7 @@ Class.fireworkSnowdread = { // Speed + big auto
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1389,7 +1389,7 @@ Class.flintSnowdread = { // Shield buff + auras
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1408,7 +1408,7 @@ Class.martensiteSnowdread = { // Shield buff + heal auras
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1427,7 +1427,7 @@ Class.ceramicSnowdread = { // Shield buff + auto spam
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1451,7 +1451,7 @@ Class.tungstenSnowdread = { // Shield buff + big auto
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1501,7 +1501,7 @@ Class.monitorSnowdread = { // FOV
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ['triangle', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			TYPE: ['triangle', {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1529,7 +1529,7 @@ Class.javelinSnowdread = {
 	LABEL: "Javelin",
 	UPGRADE_TOOLTIP: "Assassins",
 	GUNS: weaponArray(
-		addAssassin({length: 28, width: 7, x: 7}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
+		addAssassin({length: 28, width: 7, x: 8}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
 	, 5)
 }
 Class.woomeraSnowdread = { // hunter
@@ -1790,7 +1790,7 @@ Class.skynetSnowdread = {
 	PROPS: [
 		{
 			POSITION: [11, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1811,7 +1811,7 @@ Class.supernovaSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1832,7 +1832,7 @@ Class.cipherSnowdread = {
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1853,7 +1853,7 @@ Class.interstellarSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1873,7 +1873,7 @@ Class.gigabyteSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1894,7 +1894,7 @@ Class.malwareSnowdread = {
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1915,7 +1915,7 @@ Class.softwareSnowdread = {
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1935,7 +1935,7 @@ Class.roasterSnowdread = { // Flamethrower
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1959,7 +1959,7 @@ Class.monsoonSnowdread = { // Drones
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -1974,7 +1974,7 @@ Class.photosphereSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2023,7 +2023,7 @@ Class.stratosphereSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2041,7 +2041,7 @@ Class.behemothSnowdread = {
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
 		}, {
 			POSITION: [7.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
+			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2060,10 +2060,10 @@ Class.astronomicSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [7.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
+			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
@@ -2082,10 +2082,10 @@ Class.grandioseSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [7.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
+			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
@@ -2104,10 +2104,10 @@ Class.bunkerSnowdread = { // HP + auto spam
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [7.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
+			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
 			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
@@ -2130,11 +2130,11 @@ Class.arsenalSnowdread = { // HP + big auto
 	],
 	PROPS: [
 		{
-			POSITION: [15.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
+			POSITION: [15, 0, 0, 180, 1],
+			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
-			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			POSITION: [13.5, 0, 0, 180, 1],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2259,7 +2259,7 @@ Class.battalionSnowdread = { // Speed + HP
 			TYPE: ["pentagonLeviathanTop3Snowdread", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
 		}, {
 			POSITION: [7.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
+			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2276,8 +2276,14 @@ Class.titaniumSnowdread = { // Shield buff
 	BODY: shieldBuffBodyStats[2],
 	PROPS: [
 		{
+			POSITION: [6.5, 0, 0, 0, 1],
+			TYPE: "pentagonTitaniumTopSnowdread",
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "pentagonTitaniumBottomSnowdread",
 		},
 	],
 }
@@ -2289,8 +2295,14 @@ Class.obsidianSnowdread = { // Shield buff + auras
 	TURRETS: addPentanoughtAuraRing(),
 	PROPS: [
 		{
+			POSITION: [10.5, 0, 0, 180, 1],
+			TYPE: "pentagonTitaniumTop2Snowdread",
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "pentagonTitaniumBottomSnowdread",
 		},
 	]
 }
@@ -2302,8 +2314,14 @@ Class.austeniteSnowdread = { // Shield buff + heal auras
 	TURRETS: addPentanoughtAuraRing(true),
 	PROPS: [
 		{
+			POSITION: [10.5, 0, 0, 180, 1],
+			TYPE: "pentagonTitaniumTop2Snowdread",
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "pentagonTitaniumBottomSnowdread",
 		},
 	]
 }
@@ -2315,8 +2333,14 @@ Class.carbideSnowdread = { // Shield buff + auto spam
 	TURRETS: addPentanoughtTurretRing(),
 	PROPS: [
 		{
+			POSITION: [10.5, 0, 0, 180, 1],
+			TYPE: "pentagonTitaniumTop2Snowdread",
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "pentagonTitaniumBottomSnowdread",
 		},
 	]
 }
@@ -2333,8 +2357,17 @@ Class.osmiumSnowdread = { // Shield buff + big auto
 	],
 	PROPS: [
 		{
+			POSITION: [16, 0, 0, 180, 1],
+			TYPE: ["pentagonTitaniumTop2Snowdread", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 0}}],
+		}, {
+			POSITION: [13.5, 0, 0, 180, 1],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "pentagonTitaniumBottomSnowdread",
 		},
 	]
 }
@@ -2350,8 +2383,17 @@ Class.grapheneSnowdread = { // Shield + HP
 	},
 	PROPS: [
 		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["pentagon", {COLOR: 9}],
+		}, {
+			POSITION: [9.5, 0, 0, 180, 1],
+			TYPE: ["pentagonTitaniumTop2Snowdread", {BORDERLESS: true}],
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "pentagonTitaniumBottomSnowdread",
 		},
 	]
 }
@@ -2372,7 +2414,7 @@ Class.trackerSnowdread = { // FOV
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["pentagon", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",

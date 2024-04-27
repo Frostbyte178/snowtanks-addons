@@ -230,6 +230,72 @@ Class.steelBottomSnowdread = {
 		PROPERTIES: {COLOR: 9}
 	}, 3)
 }
+Class.pentagonTitaniumTopSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: 5,
+	COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10},
+	BORDERLESS: true,
+	GUNS: weaponArray([
+		{
+			POSITION: [26, 15, 0.001, 0, 0, 36, 0],
+			PROPERTIES: {COLOR: 9}
+		}, {
+			POSITION: [17.5, 16, 0.001, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: 9}
+		}
+	], 5)
+}
+Class.pentagonTitaniumTop2Snowdread = {
+	PARENT: 'genericTank',
+	SHAPE: "M 1.149 0 L 0.485 0.353 L 0.355 1.093 L -0.185 0.571 L -0.93 0.676 L -0.6 0 L -0.93 -0.676 L -0.185 -0.571 L 0.355 -1.093 L 0.485 -0.353 Z",
+	COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10},
+	GUNS: weaponArray({
+		POSITION: [6, 11, 0.001, 3, 0, 36, 0],
+		PROPERTIES: {COLOR: 9}
+	}, 5)
+}
+Class.pentagonTitaniumBottomSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: 5,
+	COLOR: 9,
+	GUNS: weaponArray({
+		POSITION: [16, 15, 0.001, 0, 0, 36, 0],
+		PROPERTIES: {COLOR: 9}
+	}, 5)
+}
+Class.hexagonTitaniumTopSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: 6,
+	COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10},
+	BORDERLESS: true,
+	GUNS: weaponArray([
+		{
+			POSITION: [24, 13, 0.001, 0, 0, 30, 0],
+			PROPERTIES: {COLOR: 9}
+		}, {
+			POSITION: [16, 16, 0.001, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: 9}
+		}
+	], 6)
+}
+Class.hexagonTitaniumTop2Snowdread = {
+	PARENT: 'genericTank',
+	SHAPE: "M 0.65 0 L 0.952 0.55 L 0.325 0.563 L 0 1.1 L -0.325 0.563 L -0.952 0.55 L -0.65 0 L -0.952 -0.55 L -0.325 -0.563 L 0 -1.1 L 0.325 -0.563 L 0.952 -0.55 Z",
+	COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10},
+	GUNS: weaponArray({
+		POSITION: [7, 10, 0.001, 2.5, 0, 0, 0],
+		PROPERTIES: {COLOR: 9}
+	}, 6)
+}
+Class.hexagonTitaniumBottomSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: 6,
+	COLOR: 9,
+	GUNS: weaponArray({
+		POSITION: [14, 14, 0.001, 0, 0, 30, 0],
+		PROPERTIES: {COLOR: 9}
+	}, 6)
+}
 
 // FOV boost body deco
 Class.spotterRadarSnowdread = {
