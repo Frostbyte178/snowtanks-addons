@@ -7,7 +7,7 @@ const {
 	addDrone, addMinion, addAutoDrone, addHoncho, addSwarm, 
 	addTrap, addAutoTrap, addAuraTrap, 
 	addTrinoughtAuraRing, addTrinoughtTurretRing, addPentanoughtAuraRing, addPentanoughtTurretRing,
-	mergeHexnoughtWeaponV2, makeHexnoughtBodyV2
+	mergeHexnoughtWeaponV2, makeHexnoughtBodyV2, setGladiatorMinion
 } = require('./snowDreadsFacilitators.js');
 const {
 	enableSnowDreads,
@@ -592,7 +592,6 @@ Class.colossusSnowdread = {
 	LABEL: "Colossus",
 	UPGRADE_TOOLTIP: "Speed Buff",
 	BODY: speedBuffBodyStats[0],
-	GUNS: [],
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 0, 1],
@@ -613,8 +612,14 @@ Class.brassSnowdread = { // Shield buff
 	BODY: shieldBuffBodyStats[0],
 	PROPS: [
 		{
+			POSITION: [7, 0, 0, 0, 1],
+			TYPE: "brassTopSnowdread",
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "squareBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "brassBottomSnowdread",
 		}
 	],
 }
@@ -1362,10 +1367,16 @@ Class.steelSnowdread = { // Shield buff
 	LABEL: "Steel",
 	UPGRADE_TOOLTIP: "Shield Buff",
 	BODY: shieldBuffBodyStats[1],
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
+			POSITION: [9, 0, 0, 0, 1],
+			TYPE: "steelTopSnowdread",
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "steelBottomSnowdread",
 		}
 	],
 }
@@ -1377,9 +1388,15 @@ Class.flintSnowdread = { // Shield buff + auras
 	TURRETS: addTrinoughtAuraRing(),
 	PROPS: [
 		{
+			POSITION: [13, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
-		},
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "steelBottomSnowdread",
+		}
 	],
 }
 Class.martensiteSnowdread = { // Shield buff + heal auras
@@ -1390,9 +1407,15 @@ Class.martensiteSnowdread = { // Shield buff + heal auras
 	TURRETS: addTrinoughtAuraRing(true),
 	PROPS: [
 		{
+			POSITION: [13, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
-		},
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "steelBottomSnowdread",
+		}
 	],
 }
 Class.ceramicSnowdread = { // Shield buff + auto spam
@@ -1403,9 +1426,15 @@ Class.ceramicSnowdread = { // Shield buff + auto spam
 	TURRETS: addTrinoughtTurretRing(),
 	PROPS: [
 		{
+			POSITION: [13, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
-		},
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "steelBottomSnowdread",
+		}
 	],
 }
 Class.tungstenSnowdread = { // Shield buff + big auto
@@ -1421,9 +1450,15 @@ Class.tungstenSnowdread = { // Shield buff + big auto
 	],
 	PROPS: [
 		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
-		},
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "steelBottomSnowdread",
+		}
 	],
 }
 Class.diamondSnowdread = { // Shield + HP
@@ -1438,9 +1473,15 @@ Class.diamondSnowdread = { // Shield + HP
 	},
 	PROPS: [
 		{
+			POSITION: [14, 0, 0, 180, 1],
+			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
-		},
+		}, {
+			POSITION: [20, 0, 0, 0, -1],
+			TYPE: "steelBottomSnowdread",
+		}
 	],
 }
 Class.monitorSnowdread = { // FOV
@@ -1651,13 +1692,13 @@ Class.gladiatorSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Gladiator",
 	UPGRADE_TOOLTIP: "Minions",
-	GUNS: [
-		...addMinion({length: 13, width: 11, gap: 2.75, angle: 0   }, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTritankMinionSnowdread",  2),
-		...addMinion({length: 13, width: 11, gap: 2.75, angle: 72  }, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTritrapMinionSnowdread",  2),
-		...addMinion({length: 13, width: 11, gap: 2.75, angle: 144 }, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorTriswarmMinionSnowdread", 2),
-		...addMinion({length: 13, width: 11, gap: 2.75, angle: -144}, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorAutoMinionSnowdread",     2),
-		...addMinion({length: 13, width: 11, gap: 2.75, angle: -72 }, 0, [g.factory, {size: 0.9, reload: 0.5}], "gladiatorAuraMinionSnowdread",     2),
-	],
+	GUNS: weaponArray(
+		addMinion({length: 13, width: 11, gap: 2.75}, 0, [g.factory, {size: 0.9, reload: 0.5}], "minion", 2)
+	, 5),
+}
+let minionIndex = 0;
+for (let gun of Class.gladiatorSnowdread.GUNS) {
+	minionIndex = setGladiatorMinion(gun, minionIndex);
 }
 Class.starlightSnowdread = { // auto-drones
 	PARENT: "genericPentanoughtSnowdread",

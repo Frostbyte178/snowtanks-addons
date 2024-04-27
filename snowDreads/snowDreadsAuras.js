@@ -31,37 +31,36 @@ const auraConfig = {
 	BORDER_FIRST: true,
 }
 Class.auraSmall = {
-	PARENT: ["aura"],
+	PARENT: "aura",
 	...auraConfig,
 	SHAPE: auraSmallShape,
 }
 Class.healAuraSmall = {
-	PARENT: ["healAura"],
+	PARENT: "healAura",
 	...auraConfig,
 	SHAPE: auraSmallShape,
 }
 Class.auraMedium = {
-	PARENT: ["aura"],
+	PARENT: "aura",
 	...auraConfig,
 	SHAPE: auraMediumShape,
 }
 Class.healAuraMedium = {
-	PARENT: ["healAura"],
+	PARENT: "healAura",
 	...auraConfig,
 	SHAPE: auraMediumShape,
 }
 Class.auraLarge = {
-	PARENT: ["auraBase"],
+	PARENT: "aura",
 	...auraConfig,
 	SHAPE: auraLargeShape,
 }
 Class.healAuraLarge = {
-	PARENT: ["auraLarge"],
+	PARENT: "healAura",
 	...auraConfig,
 	SHAPE: auraLargeShape,
 }
 Class.auraSymbolSnowdreads = {
-	PARENT: ["genericTank"],
 	CONTROLLERS: [["spin", { speed: -0.04 }]],
 	INDEPENDENT: true,
 	COLOR: 0,
@@ -70,7 +69,6 @@ Class.auraSymbolSnowdreads = {
 	"M 0.52 0.3 L 0.52 -0.3 L 0.797 -0.46 M 0.52 -0.3 L 0 -0.6 L 0 -0.92 M 0 -0.6 L -0.52 -0.3 L -0.797 -0.46 M -0.52 -0.3 L -0.52 0.3 L -0.797 0.46 M -0.52 0.3 L 0 0.6 L 0 0.92 M 0 0.6 L 0.52 0.3 L 0.797 0.46"
 }
 Class.healAuraSymbolSnowdreads = {
-	PARENT: ["genericTank"],
 	CONTROLLERS: [["spin", { speed: -0.04 }]],
 	INDEPENDENT: true,
 	COLOR: "red",

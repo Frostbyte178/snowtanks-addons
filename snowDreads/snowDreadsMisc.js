@@ -1,4 +1,4 @@
-const { combineStats, menu, addAura: addAuraOld } = require('../../facilitators.js');
+const { combineStats, menu, addAura: addAuraOld, weaponArray } = require('../../facilitators.js');
 const { smshskl } = require('../../constants.js');
 const g = require('../../gunvals.js');
 const { eggnoughtBody, squarenoughtBody, trinoughtBody, pentanoughtBody, hexnoughtBody } = require('./snowDreadsConstants.js');
@@ -60,7 +60,6 @@ Class.gladiatorGenericMinionSnowdread = {
 	PARENT: "minion",
 	BODY: { SPEED: 2 },
 	SHAPE: 3.5,
-	GUNS: [],
 	TURRETS: [
 		{
 			POSITION: [20, 0, 0, 0, 0, 1],
@@ -668,10 +667,9 @@ Class.stormTurretSnowdread = {
 	FACING_TYPE: ["spin", {speed: 0.05}],
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 6,
-	GUNS: [
-		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: 90}, 12.5, [g.drone, {size: 1.2}]),
-		...addDroneOnAuto({length: 6, width: 12, x: 8, angle: -90}, 12.5, [g.drone, {size: 1.2}]),
-	],
+	GUNS: weaponArray(
+		addDroneOnAuto({length: 6, width: 12, x: 8}, 12.5, [g.drone, {size: 1.2}])
+	, 2),
 	TURRETS: [
 		{
 			POSITION: [14, 0, 0, 0, 0, 1],
@@ -689,7 +687,9 @@ Class.tempestTurretSnowdread = {
 	FACING_TYPE: ["spin", {speed: 0.05}],
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 9,
-	GUNS: [],
+	GUNS: weaponArray(
+		addDroneOnAuto({length: 6, width: 12, x: 8, aspect: 1.2}, 7.5, [g.drone, g.overseer, {size: 1.25}])
+	, 3),
 	TURRETS: [
 		{
 			POSITION: [14, 0, 0, 0, 0, 1],
@@ -700,11 +700,6 @@ Class.tempestTurretSnowdread = {
 		},
 	]
 }
-for (let i = 0; i < 3; i++) {
-	Class.tempestTurretSnowdread.GUNS.push(
-		...addDroneOnAuto({length: 6, width: 12, x: 8, aspect: 1.2, angle: 120*i}, 7.5, [g.drone, g.overseer, {size: 1.25}]),
-	)
-}
 Class.monsoonTurretSnowdread = {
 	PARENT: 'genericTank',
 	LABEL: "",
@@ -712,7 +707,9 @@ Class.monsoonTurretSnowdread = {
 	FACING_TYPE: ["spin", {speed: 0.05}],
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 9,
-	GUNS: [],
+	GUNS: weaponArray(
+		addDroneOnAuto({length: 6.5, width: 12.5, aspect: 1.2, x: 7.5}, 10, [g.drone, {size: 1.35, health: 1.1}])
+	, 3),
 	TURRETS: [
 		{
 			POSITION: [14, 0, 0, 0, 0, 1],
@@ -722,11 +719,6 @@ Class.monsoonTurretSnowdread = {
 			TYPE: ["egg", { COLOR: { BASE: -1 } }]
 		},
 	]
-}
-for (let i = 0; i < 3; i++) {
-	Class.monsoonTurretSnowdread.GUNS.push(
-		...addDroneOnAuto({length: 6.5, width: 12.5, aspect: 1.2, x: 7.5, angle: 120*i}, 10, [g.drone, {size: 1.35, health: 1.1}])
-	)
 }
 
 Class.lighterTurretSnowdread = {

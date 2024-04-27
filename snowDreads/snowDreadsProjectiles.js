@@ -1,4 +1,4 @@
-const { combineStats, makeAuto } = require('../../facilitators.js');
+const { combineStats, makeAuto, weaponArray } = require('../../facilitators.js');
 const { gunCalcNames } = require('../../constants.js');
 const g = require('../../gunvals.js');
 const { addGunner, addTrap, addThruster } = require('./snowDreadsFacilitators.js');
@@ -35,7 +35,7 @@ Class.missileProjectileSnowdread = {
 	],
 }
 Class.superMissileSnowdread = {
-	PARENT: ["bullet"],
+	PARENT: "bullet",
 	LABEL: "Missile",
 	INDEPENDENT: true,
 	BODY: { RANGE: 120 },
@@ -89,7 +89,7 @@ Class.spiralMissileSnowdread = {
 
 // Drones
 Class.betadrone = {
-	PARENT: ["drone"],
+	PARENT: "drone",
 	TURRETS: [
 		{
 			POSITION: [10, 0, 0, 180, 0, 1],
@@ -121,11 +121,13 @@ Class.honchoDroneSnowdread = {
 
 // Minions
 Class.assailantMinionSnowdread = {
-	PARENT: ["minion"],
+	PARENT: "minion",
 	BODY: { SPEED: 2 },
 	SHAPE: 4,
 	COLOR: 13,
-	GUNS: [],
+	GUNS: weaponArray(
+		addGunner({length: 15, width: 7.5}, -5, [g.basic, g.assassin, g.minionGun])
+	, 4),
 	TURRETS: [
 		{
 			POSITION: [20, 0, 0, 0, 0, 1],
@@ -136,17 +138,14 @@ Class.assailantMinionSnowdread = {
 		}
 	]
 }
-for (let i = 0; i < 4; i++) {
-	Class.assailantMinionSnowdread.GUNS.push(
-		...addGunner({length: 15, width: 7.5, angle: 90*i}, -5, [g.basic, g.assassin, g.minionGun])
-	)
-}
 Class.aggressorMinionSnowdread = {
-	PARENT: ["minion"],
+	PARENT: "minion",
 	SHAPE: 3.5,
 	COLOR: 2,
 	BODY: { SPEED: 2 },
-	GUNS: [],
+	GUNS: weaponArray(
+		addGunner({length: 16, width: 8.5}, -2.5, [g.basic, g.sniper, g.assassin, g.minionGun, {speed: 0.93, maxSpeed: 0.93}])
+	, 3),
 	TURRETS: [
 		{
 			POSITION: [20, 0, 0, 0, 0, 1],
@@ -154,22 +153,55 @@ Class.aggressorMinionSnowdread = {
 		}
 	]
 }
-for (let i = 0; i < 3; i++) {
-	Class.aggressorMinionSnowdread.GUNS.push(
-		...addGunner({length: 16, width: 8.5, angle: 120*i}, -2.5, [g.basic, g.sniper, g.assassin, g.minionGun, {speed: 0.93, maxSpeed: 0.93}])
-	)
-}
 Class.gladiatorTritankMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	GUNS: [],
+	PARENT: "gladiatorGenericMinionSnowdread",
+	GUNS: weaponArray([
+		{
+			POSITION: [15, 8.5, 1, 0, 0, 0, 0],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.assassin, g.minionGun, {speed: 0.7, maxSpeed: 0.7, range: 0.6}]),
+				WAIT_TO_CYCLE: true,
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
+				TYPE: 'bullet',
+			},
+		}, {
+			POSITION: [13.5, 5.5, 1, 0, 0, 0, 0],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.assassin, g.minionGun, g.fake]),
+				WAIT_TO_CYCLE: true,
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.85 },
+				TYPE: 'bullet',
+			},
+		},
+	], 3),
 }
 Class.gladiatorTritrapMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	GUNS: [],
+	PARENT: "gladiatorGenericMinionSnowdread",
+	GUNS: weaponArray(
+		addTrap({length: 13, length2: 3, width: 7, aspect: 1.7}, 5, [g.trap, g.flankGuard, g.minionGun, {reload: 1.6, shudder: 0.2}])
+	, 3),
 }
 Class.gladiatorTriswarmMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
-	GUNS: [],
+	PARENT: "gladiatorGenericMinionSnowdread",
+	GUNS: weaponArray([
+		{
+			POSITION: [7, 8.5, -1.5, 7, 0, 0, 0],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([g.swarm, g.minionGun, {size: 1.6, range: 0.5}]),
+				TYPE: 'swarm',
+				STAT_CALCULATOR: gunCalcNames.swarm,
+				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.7}
+			},
+		}, {
+			POSITION: [10.5, 6.8, -1.5, 2.5, 0, 0, 0],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([g.swarm, g.minionGun, g.fake]),
+				TYPE: 'swarm',
+				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.7},
+				BORDERLESS: true
+			},
+		},
+	], 3),
 }
 Class.gladiatorAutoMinionTurretSnowdread = {
 	PARENT: "spamAutoTurretSnowdread",
@@ -206,7 +238,7 @@ Class.gladiatorAutoMinionTurretSnowdread = {
 	]
 }
 Class.gladiatorAutoMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
+	PARENT: "gladiatorGenericMinionSnowdread",
 	TURRETS: [
 		{
 			POSITION: [20, 0, 0, 0, 0, 1],
@@ -218,7 +250,7 @@ Class.gladiatorAutoMinionSnowdread = {
 	]
 }
 Class.gladiatorAuraMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
+	PARENT: "gladiatorGenericMinionSnowdread",
 	TURRETS: [
 		{
 			POSITION: [20, 0, 0, 0, 0, 1],
@@ -230,7 +262,7 @@ Class.gladiatorAuraMinionSnowdread = {
 	]
 }
 Class.gladiatorHealAuraMinionSnowdread = {
-	PARENT: ["gladiatorGenericMinionSnowdread"],
+	PARENT: "gladiatorGenericMinionSnowdread",
 	TURRETS: [
 		{
 			POSITION: [20, 0, 0, 0, 0, 1],
@@ -240,49 +272,6 @@ Class.gladiatorHealAuraMinionSnowdread = {
 			TYPE: "gladiatorHealAuraMinionAuraSnowdread",
 		}
 	]
-}
-for (let i = 0; i < 3; i++) {
-	Class.gladiatorTritankMinionSnowdread.GUNS.push(
-		{
-			POSITION: [15, 8.5, 1, 0, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.assassin, g.minionGun, {speed: 0.7, maxSpeed: 0.7, range: 0.6}]),
-				WAIT_TO_CYCLE: true,
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-				TYPE: 'bullet',
-			},
-		}, {
-			POSITION: [13.5, 5.5, 1, 0, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.assassin, g.minionGun, g.fake]),
-				WAIT_TO_CYCLE: true,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.85 },
-				TYPE: 'bullet',
-			},
-		},
-	);
-	Class.gladiatorTritrapMinionSnowdread.GUNS.push(
-		...addTrap({length: 13, length2: 3, width: 7, aspect: 1.7, angle: 120*i}, 5, [g.trap, g.flankGuard, g.minionGun, {reload: 1.6, shudder: 0.2}])
-	);
-	Class.gladiatorTriswarmMinionSnowdread.GUNS.push(
-		{
-			POSITION: [7, 8.5, -1.5, 7, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.swarm, g.minionGun, {size: 1.6, range: 0.5}]),
-				TYPE: 'swarm',
-				STAT_CALCULATOR: gunCalcNames.swarm,
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.7}
-			},
-		}, {
-			POSITION: [10.5, 6.8, -1.5, 2.5, 0, 120*i, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.swarm, g.minionGun, g.fake]),
-				TYPE: 'swarm',
-				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.7},
-				BORDERLESS: true
-			},
-		},
-	);
 }
 
 // Traps

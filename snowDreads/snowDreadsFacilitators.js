@@ -1000,6 +1000,32 @@ exports.addAura = (damageFactor = 1, sizeFactor = 1, opacity = 0.3, auraColor, a
 	};
 }
 
+exports.setGladiatorMinion = (gun, index) => {
+	if (!gun.PROPERTIES) return index;
+	if (!gun.PROPERTIES.TYPE) return index;
+	switch (index) {
+		case 0:
+			gun.PROPERTIES.TYPE = "gladiatorTritankMinionSnowdread";
+			break;
+		case 1:
+			gun.PROPERTIES.TYPE = "gladiatorTritrapMinionSnowdread";
+			break;
+		case 2:
+			gun.PROPERTIES.TYPE = "gladiatorTriswarmMinionSnowdread";
+			break;
+		case 3:
+			gun.PROPERTIES.TYPE = "gladiatorAutoMinionSnowdread";
+			break;
+		case 4:
+			gun.PROPERTIES.TYPE = "gladiatorAuraMinionSnowdread";
+			break;
+		case 5:
+			gun.PROPERTIES.TYPE = "gladiatorHealAuraMinionSnowdread";
+			break;
+	}
+	return index + 1;
+}
+
 exports.mergeHexnoughtWeaponV2 = (weapon1, weapon2) => {
 	weapon1 = ensureIsClass(weapon1);
 	weapon2 = ensureIsClass(weapon2);
@@ -1101,26 +1127,7 @@ exports.mergeHexnoughtWeaponV2 = (weapon1, weapon2) => {
 		let droneSpawnerIndex = 0
 		for (let g in GUNS) {
 			let gun = GUNS[g];
-			if (gun.PROPERTIES && gun.PROPERTIES.TYPE == "gladiatorTritankMinionSnowdread") {
-				switch (droneSpawnerIndex) {
-					case 1:
-						gun.PROPERTIES.TYPE = "gladiatorTritrapMinionSnowdread";
-						break;
-					case 2:
-						gun.PROPERTIES.TYPE = "gladiatorTriswarmMinionSnowdread";
-						break;
-					case 3:
-						gun.PROPERTIES.TYPE = "gladiatorAutoMinionSnowdread";
-						break;
-					case 4:
-						gun.PROPERTIES.TYPE = "gladiatorAuraMinionSnowdread";
-						break;
-					case 5:
-						gun.PROPERTIES.TYPE = "gladiatorHealAuraMinionSnowdread";
-						break;
-				}
-				droneSpawnerIndex++;
-			}
+			droneSpawnerIndex = exports.setGladiatorMinion(gun, droneSpawnerIndex);
 		}
 	}
 	

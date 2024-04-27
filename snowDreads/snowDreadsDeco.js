@@ -16,60 +16,57 @@ Class.eggBaseDeco = {
 			"M -0.79 -0.33 A 1 0.95 -157.5 0 1 -0.6 -0.6 L -0.54 -0.54 A 1.88 1 -157.5 0 0 -0.71 -0.29 L -0.79 -0.33",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
 	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 2; i++) {
-	Class.eggBaseDeco.GUNS.push(
+	GUNS: weaponArray([
 		{
-			POSITION: [8.25, 6.75, 0.6, 0, 0, 180*i+55, 0],
+			POSITION: [8.25, 6.75, 0.6, 0, 0, 55, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.85 },
 				BORDERLESS: true,
 			}
 		}, {
-			POSITION: [8.25, 6.75, 0.6, 0, 0, 180*i+125, 0],
+			POSITION: [8.25, 6.75, 0.6, 0, 0, 125, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.85 },
 				BORDERLESS: true,
 			}
 		}, {
-			POSITION: [4, 1.3, 0.001, 9, 0, 48 + 180 * i, 0],
+			POSITION: [4, 1.3, 0.001, 9, 0, 48, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
 				DRAW_ABOVE: true,
 			},
 		}, {
-			POSITION: [3.5, 1.7, 0.001, 9, 0, 90 + 180 * i, 0],
+			POSITION: [3.5, 1.7, 0.001, 9, 0, 90, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
 				DRAW_ABOVE: true,
 			},
 		}, {
-			POSITION: [4, 1.3, 0.001, 9, 0, 132 + 180 * i, 0],
+			POSITION: [4, 1.3, 0.001, 9, 0, 132, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
 				DRAW_ABOVE: true,
 			},
 		}, {
-			POSITION: [1.5, 1.3, 0, 7.5, 0, 48 + 180 * i, 0],
+			POSITION: [1.5, 1.3, 0, 7.5, 0, 48, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
 				DRAW_ABOVE: true,
 			},
 		}, {
-			POSITION: [1, 1.7, 0, 8, 0, 90 + 180 * i, 0],
+			POSITION: [1, 1.7, 0, 8, 0, 90, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
 				DRAW_ABOVE: true,
 			},
 		}, {
-			POSITION: [1.5, 1.3, 0, 7.5, 0, 132 + 180 * i, 0],
+			POSITION: [1.5, 1.3, 0, 7.5, 0, 132, 0],
 			PROPERTIES: {
 				COLOR: { BASE: 6, BRIGHTNESS_SHIFT: -20 },
 				DRAW_ABOVE: true,
 			},
-		}, 
-	)
+		},
+	], 2),
 }
 Class.squareBaseDeco = {
 	SHAPE: "M -0.98 0.98 L -0.3 0.75 L -0.63 0.63 L -0.75 0.3 L -0.98 0.98" + 
@@ -78,47 +75,41 @@ Class.squareBaseDeco = {
 			"M -0.98 -0.98 L -0.75 -0.3 L -0.63 -0.63 L -0.3 -0.75 L -0.98 -0.98",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
 	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 4; i++) {
-	Class.squareBaseDeco.GUNS.push(
+	GUNS: weaponArray([
 		{
-			POSITION: [4, 2, 0.001, 9.5, 2.6, 20 + 90 * i, 0],
+			POSITION: [4, 2, 0.001, 9.5, 2.6, 20, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15 } },
 		}, {
-			POSITION: [4, 2, 0.001, 9.5, -2.6, 70 + 90 * i, 0],
+			POSITION: [4, 2, 0.001, 9.5, -2.6, 70, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15 } },
 		}, {
-			POSITION: [5, 1.5, 0.001, -2, 9, -70 + 90 * i, 0],
+			POSITION: [5, 1.5, 0.001, -2, 9, -70, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 17.5 } },
 		}, {
-			POSITION: [5, 1.5, 0.001, -2, -9, 70 + 90 * i, 0],
+			POSITION: [5, 1.5, 0.001, -2, -9, 70, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 17.5 } },
 		},
-	)
+	], 4),
 }
 Class.triangleBaseDeco = {
 	SHAPE: "M -1.546 -0.108 L -1.546 0.108 L -0.175 0.303 L 0.679 1.393 L 0.867 1.285 L 0.35 0 L 0.867 -1.285 L 0.679 -1.393 L -0.175 -0.303 L -1.546 -0.108",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
 	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 3; i++) {
-	Class.triangleBaseDeco.GUNS.push(
+	GUNS: weaponArray([
 		{
-			POSITION: [7, 3, 0.001, 10, 0, 120 * i + 60, 0],
+			POSITION: [7, 3, 0.001, 10, 0, 60, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.7 } },
 		}, {
-			POSITION: [5, 2.5, 0.001, 6.5, -2, 120 * i + 90, 0],
+			POSITION: [5, 2.5, 0.001, 6.5, -2, 90, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.85 } },
 		}, {
-			POSITION: [5, 2.5, 0.001, 6.5, 2, 120 * i + 30, 0],
+			POSITION: [5, 2.5, 0.001, 6.5, 2, 30, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.85 } },
 		}, {
-			POSITION: [9, 5, 0.25, 0, 0, 120 * i + 60, 0],
+			POSITION: [9, 5, 0.25, 0, 0, 60, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 12.5 }, BORDERLESS: true, DRAW_ABOVE: true },
 		},
-	)
+	], 3),
 }
 Class.pentagonBaseDeco = {
 	SHAPE: "M -1.207 -0.324 L -0.724 -0.194 L -0.408 -0.629 L -0.681 -1.048 L -0.688 -0.5 Z" +
@@ -128,21 +119,18 @@ Class.pentagonBaseDeco = {
 		"M 1.167 0.448 L 0.7 0.269 L 0.7 -0.269 L 1.167 -0.448 L 0.85 0 Z",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
 	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 5; i++) {
-	Class.pentagonBaseDeco.GUNS.push(
+	GUNS: weaponArray([
 		{
-			POSITION: [4, 6, 0.001, 8.5, 0, 72 * i, 0],
+			POSITION: [4, 6, 0.001, 8.5, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6 } },
 		}, {
-			POSITION: [7, 2.5, 0.001, 6, -6.2, 72 * i + 60, 0],
+			POSITION: [7, 2.5, 0.001, 6, -6.2, 60, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.8 } },
 		}, {
-			POSITION: [7, 2.5, 0.001, 6, 6.2, 72 * i - 60, 0],
+			POSITION: [7, 2.5, 0.001, 6, 6.2, -60, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.8 } },
 		},
-	)
+	], 5),
 }
 Class.hexagonBaseDeco = {
 	SHAPE: "M -1.1 0 L -0.956 0.292 L -0.669 0.205 L -0.669 -0.205 L -0.956 -0.292 Z" +
@@ -153,18 +141,15 @@ Class.hexagonBaseDeco = {
 		"M 1.1 0 L 0.956 0.292 L 0.669 0.205 L 0.669 -0.205 L 0.956 -0.292 Z",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 2.5 },
 	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for(let i = 0; i < 6; i++) {
-	Class.hexagonBaseDeco.GUNS.push(
+	GUNS: weaponArray([
 		{
-			POSITION: [1.75, 3, -0.75, 7.5, 0, 60 * i, 0],
+			POSITION: [1.75, 3, -0.75, 7.5, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 2.5, SATURATION_SHIFT: 0.9 }, DRAW_ABOVE: true },
 		}, {
-			POSITION: [1, 9, 0, 8.5, 0, 60 * i + 30, 0],
+			POSITION: [1, 9, 0, 8.5, 0, 30, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 10, SATURATION_SHIFT: 1.15 } },
 		},
-	)
+	], 6),
 }
 
 // Projectile deco
@@ -194,7 +179,57 @@ Class.unsetPillboxTopSnowdread = {
 
 // Dread body deco
 // Shield buff body deco
-
+Class.brassTopSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: 4.25,
+	COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10},
+	BORDERLESS: true,
+	GUNS: weaponArray([
+		{
+			POSITION: [23, 15, 0.001, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: 9}
+		}, {
+			POSITION: [17.5, 12, 0.001, 0, 0, 45, 0],
+			PROPERTIES: {COLOR: 9}
+		}
+	], 4)
+}
+Class.brassBottomSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: 4,
+	COLOR: 9,
+	GUNS: weaponArray({
+		POSITION: [16, 14, 0.001, 0, 0, 45, 0],
+		PROPERTIES: {COLOR: 9}
+	}, 4)
+}
+Class.steelTopSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: -3,
+	COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10},
+	BORDERLESS: true,
+	GUNS: weaponArray([
+		{
+			POSITION: [24, 15, 0.001, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: 9}
+		}, {
+			POSITION: [20, 12, 0.001, 0, 0, 25, 0],
+			PROPERTIES: {COLOR: 9}
+		}, {
+			POSITION: [20, 12, 0.001, 0, 0, -25, 0],
+			PROPERTIES: {COLOR: 9}
+		}
+	], 3)
+}
+Class.steelBottomSnowdread = {
+	PARENT: 'genericTank',
+	SHAPE: 3.5,
+	COLOR: 9,
+	GUNS: weaponArray({
+		POSITION: [23, 14, 0.001, -3, 0, 60, 0],
+		PROPERTIES: {COLOR: 9}
+	}, 3)
+}
 
 // FOV boost body deco
 Class.spotterRadarSnowdread = {
@@ -284,134 +319,101 @@ Class.colossusBottomSnowdread = {
 	}, 4),
 }
 Class.titanTopSnowdread = {
-	PARENT: ["genericTrinoughtSnowdread"],
-	GUNS: [],
-}
-for (let i = 0; i < 3; i++) {
-	Class.titanTopSnowdread.GUNS.push(
-		{
-			POSITION: [5, 26, 0.001, 8, 0, 120*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
+	PARENT: "genericTrinoughtSnowdread",
+	GUNS: weaponArray({
+		POSITION: [5, 26, 0.001, 8, 0, 0, 0],
+		PROPERTIES: {COLOR: 9},
+	}, 3),
 }
 Class.pentagonLeviathanTopSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
+	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Leviathan",
 	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
+	GUNS: weaponArray([
+		{
+			POSITION: [6, 13.5, 0.001, 9, 0, 0, 0],
+			PROPERTIES: {COLOR: 9},
+		}, {
+			POSITION: [4, 11.5, 0, 5.7, 0, 0, 0],
+			PROPERTIES: {COLOR: 9, DRAW_ABOVE: true},
+		},
+	], 5),
 }
 Class.pentagonLeviathanTop2Snowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
+	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Leviathan",
 	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
+	GUNS: weaponArray([
+		{
+			POSITION: [4.5, 13.5, 0.001, 9, 0, 0, 0],
+			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}},
+		}, {
+			POSITION: [3, 11.5, 0, 6.7, 0, 0, 0],
+			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true},
+		},
+	], 5),
 }
 Class.pentagonLeviathanTop3Snowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
+	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Leviathan",
 	COLOR: 9,
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
+	GUNS: weaponArray({
+		POSITION: [3.5, 8, 0, 6.7, 0, 0, 0],
+		PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true, BORDERLESS: true},
+	}, 5),
 }
 Class.pentagonLeviathanBottomSnowdread = {
-	PARENT: ["genericPentanoughtSnowdread"],
+	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Leviathan",
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for (let i = 0; i < 5; i++) {
-	Class.pentagonLeviathanTopSnowdread.GUNS.push(
-		{
-			POSITION: [6, 13.5, 0.001, 9, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}, {
-			POSITION: [4, 11.5, 0, 5.7, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9, DRAW_ABOVE: true},
-		},
-	);
-	Class.pentagonLeviathanTop2Snowdread.GUNS.push(
-		{
-			POSITION: [4.5, 13.5, 0.001, 9, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}},
-		}, {
-			POSITION: [3, 11.5, 0, 6.7, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true},
-		},
-	);
-	Class.pentagonLeviathanTop3Snowdread.GUNS.push(
-		{
-			POSITION: [3.5, 8, 0, 6.7, 0, 72*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true, BORDERLESS: true},
-		},
-	);
-	Class.pentagonLeviathanBottomSnowdread.GUNS.push(
-		{
-			POSITION: [7, 17, 0.001, 9, 0, 72*i, 0],
-			PROPERTIES: {COLOR: 9},
-		}
-	);
+	GUNS: weaponArray({
+		POSITION: [7, 17, 0.001, 9, 0, 0, 0],
+		PROPERTIES: {COLOR: 9},
+	}, 5),
 }
 Class.hexagonLeviathanTopSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
+	PARENT: "genericHexnoughtSnowdread",
 	LABEL: "Leviathan",
 	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.hexagonLeviathanTop2Snowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.hexagonLeviathanTop3Snowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	LABEL: "Leviathan",
-	COLOR: 9,
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-Class.hexagonLeviathanBottomSnowdread = {
-	PARENT: ["genericHexnoughtSnowdread"],
-	LABEL: "Leviathan",
-	MIRROR_MASTER_ANGLE: true,
-	GUNS: [],
-}
-for (let i = 0; i < 6; i++) {
-	Class.hexagonLeviathanTopSnowdread.GUNS.push(
+	GUNS: weaponArray([
 		{
-			POSITION: [6, 10, 0.001, 9.5, 0, 60*i, 0],
+			POSITION: [6, 10, 0.001, 9.5, 0, 0, 0],
 			PROPERTIES: {COLOR: 9},
 		}, {
-			POSITION: [3, 9, 0, 7, 0, 60*i, 0],
+			POSITION: [3, 9, 0, 7, 0, 0, 0],
 			PROPERTIES: {COLOR: 9, DRAW_ABOVE: true},
 		},
-	)
-	Class.hexagonLeviathanTop2Snowdread.GUNS.push(
+	], 6),
+}
+Class.hexagonLeviathanTop2Snowdread = {
+	PARENT: "genericHexnoughtSnowdread",
+	LABEL: "Leviathan",
+	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5},
+	GUNS: weaponArray([
 		{
-			POSITION: [5, 10, 0.001, 9.5, 0, 60*i, 0],
+			POSITION: [5, 10, 0.001, 9.5, 0, 0, 0],
 			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}},
 		}, {
-			POSITION: [2.5, 9, 0, 7.5, 0, 60*i, 0],
+			POSITION: [2.5, 9, 0, 7.5, 0, 0, 0],
 			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true},
 		},
-	)
-	Class.hexagonLeviathanTop3Snowdread.GUNS.push(
-		{
-			POSITION: [3, 6.5, 0, 7, 0, 60*i, 0],
-			PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true, BORDERLESS: true},
-		}
-	)
-	Class.hexagonLeviathanBottomSnowdread.GUNS.push(
-		{
-			POSITION: [7, 13.5, 0.001, 9.5, 0, 60*i, 0],
-			PROPERTIES: {COLOR: 9},
-		},
-	)
+	], 6),
+}
+Class.hexagonLeviathanTop3Snowdread = {
+	PARENT: "genericHexnoughtSnowdread",
+	LABEL: "Leviathan",
+	COLOR: 9,
+	GUNS: weaponArray({
+		POSITION: [3, 6.5, 0, 7, 0, 0, 0],
+		PROPERTIES: {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true, BORDERLESS: true},
+	}, 6),
+}
+Class.hexagonLeviathanBottomSnowdread = {
+	PARENT: "genericHexnoughtSnowdread",
+	LABEL: "Leviathan",
+	GUNS: weaponArray({
+		POSITION: [7, 13.5, 0.001, 9.5, 0, 0, 0],
+		PROPERTIES: {COLOR: 9},
+	}, 6),
 }
 
 // Misc
