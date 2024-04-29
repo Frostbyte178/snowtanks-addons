@@ -184,7 +184,7 @@ Class.juggernautSnowdread = {
 			TYPE: ['egg', {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 5}, BORDERLESS: true}],
 		}, {
 			POSITION: [6.5, 0, 0, 0, 1],
-			TYPE: ['hexagon', {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 15}, BORDERLESS: true, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ['hexagon', {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 15}, BORDERLESS: true}],
 		}, {
 			POSITION: [24, 0, 0, 0, 0],
 			TYPE: ['egg', {COLOR: 9}]
@@ -583,7 +583,7 @@ Class.jumboSnowdread = {
 			TYPE: "squareBaseDeco",
 		}, {
 			POSITION: [24, 0, 0, 0, -1],
-			TYPE: ['square', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['square', {COLOR: 9}]
 		},
 	],
 }
@@ -633,7 +633,7 @@ Class.spySnowdread = { // FOV
 	},
 	TURRETS: [
 		{
-			POSITION: [15, 0, 0, 0, 360, 2],
+			POSITION: [13, 0, 0, 0, 360, 2],
 			TYPE: 'spyRadarSnowdread',
 		}
 	],
@@ -646,10 +646,10 @@ Class.spySnowdread = { // FOV
 			TYPE: "squareBaseDeco",
 		}, {
 			POSITION: [10.5, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 15}, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}]
 		}, {
 			POSITION: [7.5, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: 13, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['egg', {COLOR: -1}]
 		}
 	]
 }
@@ -709,8 +709,8 @@ Class.mitigatorSnowdread = {
 	LABEL: "Mitigator",
 	UPGRADE_TOOLTIP: "Twins",
 	GUNS: weaponArray([
-		...addNormal({length: 10, width: 7, x: 3, y: 4.5,  delay: 0  }, 5, [g.basic, {reload: 0.85}]),
-		...addNormal({length: 10, width: 7, x: 3, y: -4.5, delay: 0.5}, 5, [g.basic, {reload: 0.85}]),
+		...addNormal({length: 10, width: 7, x: 3, y: 4.25,  delay: 0  }, 5, [g.basic, {reload: 0.85}]),
+		...addNormal({length: 10, width: 7, x: 3, y: -4.25, delay: 0.5}, 5, [g.basic, {reload: 0.85}]),
 	], 3)
 }
 Class.appeaserSnowdread = {
@@ -1149,10 +1149,10 @@ Class.goliathSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1168,7 +1168,7 @@ Class.planetSnowdread = {
 	PROPS: [
 		{
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
@@ -1187,7 +1187,7 @@ Class.moonSnowdread = {
 	PROPS: [
 		{
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
@@ -1206,7 +1206,7 @@ Class.burgSnowdread = { // HP + auto spam
 	PROPS: [
 		{
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
@@ -1230,7 +1230,7 @@ Class.siloSnowdread = { // HP + big auto
 	PROPS: [
 		{
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [14, 0, 0, 180, 1],
 			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
@@ -1248,13 +1248,13 @@ Class.titanSnowdread = {
 	PROPS: [
 		{
 			POSITION: [11, 0, 0, 0, 1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "titanTopSnowdread"
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "titanTopSnowdread"
 		},
 	],
 }
@@ -1273,7 +1273,7 @@ Class.sirenSnowdread = {
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "titanTopSnowdread"
 		},
 	]
 }
@@ -1292,7 +1292,7 @@ Class.harpySnowdread = {
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "titanTopSnowdread"
 		},
 	]
 }
@@ -1311,7 +1311,7 @@ Class.batonSnowdread = { // Speed + auto spam
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "titanTopSnowdread"
 		},
 	]
 }
@@ -1335,7 +1335,7 @@ Class.fireworkSnowdread = { // Speed + big auto
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "titanTopSnowdread"
 		},
 	]
 }
@@ -1352,13 +1352,13 @@ Class.armadaSnowdread = { // Speed + HP
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["titanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "titanTopSnowdread"
 		},
 	],
 }
@@ -1474,7 +1474,7 @@ Class.diamondSnowdread = { // Shield + HP
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ['triangle', {COLOR: 9, MIRROR_MASTER_ANGLE: true}]
+			TYPE: ['triangle', {COLOR: 9}]
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
@@ -1494,7 +1494,7 @@ Class.monitorSnowdread = { // FOV
 	},
 	TURRETS: [
 		{
-			POSITION: [16, 0, 0, 0, 360, 2],
+			POSITION: [15, 0, 0, 0, 360, 2],
 			TYPE: 'monitorRadarSnowdread'
 		}
 	],
@@ -1507,11 +1507,11 @@ Class.monitorSnowdread = { // FOV
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [9, 0, 0, 0, 1],
-			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}}]
+			TYPE: ['egg', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}}]
 		}, {
-			POSITION: [6, 0, 0, 0, 1],
-			TYPE:['egg', {COLOR: 2}]
-		}, 
+			POSITION: [7, 0, 0, 0, 1],
+			TYPE: ['egg', {COLOR: -1}]
+		},
 	]
 }
 
@@ -2038,7 +2038,7 @@ Class.behemothSnowdread = {
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ["pentagon", {COLOR: 9}],
 		}, {
 			POSITION: [7.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
@@ -2047,7 +2047,7 @@ Class.behemothSnowdread = {
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ["pentagon", {COLOR: 9}],
 		},
 	],
 }
@@ -2066,7 +2066,7 @@ Class.astronomicSnowdread = {
 			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ["pentagon", {COLOR: 9}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2088,7 +2088,7 @@ Class.grandioseSnowdread = {
 			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ["pentagon", {COLOR: 9}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2110,7 +2110,7 @@ Class.bunkerSnowdread = { // HP + auto spam
 			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ["pentagon", {COLOR: 9}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
@@ -2140,7 +2140,7 @@ Class.arsenalSnowdread = { // HP + big auto
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ["pentagon", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ["pentagon", {COLOR: 9}],
 		}, 
 	]
 }
@@ -2152,13 +2152,13 @@ Class.leviathanSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 0, 1],
-			TYPE: ["pentagonLeviathanTopSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanTopSnowdread"
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanBottomSnowdread"
 		},
 	],
 }
@@ -2171,13 +2171,13 @@ Class.valrayvnSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 0, 1],
-			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanTop2Snowdread"
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanBottomSnowdread"
 		},
 	],
 }
@@ -2190,13 +2190,13 @@ Class.pegasusSnowdread = {
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 0, 1],
-			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanTop2Snowdread"
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanBottomSnowdread"
 		},
 	],
 }
@@ -2209,13 +2209,13 @@ Class.maceSnowdread = { // Speed + auto spam
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 0, 1],
-			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanTop2Snowdread"
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanBottomSnowdread"
 		},
 	],
 }
@@ -2233,13 +2233,13 @@ Class.missileSnowdread = { // Speed + big auto
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 0, 1],
-			TYPE: ["pentagonLeviathanTop2Snowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanTop2Snowdread"
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanBottomSnowdread"
 		},
 	],
 }
@@ -2256,7 +2256,7 @@ Class.battalionSnowdread = { // Speed + HP
 	PROPS: [
 		{
 			POSITION: [14, 0, 0, 0, 1],
-			TYPE: ["pentagonLeviathanTop3Snowdread", {COLOR: 9, MIRROR_MASTER_ANGLE: true}],
+			TYPE: ["pentagonLeviathanTop3Snowdread", {COLOR: 9}],
 		}, {
 			POSITION: [7.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}, BORDERLESS: true}],
@@ -2265,7 +2265,7 @@ Class.battalionSnowdread = { // Speed + HP
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: ["pentagonLeviathanBottomSnowdread", {MIRROR_MASTER_ANGLE: true}]
+			TYPE: "pentagonLeviathanBottomSnowdread"
 		},
 	],
 }
@@ -2407,7 +2407,7 @@ Class.trackerSnowdread = { // FOV
 	},
 	TURRETS: [
 		{
-			POSITION: [15.5, 0, 0, 0, 360, 2],
+			POSITION: [14.5, 0, 0, 0, 360, 2],
 			TYPE: 'trackerRadarSnowdread'
 		},
 	],
@@ -2419,11 +2419,11 @@ Class.trackerSnowdread = { // FOV
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
 		}, {
-			POSITION: [11, 0, 0, 180, 1],
-			TYPE: ["egg", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, MIRROR_MASTER_ANGLE: true}],
+			POSITION: [10.5, 0, 0, 180, 1],
+			TYPE: ["egg", {COLOR: 17}],
 		}, {
-			POSITION: [7.5, 0, 0, 180, 1],
-			TYPE: ["egg", {COLOR: -1, MIRROR_MASTER_ANGLE: true}],
+			POSITION: [8, 0, 0, 180, 1],
+			TYPE: ["egg", {COLOR: -1}],
 		}, 
 	]
 }

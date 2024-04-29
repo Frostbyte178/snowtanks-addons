@@ -15,7 +15,6 @@ Class.eggBaseDeco = {
 			"M 0.79 -0.33 A 1 0.95 -45 0 0 0.6 -0.6 L 0.54 -0.54 A 1.88 1 -45 0 1 0.71 -0.29 L 0.79 -0.33" + 
 			"M -0.79 -0.33 A 1 0.95 -157.5 0 1 -0.6 -0.6 L -0.54 -0.54 A 1.88 1 -157.5 0 0 -0.71 -0.29 L -0.79 -0.33",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-	MIRROR_MASTER_ANGLE: true,
 	GUNS: weaponArray([
 		{
 			POSITION: [8.25, 6.75, 0.6, 0, 0, 55, 0],
@@ -74,7 +73,6 @@ Class.squareBaseDeco = {
 			"M 0.98 -0.98 L 0.3 -0.75 L 0.63 -0.63 L 0.75 -0.3 L 0.98 -0.98" + 
 			"M -0.98 -0.98 L -0.75 -0.3 L -0.63 -0.63 L -0.3 -0.75 L -0.98 -0.98",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-	MIRROR_MASTER_ANGLE: true,
 	GUNS: weaponArray([
 		{
 			POSITION: [4, 2, 0.001, 9.5, 2.6, 20, 0],
@@ -94,7 +92,6 @@ Class.squareBaseDeco = {
 Class.triangleBaseDeco = {
 	SHAPE: "M -1.546 -0.108 L -1.546 0.108 L -0.175 0.303 L 0.679 1.393 L 0.867 1.285 L 0.35 0 L 0.867 -1.285 L 0.679 -1.393 L -0.175 -0.303 L -1.546 -0.108",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
 	GUNS: weaponArray([
 		{
 			POSITION: [7, 3, 0.001, 10, 0, 60, 0],
@@ -118,7 +115,6 @@ Class.pentagonBaseDeco = {
 		"M 0.787 0.971 L 0.472 0.583 L -0.039 0.749 L -0.065 1.248 L 0.263 0.808 Z" +
 		"M 1.167 0.448 L 0.7 0.269 L 0.7 -0.269 L 1.167 -0.448 L 0.85 0 Z",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
 	GUNS: weaponArray([
 		{
 			POSITION: [4, 6, 0.001, 8.5, 0, 0, 0],
@@ -140,7 +136,6 @@ Class.hexagonBaseDeco = {
 		"M 0.55 -0.952 L 0.225 -0.974 L 0.157 -0.682 L 0.512 -0.477 L 0.731 -0.682 Z" +
 		"M 1.1 0 L 0.956 0.292 L 0.669 0.205 L 0.669 -0.205 L 0.956 -0.292 Z",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 2.5 },
-	MIRROR_MASTER_ANGLE: true,
 	GUNS: weaponArray([
 		{
 			POSITION: [1.75, 3, -0.75, 7.5, 0, 0, 0],
@@ -160,12 +155,10 @@ Class.ring085 = {
 Class.assailantMinionTopSnowdread = {
 	SHAPE: "M 0.5 0 L 1 1 L 0 0.5 L -1 1 L -0.5 0 L -1 -1 L 0 -0.5 L 1 -1 L 0.5 0",
 	COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.75},
-	MIRROR_MASTER_ANGLE: true,
 }
 Class.aggressorMinionTopSnowdread = {
 	SHAPE: "M -1.546 -0.108 L -1.546 0.108 L -0.175 0.303 L 0.679 1.393 L 0.867 1.285 L 0.35 0 L 0.867 -1.285 L 0.679 -1.393 L -0.175 -0.303 L -1.546 -0.108",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
 }
 Class.unsetTrapTopSnowdread = {
 	SHAPE: "M 1.1 1.1 L 1 0 L 1.1 -1.1 L 0 -1 L -1.1 -1.1 L -1 0 L -1.1 1.1 L 0 1 L 1.1 1.1 M 0.9 0.9 L 0 0.825 L -0.9 0.9 L -0.825 0 L -0.9 -0.9 L 0 -0.825 L 0.9 -0.9 L 0.825 0 L 0.9 0.9 Z",
@@ -174,7 +167,6 @@ Class.unsetTrapTopSnowdread = {
 Class.unsetPillboxTopSnowdread = {
 	SHAPE: "M -1.3 -0.15 L -1.3 0.15 L -0.3 0.3 L -0.15 1.3 L 0.15 1.3 L 0.3 0.3 L 1.3 0.15 L 1.3 -0.15 L 0.3 -0.3 L 0.15 -1.3 L -0.15 -1.3 L -0.3 -0.3 Z",
 	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
-	MIRROR_MASTER_ANGLE: true,
 }
 
 // Dread body deco
@@ -323,10 +315,19 @@ Class.spyRadarSnowdread = {
 	GUNS: [
 		{
 			POSITION: [4, 26, 1, -2, 0, 0, 0],
-			PROPERTIES: {COLOR: 13}
+			PROPERTIES: {COLOR: -1}
 		}, {
-			POSITION: [7, 17, 1, -3.5, 0, 0, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -17.5}}
+			POSITION: [8.5, 7.75, 0.85, 0, 0, 90, 0],
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -12.5}}
+		}, {
+			POSITION: [8.5, 7.75, 0.85, 0, 0, -90, 0],
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -12.5}}
+		}, {
+			POSITION: [5, 8.5, 0.001, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}
+		}, {
+			POSITION: [5, 8.5, 0.001, 0, 0, 180, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}
 		}
 	]
 }
@@ -342,7 +343,13 @@ Class.monitorRadarSnowdread = {
 			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.65}}
 		}, {
 			POSITION: [3.5, 26, 1, -1.75, 0, 0, 0],
-			PROPERTIES: {COLOR: 2}
+			PROPERTIES: {COLOR: -1}
+		}, {
+			POSITION: [4, 10, 0.5, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}
+		}, {
+			POSITION: [4, 10, 0.5, 0, 0, 180, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}
 		}
 	]
 }
@@ -359,6 +366,18 @@ Class.trackerRadarSnowdread = {
 		}, {
 			POSITION: [3.2, 26, 1, -1.6, 0, 0, 0],
 			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 2.5}}
+		}, {
+			POSITION: [4, 11, 0.5, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}
+		}, {
+			POSITION: [4, 11, 0.5, 0, 0, 180, 0],
+			PROPERTIES: {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}
+		}, {
+			POSITION: [2, 2, 0.9, 6, 0, 90, 0],
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.7}, DRAW_ABOVE: true}
+		}, {
+			POSITION: [2, 2, 0.9, 6, 0, -90, 0],
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.7}, DRAW_ABOVE: true}
 		}
 	]
 }

@@ -1003,6 +1003,7 @@ exports.addAura = (damageFactor = 1, sizeFactor = 1, opacity = 0.3, auraColor, a
 exports.setGladiatorMinion = (gun, index) => {
 	if (!gun.PROPERTIES) return index;
 	if (!gun.PROPERTIES.TYPE) return index;
+	if (!gun.PROPERTIES.TYPE.includes("inion")) return index;
 	switch (index) {
 		case 0:
 			gun.PROPERTIES.TYPE = "gladiatorTritankMinionSnowdread";

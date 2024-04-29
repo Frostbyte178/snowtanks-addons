@@ -60,9 +60,10 @@ Class.gladiatorGenericMinionSnowdread = {
 	PARENT: "minion",
 	BODY: { SPEED: 2 },
 	SHAPE: 3.5,
-	TURRETS: [
+	GUNS: [],
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
+			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "aggressorMinionTopSnowdread"
 		}
 	]

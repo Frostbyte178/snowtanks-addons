@@ -90,10 +90,10 @@ Class.spiralMissileSnowdread = {
 // Drones
 Class.betadrone = {
 	PARENT: "drone",
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [10, 0, 0, 180, 0, 1],
-			TYPE: ["triangle", {MIRROR_MASTER_ANGLE: true, COLOR: -1}],
+			POSITION: [10, 0, 0, 180, 1],
+			TYPE: ["triangle", {COLOR: -1}],
 		},
 	]
 }
@@ -101,12 +101,15 @@ Class.turretedDroneSnowdread = {
 	PARENT: 'drone',
 	TURRETS: [
 		{
-			POSITION: [13, 0, 0, 0, 0, 1],
-			TYPE: ['triangle', {MIRROR_MASTER_ANGLE: true, COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [10, 0, 0, 180, 360, 1],
+			POSITION: [10, 0, 0, 180, 360, 2],
 			TYPE: 'droneAutoTurretSnowdread',
 		},
+	],
+	PROPS: [
+		{
+			POSITION: [13, 0, 0, 0, 1],
+			TYPE: ['triangle', {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}}],
+		}, 
 	]
 }
 Class.honchoDroneSnowdread = {
@@ -128,12 +131,12 @@ Class.assailantMinionSnowdread = {
 	GUNS: weaponArray(
 		addGunner({length: 15, width: 7.5}, -5, [g.basic, g.assassin, g.minionGun])
 	, 4),
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: ["square", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}, MIRROR_MASTER_ANGLE: true}]
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: ["square", {COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}}]
 		}, {
-			POSITION: [20, 0, 0, 0, 0, 1],
+			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "assailantMinionTopSnowdread"
 		}
 	]
@@ -146,9 +149,9 @@ Class.aggressorMinionSnowdread = {
 	GUNS: weaponArray(
 		addGunner({length: 16, width: 8.5}, -2.5, [g.basic, g.sniper, g.assassin, g.minionGun, {speed: 0.93, maxSpeed: 0.93}])
 	, 3),
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
+			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "aggressorMinionTopSnowdread"
 		}
 	]
@@ -177,9 +180,23 @@ Class.gladiatorTritankMinionSnowdread = {
 }
 Class.gladiatorTritrapMinionSnowdread = {
 	PARENT: "gladiatorGenericMinionSnowdread",
-	GUNS: weaponArray(
-		addTrap({length: 13, length2: 3, width: 7, aspect: 1.7}, 5, [g.trap, g.flankGuard, g.minionGun, {reload: 1.6, shudder: 0.2}])
-	, 3),
+	GUNS: weaponArray([
+		{
+			POSITION: [13, 7, 1, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.6}}
+		}, {
+			POSITION: [3, 7, 1.7, 13, 0, 0, 0],
+			PROPERTIES: {
+				SHOOT_SETTINGS: combineStats([g.trap, g.flankGuard, g.minionGun, {reload: 1.6, shudder: 0.2}]),
+				TYPE: "trap",
+				STAT_CALCULATOR: gunCalcNames.trap,
+				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.6}
+			},
+		}, {
+			POSITION: [14, 5.5, 0.7, 0, 0, 0, 0],
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -12.5,  SATURATION_SHIFT: 0.75}}
+		}
+	], 3),
 }
 Class.gladiatorTriswarmMinionSnowdread = {
 	PARENT: "gladiatorGenericMinionSnowdread",
@@ -206,14 +223,7 @@ Class.gladiatorTriswarmMinionSnowdread = {
 Class.gladiatorAutoMinionTurretSnowdread = {
 	PARENT: "spamAutoTurretSnowdread",
 	GUNS: [
-		{
-			POSITION: [18, 12, 1, 0, 0, 0, 0],
-			PROPERTIES: {
-				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, g.turret, g.fake]),
-				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 },
-			},
-		}, { // Main gun
+		{ // Main gun
 			POSITION: [22, 10, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.pelleter, g.power, g.turret, {range: 0.5}]),
@@ -241,10 +251,7 @@ Class.gladiatorAutoMinionSnowdread = {
 	PARENT: "gladiatorGenericMinionSnowdread",
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}, {
-			POSITION: [12, 0, 0, 0, 360, 1],
+			POSITION: [12, 0, 0, 0, 360, 2],
 			TYPE: "gladiatorAutoMinionTurretSnowdread"
 		}
 	]
@@ -253,10 +260,7 @@ Class.gladiatorAuraMinionSnowdread = {
 	PARENT: "gladiatorGenericMinionSnowdread",
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}, {
-			POSITION: [12, 0, 0, 0, 360, 1],
+			POSITION: [12, 0, 0, 0, 360, 2],
 			TYPE: "gladiatorAuraMinionAuraSnowdread",
 		}
 	]
@@ -265,10 +269,7 @@ Class.gladiatorHealAuraMinionSnowdread = {
 	PARENT: "gladiatorGenericMinionSnowdread",
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 0, 0, 1],
-			TYPE: "aggressorMinionTopSnowdread"
-		}, {
-			POSITION: [12, 0, 0, 0, 360, 1],
+			POSITION: [12, 0, 0, 0, 360, 2],
 			TYPE: "gladiatorHealAuraMinionAuraSnowdread",
 		}
 	]
