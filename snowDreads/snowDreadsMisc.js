@@ -333,14 +333,14 @@ Class.gripperTurretSnowdread = {
 Class.spamAutoTurretSnowdread = {
 	PARENT: "autoTankGun",
 	INDEPENDENT: true,
-	COLOR: 17,
+	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 2.5},
 	GUNS: [
 		{
 			POSITION: [17, 14, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -7.5}
+				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: -2.5}
 			},
 		}, {
 			POSITION: [22, 10, 1, 0, 0, 0, 0],
@@ -354,14 +354,14 @@ Class.spamAutoTurretSnowdread = {
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.flankGuard, g.flankGuard, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5}
+				COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}
 			},
 		},
 	],
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 0, 1],
-			TYPE: ["egg", {COLOR: -1, BORDERLESS: true}],
+			TYPE: ["egg", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 2.5, SATURATION_SHIFT: 0.85}, BORDERLESS: true}],
 		},
 	],
 }
@@ -454,14 +454,14 @@ Class.kilobyteTurretSnowdread = {
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, {health: 1.2, speed: 0.8}]),
 				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.65 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.8 },
 			},
 		}, {
 			POSITION: [21.5, 6.5, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.75 },
+				COLOR: { BASE: -1, SATURATION_SHIFT: 0.75 },
 				BORDERLESS: true,
 			},
 		}, {
@@ -469,33 +469,33 @@ Class.kilobyteTurretSnowdread = {
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 12.5 },
 			},
 		}, {
 			POSITION: [16.5, 2, -1.35, 0, -5.1, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.assassin, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 12.5 },
 			},
 		}, {
 			POSITION: [10, 8, 0.5, 0, 0, 73, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, DRAW_ABOVE: true }
 		}, {
 			POSITION: [10, 8, 0.5, 0, 0, -73, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, DRAW_ABOVE: true }
 		}, {
 			POSITION: [10, 8, 0.5, 0, 0, 180, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, DRAW_ABOVE: true }
 		}
 	],
 	PROPS: [
 		{
 			POSITION: [14.5, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.5 } }],
+			TYPE: ["egg", { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } }],
 		}, {
 			POSITION: [8, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
+			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 2.5, SATURATION_SHIFT: 0.8 } }]
 		},
 	]
 }
@@ -503,25 +503,25 @@ Class.megabyteTurretSnowdread = {
 	PARENT: "genericTank",
 	CONTROLLERS: ["nearestDifferentMaster"],
 	INDEPENDENT: true,
-	COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -12.5, SATURATION_SHIFT: 0.65 },
+	COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.65 },
 	INDEPENDENT: true,
 	GUNS: [
 		{
-			POSITION: [21, 14.5, -1.4, 0, 0, 0, 0],
+			POSITION: [21, 13.5, -1.4, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
 				TYPE: "bullet",
 				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
 			},
 		}, { // Main gun
-			POSITION: [26, 13, 1, 0, 0, 0, 0],
+			POSITION: [26, 12, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, {health: 1.2, speed: 0.8}]),
 				TYPE: "heavyBulletSnowdread",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
-			POSITION: [21.5, 8, 1, 0, 0, 0, 0],
+			POSITION: [21.5, 7, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
 				TYPE: "bullet",
@@ -529,40 +529,40 @@ Class.megabyteTurretSnowdread = {
 				BORDERLESS: true,
 			},
 		}, {
-			POSITION: [16.5, 2.6, -1.6, 0, 6.1, 0, 0],
+			POSITION: [16.5, 2.6, -1.6, 0, 5.6, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
 				TYPE: "bullet",
 				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
 			},
 		}, {
-			POSITION: [16.5, 2.6, -1.6, 0, -6.1, 0, 0],
+			POSITION: [16.5, 2.6, -1.6, 0, -5.6, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.sniper, g.pounder, g.autoTurret, g.fake]),
 				TYPE: "bullet",
 				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 },
 			},
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 8.5, 0.5, 0, 0, 60, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, DRAW_ABOVE: true }
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 8.5, 0.5, 0, 0, -60, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, DRAW_ABOVE: true }
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 8.5, 0.5, 0, 0, 140, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, DRAW_ABOVE: true }
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 8.5, 0.5, 0, 0, -140, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 5}, DRAW_ABOVE: true }
 		}
 	],
 	PROPS: [
 		{
 			POSITION: [14.5, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.5 } }],
+			TYPE: ["egg", { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } }],
 		}, {
 			POSITION: [8.5, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
+			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.6 } }]
 		},
 	]
 }
@@ -570,71 +570,71 @@ Class.gigabyteTurretSnowdread = {
 	PARENT: "genericTank",
 	CONTROLLERS: ["nearestDifferentMaster"],
 	INDEPENDENT: true,
-	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
+	COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
 	GUNS: [
 		{
 			POSITION: [14, 8, 0.001, -2, -10.5, 140, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 7.5, SATURATION_SHIFT: 1.2 } },
+			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 15, SATURATION_SHIFT: 1.2 } },
 		}, {
 			POSITION: [14, 8, 0.001, -2, 10.5, -140, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 7.5, SATURATION_SHIFT: 1.2 } },
+			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 15, SATURATION_SHIFT: 1.2 } },
 		}, {
-			POSITION: [21, 16, 1.3, 0, 0, 0, 0],
+			POSITION: [21, 15, 1.3, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 5 },
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 2.5 },
 			},
 		}, { // Main gun
-			POSITION: [26, 16, 1, 0, 0, 0, 0],
+			POSITION: [26, 15, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, {speed: 1.25, health: 0.7}]),
 				TYPE: "heavyBulletSnowdread",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.6 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6 },
 			},
 		}, {
-			POSITION: [21.5, 10, 1, 0, 0, 0, 0],
+			POSITION: [21.5, 9, 1, 0, 0, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.7 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -2.5, SATURATION_SHIFT: 0.7 },
 				BORDERLESS: true,
 			},
 		}, {
-			POSITION: [16.5, 3, -1.6, 0, 6.1, 0, 0],
+			POSITION: [16.5, 3, -1.6, 0, 5.6, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 12.5 },
 			},
 		}, {
-			POSITION: [16.5, 3, -1.6, 0, -6.1, 0, 0],
+			POSITION: [16.5, 3, -1.6, 0, -5.6, 0, 0],
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.pounder, g.destroyer, g.autoTurret, g.fake]),
 				TYPE: "bullet",
-				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 7.5 },
+				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 12.5 },
 			},
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 9, 0.5, 0, 0, 60, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true }
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -55, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 9, 0.5, 0, 0, -60, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true }
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, 135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 9, 0.5, 0, 0, 145, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true }
 		}, {
-			POSITION: [10, 9.5, 0.5, 0, 0, -135, 0],
-			PROPERTIES: { COLOR: 17, DRAW_ABOVE: true }
+			POSITION: [10, 9, 0.5, 0, 0, -145, 0],
+			PROPERTIES: { COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10}, DRAW_ABOVE: true }
 		}
 	],
 	PROPS: [
 		{
 			POSITION: [14.5, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -17.5, SATURATION_SHIFT: 0.5 } }],
+			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -5, SATURATION_SHIFT: 0.6 } }],
 		}, {
 			POSITION: [9.5, 0, 0, 0, 1],
-			TYPE: ["egg", { COLOR: { BASE: -1 } }]
+			TYPE: ["egg", { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: 5, SATURATION_SHIFT: 0.8 } }]
 		},
 	]
 }
