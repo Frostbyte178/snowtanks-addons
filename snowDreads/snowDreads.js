@@ -224,7 +224,7 @@ Class.gladiusSnowdread = {
 	LABEL: "Gladius",
 	UPGRADE_TOOLTIP: "Rifles",
 	GUNS: weaponArray(
-		addRifle({length: 19.5, width: 5}, 2.5, [g.basic, g.sniper, g.rifle, {health: 1.3}])
+		addRifle({length: 19.5, width: 5}, 5, [g.basic, g.sniper, g.rifle, {health: 1.3}])
 	, 4)
 }
 Class.sabreSnowdread = {
@@ -232,7 +232,7 @@ Class.sabreSnowdread = {
 	LABEL: "Sabre",
 	UPGRADE_TOOLTIP: "Assassins",
 	GUNS: weaponArray(
-		addAssassin({length: 24, width: 7, x: 7}, 12.5, [g.basic, g.sniper, g.assassin, g.assassin, {reload: 0.85}])
+		addAssassin({length: 24, width: 6.5, x: 7}, 15, [g.basic, g.sniper, g.assassin, g.assassin, {reload: 0.85}])
 	, 4)
 }
 Class.slingSnowdread = { // hunter
@@ -312,7 +312,7 @@ Class.enforcerSnowdread = {
 	LABEL: "Enforcer",
 	UPGRADE_TOOLTIP: "Heavy Bullets",
 	GUNS: weaponArray(
-		addHeavy({length: 17, width: 9}, 2.5, [g.basic, g.pounder, {reload: 0.9}])
+		addHeavy({length: 17, width: 9}, 7.5, [g.basic, g.pounder, {reload: 0.9}])
 	, 4)
 }
 Class.executorSnowdread = {
@@ -660,7 +660,7 @@ Class.bladeSnowdread = {
 	LABEL: "Blade",
 	UPGRADE_TOOLTIP: "Muskets",
 	GUNS: weaponArray(
-		addRifle({length: 18, width: 5}, -2.5, [g.basic, g.sniper, g.rifle, g.twin, {speed: 0.8, health: 1.5}], true)
+		addRifle({length: 18, width: 5}, 0, [g.basic, g.sniper, g.rifle, g.twin, {speed: 0.8, health: 1.5}], true)
 	, 3)
 }
 Class.bayonetSnowdread = {
@@ -668,7 +668,7 @@ Class.bayonetSnowdread = {
 	LABEL: "Bayonet",
 	UPGRADE_TOOLTIP: "Assassins",
 	GUNS: weaponArray(
-		addAssassin({length: 28, width: 7, x: 7}, 5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
+		addAssassin({length: 28, width: 6.5, x: 7}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 0.4}])
 	, 3)
 }
 Class.atlatlSnowdread = { // hunter
@@ -709,8 +709,8 @@ Class.mitigatorSnowdread = {
 	LABEL: "Mitigator",
 	UPGRADE_TOOLTIP: "Twins",
 	GUNS: weaponArray([
-		...addNormal({length: 10, width: 7, x: 3, y: 4.25,  delay: 0  }, 5, [g.basic, {reload: 0.85}]),
-		...addNormal({length: 10, width: 7, x: 3, y: -4.25, delay: 0.5}, 5, [g.basic, {reload: 0.85}]),
+		...addNormal({length: 10, width: 7.25, x: 3, y: 4.5,  delay: 0  }, 5, [g.basic, {reload: 0.85}]),
+		...addNormal({length: 10, width: 7.25, x: 3, y: -4.5, delay: 0.5}, 5, [g.basic, {reload: 0.85}]),
 	], 3)
 }
 Class.appeaserSnowdread = {
@@ -999,13 +999,13 @@ Class.megabyteSnowdread = {
 	UPGRADE_TOOLTIP: "Heavy Auto Turret",
 	TURRETS: [
 		{
-			POSITION: [12, 0, 0, 0, 360, 2],
+			POSITION: [11, 0, 0, 0, 360, 2],
 			TYPE: "megabyteTurretSnowdread",
 		},
 	],
 	PROPS: [
 		{
-			POSITION: [15.5, 0, 0, 180, 1],
+			POSITION: [15, 0, 0, 180, 1],
 			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
@@ -1521,7 +1521,7 @@ Class.rapierSnowdread = {
 	LABEL: "Rapier",
 	UPGRADE_TOOLTIP: "Muskets",
 	GUNS: weaponArray(
-		addRifle({length: 18, width: 4.5}, 0, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
+		addRifle({length: 18, width: 4.5}, 2.5, [g.basic, g.sniper, g.rifle, {speed: 0.8, health: 1.5}], true)
 	, 5)
 }
 Class.javelinSnowdread = {
@@ -1529,7 +1529,7 @@ Class.javelinSnowdread = {
 	LABEL: "Javelin",
 	UPGRADE_TOOLTIP: "Assassins",
 	GUNS: weaponArray(
-		addAssassin({length: 28, width: 7, x: 8}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
+		addAssassin({length: 28, width: 6.5, x: 8}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
 	, 5)
 }
 Class.woomeraSnowdread = { // hunter
@@ -1866,13 +1866,13 @@ Class.gigabyteSnowdread = {
 	UPGRADE_TOOLTIP: "Heavy Auto Turret",
 	TURRETS: [
 		{
-			POSITION: [12.5, 0, 0, 0, 360, 2],
+			POSITION: [11.5, 0, 0, 0, 360, 2],
 			TYPE: "gigabyteTurretSnowdread",
 		},
 	],
 	PROPS: [
 		{
-			POSITION: [14.5, 0, 0, 180, 1],
+			POSITION: [13.5, 0, 0, 180, 1],
 			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
@@ -1928,13 +1928,13 @@ Class.roasterSnowdread = { // Flamethrower
 	UPGRADE_TOOLTIP: "Flamethrower",
 	TURRETS: [
 		{
-			POSITION: [10.5, 0, 0, 0, 360, 2],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: 'roasterTurretSnowdread'
 		},
 	],
 	PROPS: [
 		{
-			POSITION: [14, 0, 0, 180, 1],
+			POSITION: [13, 0, 0, 180, 1],
 			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],

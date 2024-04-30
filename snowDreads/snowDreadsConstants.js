@@ -18,7 +18,7 @@ exports.useOldPhotosphere = false;
 exports.hexnoughtScaleFactor = 0.9;
 
 // Missing stats
-g.flame = {reload: 0.5, recoil: 0.1, shudder: 1.5, range: 0.5, spray: 7, damage: 2, health: 1/3, speed: 0.6, maxSpeed: 0.3};
+g.flame = {reload: 0.65, recoil: 0.1, shudder: 1.5, range: 0.6, spray: 7, damage: 1.9, health: 0.3, speed: 0.65, maxSpeed: 0.5};
 g.honcho = {size: 2, damage: 2.5, health: 1.2, reload: 2, speed: 0.7};
 
 // Body helpers
