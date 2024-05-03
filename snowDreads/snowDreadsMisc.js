@@ -832,7 +832,9 @@ Class.showerTurretSnowdread = {
 		SATURATION_SHIFT: 0.5,
 	},
 	MAX_CHILDREN: 4,
-	GUNS: addDroneOnAuto({length: 6, width: 12, x: 8}, 0, [g.drone, {size: 1.3}]),
+	GUNS: weaponArray(
+		addDroneOnAuto({length: 6, width: 10.5, x: 8}, 0, [g.drone, g.overseer, {size: 1.3}])
+	, 2),
 	PROPS: [
 		{
 			POSITION: [14.5, 0, 0, 0, 1],
@@ -851,7 +853,7 @@ Class.stormTurretSnowdread = {
 	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 7.5},
 	MAX_CHILDREN: 6,
 	GUNS: weaponArray(
-		addDroneOnAuto({length: 6, width: 12, x: 8}, 12.5, [g.drone, {size: 1.2}])
+		addDroneOnAuto({length: 6, width: 12, x: 8}, 12.5, [g.drone, {size: 1.25}])
 	, 2),
 	PROPS: [
 		{
