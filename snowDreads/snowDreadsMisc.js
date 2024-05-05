@@ -4,6 +4,7 @@ const g = require('../../gunvals.js');
 const { eggnoughtBody, squarenoughtBody, trinoughtBody, pentanoughtBody, hexnoughtBody } = require('./snowDreadsConstants.js');
 const { addGunner, addDroneOnAuto, addAura: addAuraNew } = require('./snowDreadsFacilitators.js');
 const { enableSnowDreads } = require('./snowDreadsConstants.js');
+require('../snowTesting.js');
 
 // Navigate to [snowDreadsConstants.js] and the "enableSnowDreads" variable to enable/disable this addon.
 if (!enableSnowDreads) {
@@ -906,9 +907,6 @@ Class.monsoonTurretSnowdread = {
 	]
 }
 
-// Debug
-Class.snowdreadsDebug = menu("Snowdreads Debug", "egg", -6);
-
 // FPS testing
 Class.auraBenchmark1 = {
 	PARENT: 'genericTank',
@@ -937,5 +935,4 @@ for (let i = -6; i <= 6; i++) {
 	}
 }
 
-Class.addons.UPGRADES_TIER_0.push("snowdreadsDebug");
-	Class.snowdreadsDebug.UPGRADES_TIER_0 = ["auraBenchmark1", "auraBenchmark2"];
+Class.snowtanksTesting.UPGRADES_TIER_0.push("auraBenchmark1", "auraBenchmark2");
