@@ -328,7 +328,7 @@ Class.doserSnowdread = { // shotgun
 	LABEL: "Doser",
 	UPGRADE_TOOLTIP: "Shotguns",
 	GUNS: weaponArray(
-		addShotgun({length: 21, width: 10.5, x: 6}, 7.5, [
+		addShotgun({length: 20, width: 10, x: 6}, 7.5, [
 			{l: 15, w: 3, y: -3},
 			{l: 14, w: 3, y: 3},
 			{l: 17, w: 4, y: 0},
@@ -785,7 +785,7 @@ Class.tranquilizerSnowdread = { // shotgun
 	LABEL: "Tranquilizer",
 	UPGRADE_TOOLTIP: "Shotguns",
 	GUNS: weaponArray(
-		addShotgun({length: 20, width: 11.5, x: 5}, 0, [
+		addShotgun({length: 19.5, width: 11, x: 5}, 0, [
 			{l: 15, w: 3, y: -3},
 			{l: 15, w: 3, y: 3},
 			{l: 17, w: 4, y: 0},
