@@ -221,8 +221,8 @@ Class.amalgamAutoSnowdread = {
 	PARENT: 'autoTankGun',
 	BODY: {FOV: 2},
 	GUNS: [
-		...addGunner({length: 17, width: 4, y: -3.5, delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot, {recoil: 2}]),
-		...addGunner({length: 17, width: 4, y: 3.5,  delay: 0.5}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot, {recoil: 2}]),
+		...addGunner({length: 17, width: 4, y: -3.5, delay: 1/3}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot, {recoil: 2}]),
+		...addGunner({length: 17, width: 4, y: 3.5,  delay: 2/3}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot, {recoil: 2}]),
 		...addGunner({length: 19, width: 4, y: 0,    delay: 0  }, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot, {recoil: 2}]),
 		{
 			POSITION: [7, 11, -1.3, 5, 0, 0, 0],

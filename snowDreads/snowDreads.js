@@ -266,8 +266,8 @@ Class.mediatorSnowdread = {
 	LABEL: "Mediator",
 	UPGRADE_TOOLTIP: "Twins",
 	GUNS: weaponArray([
-		...addNormal({length: 15, width: 7, y: 4.25,  delay: 0  }, 12.5, [g.basic, g.twin, {reload: 0.85}]),
-		...addNormal({length: 15, width: 7, y: -4.25, delay: 0.5}, 12.5, [g.basic, g.twin, {reload: 0.85}]),
+		...addNormal({length: 15, width: 6.5, y: 4,  delay: 0  }, 15, [g.basic, g.twin, {reload: 0.85}]),
+		...addNormal({length: 15, width: 6.5, y: -4, delay: 0.5}, 15, [g.basic, g.twin, {reload: 0.85}]),
 	], 4)
 }
 Class.negotiatorSnowdread = {
@@ -302,9 +302,9 @@ Class.grabberSnowdread = { // spread
 	LABEL: "Grabber",
 	UPGRADE_TOOLTIP: "Triple Shots",
 	GUNS: weaponArray([
-		...addNormal({length: 17, width: 6.5, y: -1.25, angle: -15, delay: 0.5}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17, width: 6.5, y: 1.25,  angle: 15,  delay: 0.5}, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 19, width: 6.5, y: 0,     angle: 0,   delay: 0  }, 12.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 16, width: 6.25, y: -1, angle: -15, delay: 0.5}, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 16, width: 6.25, y: 1,  angle: 15,  delay: 0.5}, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 18, width: 6.5, y: 0,  angle: 0,   delay: 0  }, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
 	], 4)
 }
 Class.enforcerSnowdread = {
@@ -737,17 +737,17 @@ Class.breakerSnowdread = { // ultra bullet spam
 	LABEL: "Breaker",
 	UPGRADE_TOOLTIP: "Nailguns",
 	GUNS: weaponArray([
-		...addSpam({length: 18.5, width: 2.75, y: -3, delay: 1/3}, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
-		...addSpam({length: 18.5, width: 2.75, y: 3,  delay: 2/3}, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
-		...addSpam({length: 21,   width: 3.25, y: 0,  delay: 0  }, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05, size: 2.75/3.25}]),
+		...addSpam({length: 17.5, width: 2.75, y: -3, delay: 1/3}, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
+		...addSpam({length: 17.5, width: 2.75, y: 3,  delay: 2/3}, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05}]),
+		...addSpam({length: 20,   width: 3.25, y: 0,  delay: 0  }, 0, [g.basic, g.pelleter, g.power, g.nailgun, {speed: 1.05, maxSpeed: 1.05, size: 2.75/3.25}]),
 		{
-			POSITION: [10, 8.5, 0.6, 5, 0, 0, 0],
+			POSITION: [10, 8.5, 0.6, 4, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } },
 		}, {
-			POSITION: [5.5, 9, -1.8, 6.5, 0, 0, 0],
-			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.6 }, },
+			POSITION: [5.5, 9, -1.8, 5.5, 0, 0, 0],
+			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.7 }, },
 		}, {
-			POSITION: [5.5, 7.5, -1.8, 5, 0, 0, 0],
+			POSITION: [5.5, 7.5, -1.8, 4, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 10 } },
 		},
 	], 3)
@@ -757,11 +757,9 @@ Class.clasperSnowdread = { // spread
 	LABEL: "Clasper",
 	UPGRADE_TOOLTIP: "Penta Shots",
 	GUNS: weaponArray([
-		...addNormal({length: 15, width: 7, y: -2.5,  angle: -22, delay: 2/3}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 15, width: 7, y: 2.5,   angle: 22,  delay: 2/3}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17, width: 7, y: -1.25, angle: -11, delay: 1/3}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17, width: 7, y: 1.25,  angle: 11,  delay: 1/3}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 19, width: 7, y: 0,     angle: 0,   delay: 0  }, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 15.5, width: 7, y: -1.5, angle: -15, delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.45}]),
+		...addNormal({length: 15.5, width: 7, y: 1.5,  angle: 15,  delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.45}]),
+		...addNormal({length: 17.5, width: 7, y: 0,    angle: 0,   delay: 0  }, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.45}]),
 	], 3)
 }
 Class.suppressorSnowdread = {
@@ -1619,11 +1617,9 @@ Class.gripperSnowdread = { // spread
 	LABEL: "Gripper",
 	UPGRADE_TOOLTIP: "Crowbars",
 	GUNS: weaponArray([
-		...addNormal({length: 15.5, width: 5.5, y: 1,  angle: -22, delay: 2/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 15.5, width: 5.5, y: -1, angle: 22,  delay: 2/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17,   width: 5.5, y: 0,  angle: -11, delay: 1/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 17,   width: 5.5, y: 0,  angle: 11,  delay: 1/3}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 18.5, width: 5.5, y: 0,  angle: 0,   delay: 0  }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 15.5, width: 6,    y: -0.5, angle: -13, delay: 0.5}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.95}]),
+		...addNormal({length: 15.5, width: 6,    y: 0.5,  angle: 13,  delay: 0.5}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.95}]),
+		...addNormal({length: 17.5, width: 6.25, y: 0,    angle: 0,   delay: 0  }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.95}]),
 	], 5)
 }
 Class.retardantSnowdread = {
