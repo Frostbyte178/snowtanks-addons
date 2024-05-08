@@ -302,9 +302,9 @@ Class.grabberSnowdread = { // spread
 	LABEL: "Grabber",
 	UPGRADE_TOOLTIP: "Triple Shots",
 	GUNS: weaponArray([
-		...addNormal({length: 16, width: 6.25, y: -1, angle: -15, delay: 0.5}, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 16, width: 6.25, y: 1,  angle: 15,  delay: 0.5}, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
-		...addNormal({length: 18, width: 6.5, y: 0,  angle: 0,   delay: 0  }, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.15}]),
+		...addNormal({length: 16, width: 3.75, y: -1.5, angle: -15, delay: 0.5}, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1}]),
+		...addNormal({length: 16, width: 3.75, y: 1.5,  angle: 15,  delay: 0.5}, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1}]),
+		...addNormal({length: 18, width: 6.75, y: 0,    angle: 0,   delay: 0  }, 15, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 0.95, health: 1.35}]),
 	], 4)
 }
 Class.enforcerSnowdread = {
@@ -757,9 +757,9 @@ Class.clasperSnowdread = { // spread
 	LABEL: "Clasper",
 	UPGRADE_TOOLTIP: "Penta Shots",
 	GUNS: weaponArray([
-		...addNormal({length: 15.5, width: 7, y: -1.5, angle: -15, delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.45}]),
-		...addNormal({length: 15.5, width: 7, y: 1.5,  angle: 15,  delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.45}]),
-		...addNormal({length: 17.5, width: 7, y: 0,    angle: 0,   delay: 0  }, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.45}]),
+		...addNormal({length: 15.5, width: 7, y: -1.5, angle: -15, delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.35}]),
+		...addNormal({length: 15.5, width: 7, y: 1.5,  angle: 15,  delay: 0.5}, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.35}]),
+		...addNormal({length: 17.5, width: 7, y: 0,    angle: 0,   delay: 0  }, 7.5, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.15, health: 1.35}]),
 	], 3)
 }
 Class.suppressorSnowdread = {
@@ -1617,9 +1617,9 @@ Class.gripperSnowdread = { // spread
 	LABEL: "Gripper",
 	UPGRADE_TOOLTIP: "Crowbars",
 	GUNS: weaponArray([
-		...addNormal({length: 15.5, width: 6,    y: -0.5, angle: -13, delay: 0.5}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.95}]),
-		...addNormal({length: 15.5, width: 6,    y: 0.5,  angle: 13,  delay: 0.5}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.95}]),
-		...addNormal({length: 17.5, width: 6.25, y: 0,    angle: 0,   delay: 0  }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.95}]),
+		...addNormal({length: 15.5, width: 6,    y: -0.5, angle: -13, delay: 0.5}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.8}]),
+		...addNormal({length: 15.5, width: 6,    y: 0.5,  angle: 13,  delay: 0.5}, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.8}]),
+		...addNormal({length: 17.5, width: 6.25, y: 0,    angle: 0,   delay: 0  }, 10, [g.basic, g.twin, g.tripleShot, {size: 0.95, reload: 1.35, health: 1.8}]),
 	], 5)
 }
 Class.retardantSnowdread = {
