@@ -865,9 +865,9 @@ Class.hydraSnowdread = {
 	LABEL: "Hydra",
 	UPGRADE_TOOLTIP: "Trap Spam",
 	GUNS: weaponArray([
-		...addTrap({length: 6,  length2: 2,   width: 3.5, aspect: 1.8, x: 4, y: 7.5,  delay: 2/3}, 0, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
-		...addTrap({length: 6,  length2: 2,   width: 3.5, aspect: 1.8, x: 4, y: -7.5, delay: 1/3}, 0, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
-		...addTrap({length: 12, length2: 2.5, width: 5,   aspect: 1.7, x: 0, y: 0,    delay: 0  }, 0, [g.trap, g.setTrap, g.twin, g.pounder, {speed: 1.2, reload: 1/1.1}], true),
+		...addTrap({length: 6,  length2: 2,   width: 3.5, aspect: 1.8, x: 4, y: 7.5,  delay: 2/3}, 2.5, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
+		...addTrap({length: 6,  length2: 2,   width: 3.5, aspect: 1.8, x: 4, y: -7.5, delay: 1/3}, 2.5, [g.trap, g.twin, g.pounder, {speed: 1.2}]),
+		...addTrap({length: 12, length2: 2.5, width: 5,   aspect: 1.7, x: 0, y: 0,    delay: 0  }, 2.5, [g.trap, g.setTrap, g.twin, g.pounder, {speed: 1.2, reload: 1/1.1}], true),
 	], 3)
 }
 Class.beelzebubSnowdread = {
@@ -875,7 +875,7 @@ Class.beelzebubSnowdread = {
 	LABEL: "Beelzebub",
 	UPGRADE_TOOLTIP: "Blocks",
 	GUNS: weaponArray(
-		addTrap({length: 13.5, length2: 3.5, width: 9, aspect: 1.6}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.3, maxSpeed: 1.3, size: 1.2, health: 2}], true)
+		addTrap({length: 12.5, length2: 3.5, width: 9, aspect: 1.6}, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.3, maxSpeed: 1.3, size: 1.2, health: 2}], true)
 	, 3)
 }
 Class.sweeperSnowdread = { // auto-traps

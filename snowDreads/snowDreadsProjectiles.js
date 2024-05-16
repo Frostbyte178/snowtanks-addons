@@ -299,11 +299,14 @@ Class.auraBlock = {
 	PARENT: 'unsetTrap',
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 45, 0, 1],
-			TYPE: 'unsetPillboxTopSnowdread'
-		}, {
-			POSITION: [10, 0, 0, 0, 360, 1],
+			POSITION: [10, 0, 0, 0, 360, 2],
 			TYPE: 'auraBlockAura'
+		}
+	],
+	PROPS: [
+		{
+			POSITION: [20, 0, 0, 45, 1],
+			TYPE: 'unsetPillboxTopSnowdread'
 		}
 	]
 }
@@ -313,23 +316,29 @@ Class.unsetPillboxWeakSnowdread = {
 	PARENT: 'unsetPillbox',
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 45, 360, 1],
-			TYPE: "unsetPillboxTopSnowdread",
-		}, {
-			POSITION: [11, 0, 0, 0, 360, 1],
+			POSITION: [11, 0, 0, 0, 360, 2],
 			TYPE: "pillboxTurretWeakSnowdread",
 		},
+	],
+	PROPS: [
+		{
+			POSITION: [20, 0, 0, 45, 1],
+			TYPE: 'unsetPillboxTopSnowdread'
+		}
 	]
 }
 Class.unsetPillboxSnowdread = {
 	PARENT: 'unsetPillbox',
 	TURRETS: [
 		{
-			POSITION: [20, 0, 0, 45, 360, 1],
-			TYPE: "unsetPillboxTopSnowdread",
-		}, {
-			POSITION: [11, 0, 0, 0, 360, 1],
+			POSITION: [11, 0, 0, 0, 360, 2],
 			TYPE: "pillboxTurretSnowdread",
 		},
+	],
+	PROPS: [
+		{
+			POSITION: [20, 0, 0, 45, 1],
+			TYPE: 'unsetPillboxTopSnowdread'
+		}
 	]
 }
