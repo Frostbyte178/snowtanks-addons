@@ -114,9 +114,9 @@ Class.turretedDroneSnowdread = {
 }
 Class.honchoDroneSnowdread = {
 	PARENT: 'drone',
-	TURRETS: [
+	PROPS: [
 		{
-			POSITION: [20, 0, 0, 180, 0, 1],
+			POSITION: [20, 0, 0, 180, 1],
 			TYPE: ["aggressorMinionTopSnowdread"],
 		},
 	]
