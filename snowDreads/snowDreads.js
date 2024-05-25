@@ -320,7 +320,7 @@ Class.executorSnowdread = {
 	LABEL: "Executor",
 	UPGRADE_TOOLTIP: "Launchers",
 	GUNS: weaponArray(
-		addLauncher({length: 17, width: 9}, -5, [g.basic, g.pounder, g.artillery, {size: 0.9, speed: 0.5, maxSpeed: 0.4, reload: 0.8}])
+		addLauncher({length: 17, width: 9}, -2.5, [g.basic, g.pounder, g.artillery, {size: 0.9, speed: 0.5, maxSpeed: 0.4, reload: 0.8}])
 	, 4)
 }
 Class.doserSnowdread = { // shotgun

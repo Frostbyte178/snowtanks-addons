@@ -498,7 +498,7 @@ exports.addLauncher = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE,
 				STAT_CALCULATOR: gunCalcNames.sustained,
-				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6 },
+				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
 			POSITION: [length - 7, width - 5, 0, x + 8, y, angle, delay],
@@ -513,10 +513,10 @@ exports.addLauncher = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 }} 
 		}, {
 			POSITION: [length, width - 2.5, -0.6, x, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.7 }}
+			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 5, SATURATION_SHIFT: 0.75 }}
 		}, {
 			POSITION: [length, width - 3, 0.7, x - 2, y, angle, 0],
-			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift + 2.5, SATURATION_SHIFT: 0.7 }, BORDERLESS: true}
+			PROPERTIES: {COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift + 2.5, SATURATION_SHIFT: 0.75 }, BORDERLESS: true}
 		}, {
 			POSITION: [length * 0.8, width * 0.45, 0.001, x, y, angle, 0],
 			PROPERTIES: {COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 }} 
