@@ -1,7 +1,7 @@
 const { combineStats, dereference } = require('../../facilitators.js');
 const { gunCalcNames } = require('../../constants.js');
 const g = require('../../gunvals.js');
-const { enableSnowDreads, buildHexnoughts, hexnoughtBody, hexnoughtScaleFactor, hexDreadNames } = require('./snowDreadsConstants.js');
+const { enableSnowDreads, buildHexnoughts, hexnoughtBody, hexnoughtScaleFactor, exceptionHexdreadGuns, hexDreadNames } = require('./snowDreadsConstants.js');
 
 // Navigate to [snowDreadsConstants.js] and the "enableSnowDreads" variable to enable/disable this addon.
 if (!enableSnowDreads) {
@@ -190,7 +190,7 @@ exports.addAssassin = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 		},
 	];
 }
-exports.addHunter = ({length = 18, width = 8, dimensionDifference = 3, barrelCount = 2, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
+exports.addHunter = ({length = 18, width = 8, dimensionDiff = 3, barrelCount = 2, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 6, stats = [g.sniper]) => {
 	let output = [
 		{
 			POSITION: [length - 2.5, width + 2, -aspect - 0.3, x, y, angle, 0],
@@ -198,18 +198,19 @@ exports.addHunter = ({length = 18, width = 8, dimensionDifference = 3, barrelCou
 		},
 	];
 	let delayOffset = 0.5 / barrelCount;
+	let decoWidthShrink = width * 0.35;
 	for (let i = 0; i < barrelCount; i++) stats.push(g.hunterSecondary);
 	for (let i = barrelCount - 1; i >= 0; i--) {
 		output.push(
 			{
-				POSITION: [length + i * dimensionDifference, width - i * dimensionDifference, aspect, x, y, angle, delay + delayOffset * (barrelCount - i - 1)],
+				POSITION: [length + i * dimensionDiff, width - i * dimensionDiff, aspect, x, y, angle, delay + delayOffset * (barrelCount - i - 1)],
 				PROPERTIES: {
 					SHOOT_SETTINGS: combineStats(stats),
 					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
 					TYPE: "bullet",
 				},
 			}, {
-				POSITION: [length + i * dimensionDifference, width - i * dimensionDifference - 3, -aspect + 0.3, x, y, angle, delay + delayOffset * (barrelCount - i - 1)],
+				POSITION: [length + i * dimensionDiff, width - i * dimensionDiff - decoWidthShrink, -aspect + 0.3, x, y, angle, delay + delayOffset * (barrelCount - i - 1)],
 				PROPERTIES: {
 					SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 					COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.65 },
@@ -792,7 +793,7 @@ exports.addTrap = ({length = 18, length2 = 3, width = 8, aspect = 1.6, x = 0, y 
 			},
 		}, {
 			POSITION: [length + length2 / 3, width * 0.8, 0.7, x, y, angle, 0],
-			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5,  SATURATION_SHIFT: 0.75}}
+			PROPERTIES: {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 17.5,  SATURATION_SHIFT: 0.6}}
 		},
 	];
 }
@@ -1065,14 +1066,26 @@ exports.mergeHexnoughtWeaponV2 = (weapon1, weapon2) => {
 	if (weapon1.LABEL == weapon2.LABEL) UPGRADE_TOOLTIP = weapon1.UPGRADE_TOOLTIP;
 	
 	// Guns ----------------------
+	let resizeGunsStart = 0;
 	if (weapon1.GUNS) {
+		let guns = weapon1.GUNS;
+		if (exceptionHexdreadGuns.includes(weapon1.LABEL)) {
+			resizeGunsStart = weapon1.GUNS.length / 5;
+			guns = Class[`${weapon1.LABEL.toLowerCase()}SnowdreadHex`].GUNS;
+		}
 		for (let i = 0; i < weapon1.GUNS.length; i += 5) {
-			gunsOnOneSide.push(dereference(weapon1.GUNS[i]));
+			gunsOnOneSide.push(dereference(guns[i]));
 		}
 	}
+	let resizeGunsEnd = ((weapon1.GUNS ?? []).length + (weapon2.GUNS ?? []).length) / 5;
 	if (weapon2.GUNS) {
+		let guns = weapon2.GUNS;
+		if (exceptionHexdreadGuns.includes(weapon2.LABEL)) {
+			resizeGunsEnd = gunsOnOneSide.length;
+			guns = Class[`${weapon2.LABEL.toLowerCase()}SnowdreadHex`].GUNS;
+		}
 		for (let i = 0; i < weapon2.GUNS.length; i += 5) {
-			weapon2GunsOnOneSide.push(dereference(weapon2.GUNS[i]));
+			weapon2GunsOnOneSide.push(dereference(guns[i]));
 		}
 	}
 
@@ -1095,7 +1108,7 @@ exports.mergeHexnoughtWeaponV2 = (weapon1, weapon2) => {
 	turretsOnOneSide.push(...weapon2TurretsOnOneSide)
 
 	// Scale to fit size constraints
-	for (let g in gunsOnOneSide) {
+	for (let g = resizeGunsStart; g < resizeGunsEnd; g++) {
 		// Scales X and length instead of Y and width if the gun is sideways, only needed for trebuchet
 		let isTrebuchetSpecial = Math.abs(gunsOnOneSide[g].POSITION[5]) == 90 || gunsOnOneSide[g].POSITION[5] == 150 || gunsOnOneSide[g].POSITION[5] == -30;
 		let offset = 0;

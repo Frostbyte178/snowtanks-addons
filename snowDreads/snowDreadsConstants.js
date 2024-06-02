@@ -15,6 +15,7 @@ exports.buildHexnoughts = true;
 exports.useOldPhotosphere = false;
 
 // For hexnought merging
+exports.exceptionHexdreadGuns = ["Javelin", "Woomera", "Trebuchet", "Jackhammer"];
 exports.hexnoughtScaleFactor = 0.9;
 
 // Missing stats

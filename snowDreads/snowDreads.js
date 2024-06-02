@@ -411,7 +411,7 @@ Class.minotaurSnowdread = {
 	LABEL: "Minotaur",
 	UPGRADE_TOOLTIP: "Blocks",
 	GUNS: weaponArray(
-		addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75}, 5, [g.trap, g.setTrap, {reload: 2, health: 2}], true)
+		addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75}, 7.5, [g.trap, g.setTrap, {reload: 2, health: 2}], true)
 	, 4)
 }
 Class.cleanerSnowdread = { // auto-traps
@@ -435,7 +435,7 @@ Class.screwdriverSnowdread = { // trap + gun
 	LABEL: "Screwdriver",
 	UPGRADE_TOOLTIP: "Traps + Bullets",
 	GUNS: weaponArray([
-		...addNormal({length: 19, width: 7}, 10, [g.basic, g.flankGuard]),
+		...addNormal({length: 19, width: 7}, 10, [g.basic, g.flankGuard], false),
 		...addTrap({length: 13, length2: 3.75, width: 7, aspect: 1.75}, 10, [g.trap, g.hexaTrapper]),
 	], 4)
 }
@@ -678,7 +678,7 @@ Class.atlatlSnowdread = { // hunter
 	CONTROLLERS: [["zoom", { distance: 500 }]],
 	TOOLTIP: "Hold right click to zoom.",
 	GUNS: weaponArray([
-		...addHunter({length: 18, width: 9, dimensionDifference: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, {health: 1.1}]),
+		...addHunter({length: 18, width: 9}, -5, [g.basic, g.sniper, g.assassin, g.hunter, {health: 1.1}]),
 		{
 			POSITION: [5, 9, -1.6, 6, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -20, SATURATION_SHIFT: 0.5 } },
@@ -1530,6 +1530,11 @@ Class.javelinSnowdread = {
 		addAssassin({length: 28, width: 6.5, x: 8}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
 	, 5)
 }
+Class.javelinSnowdreadHex = { // exception
+	GUNS: weaponArray(
+		addAssassin({length: 26, width: 5.5, x: 8}, 7.5, [g.basic, g.sniper, g.assassin, g.assassin, g.assassin, g.assassin, {reload: 0.8, density: 2/9, speed: 0.8, maxSpeed: 0.8, health: 1.25}])
+	, 5)
+}
 Class.woomeraSnowdread = { // hunter
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Woomera",
@@ -1537,12 +1542,24 @@ Class.woomeraSnowdread = { // hunter
 	CONTROLLERS: [["zoom", { distance: 450 }]],
 	TOOLTIP: "Hold right click to zoom.",
 	GUNS: weaponArray([
-		...addHunter({length: 20, width: 9.5, dimensionDifference: 2.5, barrelCount: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, g.predator, {health: 1.1}]),
+		...addHunter({length: 19, width: 8.5, dimensionDiff: 2, barrelCount: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, g.predator, {health: 1.1}]),
 		{
 			POSITION: [5, 9.5, -1.6, 7.5, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 }, },
 		}, {
 			POSITION: [5, 8, -1.6, 6, 0, 0, 0],
+			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 } },
+		},
+	], 5)
+}
+Class.woomeraSnowdreadHex = { // exception
+	GUNS: weaponArray([
+		...addHunter({length: 18, width: 6.75, dimensionDiff: 1.7, barrelCount: 3}, -5, [g.basic, g.sniper, g.assassin, g.hunter, g.predator, {health: 1.1}]),
+		{
+			POSITION: [5, 7.5, -1.6, 7.5, 0, 0, 0],
+			PROPERTIES: { COLOR: { BASE: -1, BRIGHTNESS_SHIFT: -15, SATURATION_SHIFT: 0.5 }, },
+		}, {
+			POSITION: [5, 6.5, -1.6, 6, 0, 0, 0],
 			PROPERTIES: { COLOR: { BASE: 17, BRIGHTNESS_SHIFT: 15 } },
 		},
 	], 5)
@@ -1553,6 +1570,11 @@ Class.trebuchetSnowdread = { // mega-sniper
 	UPGRADE_TOOLTIP: "Mega-Snipers",
 	GUNS: weaponArray(
 		addHeavySniper({length: 24, width: 9, x: 8.5}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.4, size: 2}])
+	, 5)
+}
+Class.trebuchetSnowdreadHex = { // exception
+	GUNS: weaponArray(
+		addHeavySniper({length: 22.5, width: 7.2, x: 8.5}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.7, health: 1.4, size: 2}])
 	, 5)
 }
 Class.boltSnowdread = { // railgun
@@ -1730,9 +1752,9 @@ Class.cerberusSnowdread = {
 	LABEL: "Cerberus",
 	UPGRADE_TOOLTIP: "Trap Spam",
 	GUNS: weaponArray([
-		...addTrap({length: 13, length2: 1.5, width: 4, aspect: 1.6, y: 2,  angle: 10,  delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
-		...addTrap({length: 13, length2: 1.5, width: 4, aspect: 1.6, y: -2, angle: -10, delay: 0.5}, 0, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
-		...addTrap({length: 15, length2: 2, width: 5.5, aspect: 1.7, y: 0,  angle: 0,   delay: 0  }, 0, [g.trap, g.setTrap, g.pounder, {speed: 1.2, reload: 1.09}], true),
+		...addTrap({length: 13, length2: 1.5, width: 4, aspect: 1.6, y: 2,  angle: 10,  delay: 0.5}, 2.5, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
+		...addTrap({length: 13, length2: 1.5, width: 4, aspect: 1.6, y: -2, angle: -10, delay: 0.5}, 2.5, [g.trap, g.pounder, {speed: 1.2, reload: 1.09}]),
+		...addTrap({length: 15, length2: 2, width: 5.5, aspect: 1.7, y: 0,  angle: 0,   delay: 0  }, 2.5, [g.trap, g.setTrap, g.pounder, {speed: 1.2, reload: 1.09}], true),
 	], 5)
 }
 Class.luciferSnowdread = {
@@ -1765,7 +1787,13 @@ Class.jackhammerSnowdread = { // trap + gun
 	UPGRADE_TOOLTIP: "Blocks + Bullets",
 	GUNS: weaponArray([
 		...addNormal({length: 19, width: 6.75}, 10),
-		...addTrap({length: 13, length2: 3, width: 8.25, aspect: 1.4}, 2.5, [g.trap, g.setTrap, g.hexaTrapper], true)
+		...addTrap({length: 13, length2: 3, width: 7.75, aspect: 1.4}, 2.5, [g.trap, g.setTrap, g.hexaTrapper], true)
+	], 5)
+}
+Class.jackhammerSnowdreadHex = { // exception
+	GUNS: weaponArray([
+		...addNormal({length: 17.5, width: 5.25}, 10),
+		...addTrap({length: 12.5, length2: 2.75, width: 6.75, aspect: 1.3}, 2.5, [g.trap, g.setTrap, g.hexaTrapper], true)
 	], 5)
 }
 

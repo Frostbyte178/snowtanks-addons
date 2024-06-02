@@ -168,6 +168,7 @@ Class.pillboxTurretSnowdread = {
 // Dread weapon turrets
 Class.melderAutoSnowdread = {
 	PARENT: 'autoTankGun',
+	COLOR:  {BASE: 17, BRIGHTNESS_SHIFT: 10},
 	GUNS: [
 		{
 			POSITION: [18, 12, 1, 0, 0, 0, 0],
@@ -219,6 +220,7 @@ Class.melderAutoSnowdread = {
 }
 Class.amalgamAutoSnowdread = {
 	PARENT: 'autoTankGun',
+	COLOR:  {BASE: 17, BRIGHTNESS_SHIFT: 10},
 	BODY: {FOV: 2},
 	GUNS: [
 		...addGunner({length: 17, width: 4, y: -3.5, delay: 1/3}, 0, [g.basic, g.autoTurret, g.pelleter, g.power, g.twin, g.tripleShot, {recoil: 2}]),
@@ -244,6 +246,7 @@ Class.amalgamAutoSnowdread = {
 }
 Class.dissolverAutoSnowdread = {
 	PARENT: 'autoTankGun',
+	COLOR: {BASE: 17, BRIGHTNESS_SHIFT: 10},
 	BODY: {FOV: 5},
 	GUNS: [
 		...addGunner({length: 25.5, width: 5, y: -3.5, delay: 0 }, 0, [g.basic, g.sniper, g.assassin, g.flankGuard, g.flankGuard, g.autoTurret, {recoil: 0.6}]),
