@@ -1,5 +1,4 @@
 const { combineStats, dereference } = require('../../facilitators.js');
-const { gunCalcNames } = require('../../constants.js');
 const g = require('../../gunvals.js');
 const { enableSnowDreads, buildHexnoughts, hexnoughtBody, hexnoughtScaleFactor, exceptionHexdreadGuns, hexDreadNames } = require('./snowDreadsConstants.js');
 
@@ -474,7 +473,7 @@ exports.addLauncher = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 				PROPERTIES: {
 					SHOOT_SETTINGS: combineStats(stats),
 					TYPE,
-					STAT_CALCULATOR: gunCalcNames.sustained,
+					STAT_CALCULATOR: "sustained",
 					COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 10 },
 				},
 			}, {
@@ -498,7 +497,7 @@ exports.addLauncher = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE,
-				STAT_CALCULATOR: gunCalcNames.sustained,
+				STAT_CALCULATOR: "sustained",
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65 },
 			},
 		}, {
@@ -506,7 +505,6 @@ exports.addLauncher = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle 
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([...stats, g.fake]),
 				TYPE: "bullet",
-				STAT_CALCULATOR: gunCalcNames.sustained,
 				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift },
 			},
 		}, {
@@ -604,7 +602,7 @@ exports.addTwister = ({length = 18, width = 8, aspect = -1.4, x = 0, y = 0, angl
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE,
-				STAT_CALCULATOR: gunCalcNames.sustained,
+				STAT_CALCULATOR: "sustained",
 				COLOR: { BASE: 17, BRIGHTNESS_SHIFT: brightShift + 5 },
 			},
 		}, {
@@ -641,7 +639,7 @@ exports.addDrone = ({length = 18, width = 8, aspect = 1.2, x = 8, y = 0, angle =
 				MAX_CHILDREN,
 				AUTOFIRE: true,
 				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
+				STAT_CALCULATOR: "drone",
 				WAIT_TO_CYCLE: true,
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.8}
 			},
@@ -673,7 +671,7 @@ exports.addMinion = ({length = 18, gap = 3, width = 8, aspect = 1, x = 0, y = 0,
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE,
-				STAT_CALCULATOR: gunCalcNames.drone,
+				STAT_CALCULATOR: "drone",
 				AUTOFIRE: true,
 				SYNCS_SKILLS: true,
 				MAX_CHILDREN,
@@ -703,7 +701,7 @@ exports.addAutoDrone = ({length = 18, width = 8, aspect = 1.2, x = 8, y = 0, ang
 				TYPE: "turretedDroneSnowdread",
 				AUTOFIRE: true,
 				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
+				STAT_CALCULATOR: "drone",
 				WAIT_TO_CYCLE: true,
 				MAX_CHILDREN,
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.65},
@@ -731,7 +729,7 @@ exports.addHoncho = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 
 				TYPE: "honchoDroneSnowdread",
 				AUTOFIRE: true,
 				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
+				STAT_CALCULATOR: "drone",
 				WAIT_TO_CYCLE: true,
 				MAX_CHILDREN,
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 10, SATURATION_SHIFT: 0.6},
@@ -761,7 +759,7 @@ exports.addSwarm = ({length = 18, width = 8, aspect = 0.6, x = 0, y = 0, angle =
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: "swarm",
-				STAT_CALCULATOR: gunCalcNames.swarm,
+				STAT_CALCULATOR: "swarm",
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.7}
 			},
 		}, {
@@ -788,7 +786,7 @@ exports.addTrap = ({length = 18, length2 = 3, width = 8, aspect = 1.6, x = 0, y 
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: isBox ? "unsetTrapSnowdread" : "trap",
-				STAT_CALCULATOR: gunCalcNames.trap,
+				STAT_CALCULATOR: "trap",
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 12.5, SATURATION_SHIFT: 0.6}
 			},
 		}, {
@@ -813,7 +811,7 @@ exports.addAutoTrap = ({length = 18, length2 = 3, width = 8, aspect = 1, x = 0, 
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: isBox ? 'unsetPillboxWeakSnowdread' : 'autoTrapSnowdread',
-				STAT_CALCULATOR: gunCalcNames.trap,
+				STAT_CALCULATOR: "trap",
 				INDEPENDENT: true,
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6},
 				MAX_CHILDREN,
@@ -855,7 +853,7 @@ exports.addAuraTrap = ({length = 18, length2 = 3, width = 8, aspect = 1, x = 0, 
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats(stats),
 				TYPE: isBox ? 'auraBlock' : 'auraTrap',
-				STAT_CALCULATOR: gunCalcNames.trap,
+				STAT_CALCULATOR: "trap",
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: brightShift - 15, SATURATION_SHIFT: 0.6},
 				MAX_CHILDREN,
 				DESTROY_OLDEST_CHILD: true,
@@ -882,7 +880,7 @@ exports.addDroneOnAuto = ({length = 6, width = 12, aspect = 1.2, x = 8, y = 0, a
 				TYPE: 'drone',
 				AUTOFIRE: true,
 				SYNCS_SKILLS: true,
-				STAT_CALCULATOR: gunCalcNames.drone,
+				STAT_CALCULATOR: "drone",
 				WAIT_TO_CYCLE: true,
 				COLOR: { BASE: -1, BRIGHTNESS_SHIFT: brightShift - 20, SATURATION_SHIFT: 0.65 },
 			},
@@ -893,7 +891,7 @@ exports.addDroneOnAuto = ({length = 6, width = 12, aspect = 1.2, x = 8, y = 0, a
 	];
 }
 exports.addThruster = ({length = 18, width = 8, aspect = 1, x = 0, y = 0, angle = 0, delay = 0}, brightShift = 0, stats = [g.basic], useThrusterCalculator = true) => {
-	let STAT_CALCULATOR = useThrusterCalculator ? gunCalcNames.thruster : undefined;
+	let STAT_CALCULATOR = useThrusterCalculator ? "thruster" : undefined;
 	return [
 		{ // Main barrel
 			POSITION: [length, width, 1, x, y, angle, delay],

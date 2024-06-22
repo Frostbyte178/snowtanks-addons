@@ -1,5 +1,5 @@
 const { menu, combineStats, weaponArray } = require('../../facilitators.js');
-const { base, statnames, gunCalcNames } = require('../../constants.js');
+const { base, statnames } = require('../../constants.js');
 const g = require('../../gunvals.js');
 const { decoAuraProperties, shadingProperties, blinkerProperties } = require('./voidlingsFacilitators.js');
 const { 
@@ -35,7 +35,7 @@ Class.relativity = {
                 PROPERTIES: {
                     SHOOT_SETTINGS: combineStats([g.basic, g.pounder, g.destroyer, {damage: 0.6, speed: 1.8, maxSpeed: 3.25, range: 3, size: 0.7}]),
                     TYPE: 'relativityMissile',
-                    STAT_CALCULATOR: gunCalcNames.swarm,
+                    STAT_CALCULATOR: "swarm",
                     BORDERLESS: true,
                     DRAW_FILL: false,
                     ALT_FIRE: 1,
@@ -54,7 +54,7 @@ Class.relativity = {
                 PROPERTIES: {
                     SHOOT_SETTINGS: combineStats([g.trap, g.setTrap, g.pounder, g.destroyer, {speed: 1.5, maxSpeed: 0, size: 0.85}]),
                     TYPE: 'relativityShield',
-                    STAT_CALCULATOR: gunCalcNames.block,
+                    STAT_CALCULATOR: "block",
                     BORDERLESS: true,
                     DRAW_FILL: false,
                     ALT_FIRE: 3,

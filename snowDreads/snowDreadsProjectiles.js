@@ -1,5 +1,4 @@
 const { combineStats, makeAuto, weaponArray } = require('../../facilitators.js');
-const { gunCalcNames } = require('../../constants.js');
 const g = require('../../gunvals.js');
 const { addGunner, addTrap, addThruster } = require('./snowDreadsFacilitators.js');
 const { enableSnowDreads } = require('./snowDreadsConstants.js');
@@ -189,7 +188,7 @@ Class.gladiatorTritrapMinionSnowdread = {
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.trap, g.flankGuard, g.minionGun, {reload: 1.6, shudder: 0.2}]),
 				TYPE: "trap",
-				STAT_CALCULATOR: gunCalcNames.trap,
+				STAT_CALCULATOR: "trap",
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -7.5, SATURATION_SHIFT: 0.6}
 			},
 		}, {
@@ -206,7 +205,7 @@ Class.gladiatorTriswarmMinionSnowdread = {
 			PROPERTIES: {
 				SHOOT_SETTINGS: combineStats([g.swarm, g.minionGun, {size: 1.6, range: 0.5}]),
 				TYPE: 'swarm',
-				STAT_CALCULATOR: gunCalcNames.swarm,
+				STAT_CALCULATOR: "swarm",
 				COLOR: {BASE: -1, BRIGHTNESS_SHIFT: -10, SATURATION_SHIFT: 0.7}
 			},
 		}, {
