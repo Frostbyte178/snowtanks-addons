@@ -31,6 +31,15 @@ Class.dreadSnowdread = {
 	UPGRADE_COLOR: "aqua",
 	LEVEL: 90,
 	EXTRA_SKILL: 18,
+	PROPS: [
+		{
+			POSITION: [15, 0, 0, 0, 1],
+			TYPE: 'egg',
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "eggBaseDeco",
+		},
+	]
 }
 Class.dreadWeaponSnowdread = {
 	LABEL: "",
@@ -41,6 +50,15 @@ Class.dreadBodySnowdread = {
 	LABEL: "",
 	COLOR: 6,
 	REROOT_UPGRADE_TREE: "dreadBodySnowdread",
+	PROPS: [
+		{
+			POSITION: [15, 0, 0, 0, 1],
+			TYPE: 'egg',
+		}, {
+			POSITION: [20, 0, 0, 0, 1],
+			TYPE: "eggBaseDeco",
+		},
+	]
 }
 
 // T1 Weapons
