@@ -268,7 +268,7 @@ Class.catapultSnowdread = { // mega-sniper
 	LABEL: "Catapult",
 	UPGRADE_TOOLTIP: "Mega-Snipers",
 	GUNS: weaponArray(
-		addHeavySniper({length: 22, width: 9, x: 7.5}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.333, size: 2}])
+		addHeavySniper({length: 22, width: 8.5, x: 7.5}, -2.5, [g.basic, g.sniper, g.predator, g.predator, g.predator, {speed: 0.93, maxSpeed: 0.93, reload: 1.333, size: 2}])
 	, 4)
 }
 Class.dartSnowdread = { // railgun
@@ -1232,30 +1232,6 @@ Class.burgSnowdread = { // HP + auto spam
 		},
 	]
 }
-Class.siloSnowdread = { // HP + big auto
-	PARENT: "genericTrinoughtSnowdread",
-	LABEL: "Silo",
-	UPGRADE_TOOLTIP: "Health Buff + Heavy Auto",
-	BODY: hpBuffBodyStats[1],
-	TURRETS: [
-		{
-			POSITION: [10, 0, 0, 0, 360, 2],
-			TYPE: "kilobyteTurretSnowdread",
-		},
-	],
-	PROPS: [
-		{
-			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ['triangle', {COLOR: 9}]
-		}, {
-			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 1],
-			TYPE: "triangleBaseDeco",
-		},
-	]
-}
 Class.titanSnowdread = {
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Titan",
@@ -1321,30 +1297,6 @@ Class.batonSnowdread = { // Speed + auto spam
 	PROPS: [
 		{
 			POSITION: [13, 0, 0, 180, 1],
-			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 1],
-			TYPE: "triangleBaseDeco",
-		}, {
-			POSITION: [20, 0, 0, 0, -1],
-			TYPE: "titanTopSnowdread"
-		},
-	]
-}
-Class.fireworkSnowdread = { // Speed + big auto
-	PARENT: "genericTrinoughtSnowdread",
-	LABEL: "Firework",
-	UPGRADE_TOOLTIP: "Speed Buff + Heavy Auto",
-	BODY: speedBuffBodyStats[0],
-	TURRETS: [
-		{
-			POSITION: [10, 0, 0, 0, 360, 2],
-			TYPE: "kilobyteTurretSnowdread",
-		},
-	],
-	PROPS: [
-		{
-			POSITION: [14, 0, 0, 180, 1],
 			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
@@ -1453,27 +1405,26 @@ Class.ceramicSnowdread = { // Shield buff + auto spam
 		}
 	],
 }
-Class.tungstenSnowdread = { // Shield buff + big auto
+Class.tungstenSnowdread = { // Speed + shield
 	PARENT: "genericTrinoughtSnowdread",
 	LABEL: "Tungsten",
-	UPGRADE_TOOLTIP: "Shield Buff + Heavy Auto",
-	BODY: shieldBuffBodyStats[0],
-	TURRETS: [
-		{
-			POSITION: [10, 0, 0, 0, 360, 2],
-			TYPE: "kilobyteTurretSnowdread",
-		},
-	],
+	UPGRADE_TOOLTIP: "Speed Buff + Shield Buff",
+	BODY: {
+		HEALTH: 0.95, 
+		SPEED: 1.8,
+		SHIELD: 1.35, 
+		REGEN: 1.35,
+	},
 	PROPS: [
 		{
-			POSITION: [14, 0, 0, 180, 1],
-			TYPE: ["triangle", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 5}}],
+			POSITION: [9, 0, 0, 0, 1],
+			TYPE: "steelTopSnowdread",
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "triangleBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: "steelBottomSnowdread",
+			TYPE: "titanTopSnowdread",
 		}
 	],
 }
@@ -2159,33 +2110,6 @@ Class.bunkerSnowdread = { // HP + auto spam
 		},
 	]
 }
-Class.arsenalSnowdread = { // HP + big auto
-	PARENT: "genericPentanoughtSnowdread",
-	LABEL: "Arsenal",
-	UPGRADE_TOOLTIP: "Health Buff + Heavy Auto",
-	BODY: hpBuffBodyStats[2],
-	TURRETS: [
-		{
-			POSITION: [11.5, 0, 0, 0, 360, 2],
-			TYPE: "megabyteTurretSnowdread",
-		},
-	],
-	PROPS: [
-		{
-			POSITION: [15, 0, 0, 180, 1],
-			TYPE: ["pentagon", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 10}}],
-		}, {
-			POSITION: [13.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
-		}, {
-			POSITION: [20, 0, 0, 0, 1],
-			TYPE: "pentagonBaseDeco",
-		}, {
-			POSITION: [24, 0, 0, 180, -1],
-			TYPE: ["pentagon", {COLOR: 9}],
-		}, 
-	]
-}
 Class.leviathanSnowdread = {
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Leviathan",
@@ -2248,30 +2172,6 @@ Class.maceSnowdread = { // Speed + auto spam
 	UPGRADE_TOOLTIP: "Speed Buff + Small Autos",
 	BODY: speedBuffBodyStats[1],
 	TURRETS: addPentanoughtTurretRing(),
-	PROPS: [
-		{
-			POSITION: [12, 0, 0, 0, 1],
-			TYPE: "pentagonLeviathanTop2Snowdread"
-		}, {
-			POSITION: [20, 0, 0, 0, 1],
-			TYPE: "pentagonBaseDeco",
-		}, {
-			POSITION: [20, 0, 0, 0, -1],
-			TYPE: "pentagonLeviathanBottomSnowdread"
-		},
-	],
-}
-Class.missileSnowdread = { // Speed + big auto
-	PARENT: "genericPentanoughtSnowdread",
-	LABEL: "Missile",
-	UPGRADE_TOOLTIP: "Speed Buff + Heavy Auto",
-	BODY: speedBuffBodyStats[1],
-	TURRETS: [
-		{
-			POSITION: [11.5, 0, 0, 0, 360, 2],
-			TYPE: "megabyteTurretSnowdread",
-		},
-	],
 	PROPS: [
 		{
 			POSITION: [12, 0, 0, 0, 1],
@@ -2386,30 +2286,26 @@ Class.carbideSnowdread = { // Shield buff + auto spam
 		},
 	]
 }
-Class.osmiumSnowdread = { // Shield buff + big auto
+Class.osmiumSnowdread = { // Speed + shield
 	PARENT: "genericPentanoughtSnowdread",
 	LABEL: "Osmium",
-	UPGRADE_TOOLTIP: "Shield buff + Heavy Auto",
-	BODY: shieldBuffBodyStats[1],
-	TURRETS: [
-		{
-			POSITION: [11.5, 0, 0, 0, 360, 2],
-			TYPE: "megabyteTurretSnowdread",
-		},
-	],
+	UPGRADE_TOOLTIP: "Speed Buff + Shield Buff",
+	BODY: {
+		HEALTH: 1, 
+		SPEED: 2,
+		SHIELD: 1.75, 
+		REGEN: 1.4,
+	},
 	PROPS: [
 		{
-			POSITION: [16, 0, 0, 180, 1],
-			TYPE: ["pentagonTitaniumTop2Snowdread", {COLOR: {BASE: 9, BRIGHTNESS_SHIFT: 0}}],
-		}, {
-			POSITION: [13.5, 0, 0, 180, 1],
-			TYPE: ["pentagon", {COLOR: {BASE: -1, BRIGHTNESS_SHIFT: 7.5}}],
+			POSITION: [6.5, 0, 0, 0, 1],
+			TYPE: "pentagonTitaniumTopSnowdread",
 		}, {
 			POSITION: [20, 0, 0, 0, 1],
 			TYPE: "pentagonBaseDeco",
 		}, {
 			POSITION: [20, 0, 0, 0, -1],
-			TYPE: "pentagonTitaniumBottomSnowdread",
+			TYPE: "pentagonLeviathanBottomSnowdread",
 		},
 	]
 }
@@ -2565,7 +2461,7 @@ Class.addons.UPGRADES_TIER_0.push("dreadSnowdread");
 				Class.batonSnowdread.UPGRADES_TIER_0 = ["maceSnowdread"];
 					Class.maceSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("maceSnowdread");
 
-			Class.kilobyteSnowdread.UPGRADES_TIER_0 = ["megabyteSnowdread", "binarySnowdread", "trojanSnowdread", "hardwareSnowdread", "siloSnowdread", "fireworkSnowdread"];
+			Class.kilobyteSnowdread.UPGRADES_TIER_0 = ["megabyteSnowdread", "binarySnowdread", "trojanSnowdread", "hardwareSnowdread"];
 				Class.megabyteSnowdread.UPGRADES_TIER_0 = ["gigabyteSnowdread"];
 					Class.gigabyteSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("gigabyteSnowdread");
 				// Class.binarySnowdread.UPGRADES_TIER_0 = ["cipherSnowdread"];
@@ -2573,10 +2469,6 @@ Class.addons.UPGRADES_TIER_0.push("dreadSnowdread");
 					Class.malwareSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("malwareSnowdread");
 				Class.hardwareSnowdread.UPGRADES_TIER_0 = ["softwareSnowdread"];
 					Class.softwareSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("softwareSnowdread");
-				Class.siloSnowdread.UPGRADES_TIER_0 = ["arsenalSnowdread"];
-					Class.arsenalSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("arsenalSnowdread");
-				Class.fireworkSnowdread.UPGRADES_TIER_0 = ["missileSnowdread"];
-					Class.missileSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("missileSnowdread");
 				
 			Class.lighterSnowdread.UPGRADES_TIER_0 = ["burnerSnowdread"];
 				Class.burnerSnowdread.UPGRADES_TIER_0 = ["roasterSnowdread"];
@@ -2615,36 +2507,36 @@ Class.addons.UPGRADES_TIER_0.push("dreadSnowdread");
 
 		Class.juggernautSnowdread.UPGRADES_TIER_0 = ["jumboSnowdread", "colossusSnowdread", "brassSnowdread"];
 
-			Class.jumboSnowdread.UPGRADES_TIER_0 = ["goliathSnowdread", "planetSnowdread", "moonSnowdread", "burgSnowdread", "siloSnowdread", "armadaSnowdread"];
+			Class.jumboSnowdread.UPGRADES_TIER_0 = ["goliathSnowdread", "planetSnowdread", "moonSnowdread", "burgSnowdread", "armadaSnowdread", "diamondSnowdread"];
 				Class.goliathSnowdread.UPGRADES_TIER_0 = ["behemothSnowdread"];
 					Class.behemothSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("behemothSnowdread");
 				// Class.planetSnowdread.UPGRADES_TIER_0 = ["astronomicSnowdread"];
 				// Class.moonSnowdread.UPGRADES_TIER_0 = ["grandioseSnowdread"];
 				// Class.burgSnowdread.UPGRADES_TIER_0 = ["bunkerSnowdread"];
-				// Class.siloSnowdread.UPGRADES_TIER_0 = ["arsenalSnowdread"];
 				Class.armadaSnowdread.UPGRADES_TIER_0 = ["battalionSnowdread"];
 					Class.battalionSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("battalionSnowdread");
+				Class.diamondSnowdread.UPGRADES_TIER_0 = ["grapheneSnowdread"];
+					Class.grapheneSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("grapheneSnowdread");
 
-			Class.colossusSnowdread.UPGRADES_TIER_0 = ["titanSnowdread", "sirenSnowdread", "harpySnowdread", "batonSnowdread", "fireworkSnowdread", "armadaSnowdread"];
+			Class.colossusSnowdread.UPGRADES_TIER_0 = ["titanSnowdread", "sirenSnowdread", "harpySnowdread", "batonSnowdread", "armadaSnowdread", "tungstenSnowdread"];
 				Class.titanSnowdread.UPGRADES_TIER_0 = ["leviathanSnowdread"];
 					Class.leviathanSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("leviathanSnowdread");
 				// Class.sirenSnowdread.UPGRADES_TIER_0 = ["valrayvnSnowdread"];
 				// Class.harpySnowdread.UPGRADES_TIER_0 = ["pegasusSnowdread"];
 				// Class.batonSnowdread.UPGRADES_TIER_0 = ["maceSnowdread"];
-				// Class.fireworkSnowdread.UPGRADES_TIER_0 = ["missileSnowdread"];
 				// Class.armadaSnowdread.UPGRADES_TIER_0 = ["battalionSnowdread"];
+				Class.tungstenSnowdread.UPGRADES_TIER_0 = ["osmiumSnowdread"];
+					Class.osmiumSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("osmiumSnowdread");
 
-			Class.brassSnowdread.UPGRADES_TIER_0 = ["steelSnowdread", "flintSnowdread", "martensiteSnowdread", "ceramicSnowdread", "tungstenSnowdread", "diamondSnowdread"];
+			Class.brassSnowdread.UPGRADES_TIER_0 = ["steelSnowdread", "flintSnowdread", "martensiteSnowdread", "ceramicSnowdread", "diamondSnowdread", "tungstenSnowdread"];
 				Class.steelSnowdread.UPGRADES_TIER_0 = ["titaniumSnowdread"];
 					Class.titaniumSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("titaniumSnowdread");
 				// Class.flintSnowdread.UPGRADES_TIER_0 = ["obsidianSnowdread"];
 				// Class.martensiteSnowdread.UPGRADES_TIER_0 = ["austeniteSnowdread"];
 				Class.ceramicSnowdread.UPGRADES_TIER_0 = ["carbideSnowdread"];
 					Class.carbideSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("carbideSnowdread");
-				Class.tungstenSnowdread.UPGRADES_TIER_0 = ["osmiumSnowdread"];
-					Class.osmiumSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("osmiumSnowdread");
-				Class.diamondSnowdread.UPGRADES_TIER_0 = ["grapheneSnowdread"];
-					Class.grapheneSnowdread.UPGRADES_TIER_0 = makeHexnoughtBodyV2("grapheneSnowdread");
+				// Class.diamondSnowdread.UPGRADES_TIER_0 = ["grapheneSnowdread"];
+				// Class.tungstenSnowdread.UPGRADES_TIER_0 = ["osmiumSnowdread"];
 
 		Class.spotterSnowdread.UPGRADES_TIER_0 = ["spySnowdread"];
 			Class.spySnowdread.UPGRADES_TIER_0 = ["monitorSnowdread"];
