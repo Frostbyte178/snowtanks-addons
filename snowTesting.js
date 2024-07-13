@@ -2,24 +2,6 @@ const { combineStats, menu } = require('../facilitators.js');
 const { base } = require('../constants.js');
 
 Class.spectator.CAN_GO_OUTSIDE_ROOM = true;
-Class.fastSpectator = {
-    PARENT: "spectator",
-    LABEL: "Fast Spectator",
-    BODY: {
-        SPEED: 25,
-        ACCELERATION: base.ACCEL * 5,
-        FOV: 5,
-    },
-}
-Class.superFastSpectator = {
-    PARENT: "spectator",
-    LABEL: "Super Fast Spectator",
-    BODY: {
-        SPEED: 75,
-        ACCELERATION: base.ACCEL * 10,
-        FOV: 10,
-    },
-}
 
 Class.snowtanksTesting = menu("Snow Testing", {BASE: 0, SATURATION_SHIFT: 0.7, BRIGHTNESS_SHIFT: 15}, -6);
 
@@ -86,10 +68,6 @@ for (let a = 0; a < 4; a++) {
         })
     }
 }
-
-Class.spectator.UPGRADES_TIER_0 = ["spectator", "fastSpectator", "superFastSpectator"];
-Class.fastSpectator.UPGRADES_TIER_0 = ["spectator", "fastSpectator", "superFastSpectator"];
-Class.superFastSpectator.UPGRADES_TIER_0 = ["spectator", "fastSpectator", "superFastSpectator"];
 
 Class.addons.UPGRADES_TIER_0.push('snowtanksTesting');
     Class.snowtanksTesting.UPGRADES_TIER_0 = ["particleEmitterTest", "blinkerTest"];
